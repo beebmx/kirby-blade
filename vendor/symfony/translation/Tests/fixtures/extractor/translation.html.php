@@ -1,7 +1,7 @@
 This template is used for translation message extraction tests
 <?php echo $view['translator']->trans('single-quoted key'); ?>
 <?php echo $view['translator']->trans('double-quoted key'); ?>
-<?php echo $view['translator']->trans(<<<'EOF'
+<?php echo $view['translator']->trans(<<<EOF
 heredoc key
 EOF
 ); ?>
@@ -30,6 +30,14 @@ EOF
     '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
     10,
     ['%count%' => 10]
+); ?>
+
+<?php echo $view['translator']->trans('concatenated'.' message'.<<<EOF
+ with heredoc
+EOF
+.<<<'EOF'
+ and nowdoc
+EOF
 ); ?>
 
 <?php echo $view['translator']->trans('other-domain-test-no-params-short-array', [], 'not_messages'); ?>

@@ -14,6 +14,7 @@ return array(
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Kirby\\' => array($vendorDir . '/getkirby/composer-installer/src'),
     'Jenssegers\\Blade\\' => array($vendorDir . '/jenssegers/blade/src'),
     'Illuminate\\View\\' => array($vendorDir . '/illuminate/view'),
     'Illuminate\\Support\\' => array($vendorDir . '/illuminate/support'),

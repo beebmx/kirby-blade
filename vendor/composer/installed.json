@@ -191,18 +191,58 @@
         ]
     },
     {
-        "name": "illuminate/container",
+        "name": "getkirby/composer-installer",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/illuminate/container.git",
-            "reference": "dbe5f85988acd6f07a3bdae62975af1e8f183244"
+            "url": "https://github.com/getkirby/composer-installer.git",
+            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/container/zipball/dbe5f85988acd6f07a3bdae62975af1e8f183244",
-            "reference": "dbe5f85988acd6f07a3bdae62975af1e8f183244",
+            "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/2d6b8f5601a31caeeea45623e1643fbb437eb94e",
+            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "require-dev": {
+            "composer/composer": "^1.8",
+            "phpunit/phpunit": "^7.0"
+        },
+        "time": "2019-02-11T20:27:36+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Kirby\\ComposerInstaller\\Plugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Kirby\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Kirby's custom Composer installer for the Kirby CMS and for Kirby plugins",
+        "homepage": "https://getkirby.com"
+    },
+    {
+        "name": "illuminate/container",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/illuminate/container.git",
+            "reference": "2f7d22823af887b78c08bad1c9b6d0404098adf2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/illuminate/container/zipball/2f7d22823af887b78c08bad1c9b6d0404098adf2",
+            "reference": "2f7d22823af887b78c08bad1c9b6d0404098adf2",
             "shasum": ""
         },
         "require": {
@@ -211,7 +251,7 @@
             "php": "^7.1.3",
             "psr/container": "^1.0"
         },
-        "time": "2019-01-10T16:57:03+00:00",
+        "time": "2019-02-11T13:53:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -239,17 +279,17 @@
     },
     {
         "name": "illuminate/contracts",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/contracts.git",
-            "reference": "d441b3099ceb5ad2dc41a40d23fabca71647ab04"
+            "reference": "8ea5962741b7260a9e689107263b6c13725a8071"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/contracts/zipball/d441b3099ceb5ad2dc41a40d23fabca71647ab04",
-            "reference": "d441b3099ceb5ad2dc41a40d23fabca71647ab04",
+            "url": "https://api.github.com/repos/illuminate/contracts/zipball/8ea5962741b7260a9e689107263b6c13725a8071",
+            "reference": "8ea5962741b7260a9e689107263b6c13725a8071",
             "shasum": ""
         },
         "require": {
@@ -257,7 +297,7 @@
             "psr/container": "^1.0",
             "psr/simple-cache": "^1.0"
         },
-        "time": "2019-01-21T02:40:57+00:00",
+        "time": "2019-02-12T14:57:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -285,17 +325,17 @@
     },
     {
         "name": "illuminate/events",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/events.git",
-            "reference": "eaf87f7a83b3a199f855379d5ccc1c63dc88574b"
+            "reference": "2e937cd816cdc63f9a27d829a7cfe4285b2aceed"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/events/zipball/eaf87f7a83b3a199f855379d5ccc1c63dc88574b",
-            "reference": "eaf87f7a83b3a199f855379d5ccc1c63dc88574b",
+            "url": "https://api.github.com/repos/illuminate/events/zipball/2e937cd816cdc63f9a27d829a7cfe4285b2aceed",
+            "reference": "2e937cd816cdc63f9a27d829a7cfe4285b2aceed",
             "shasum": ""
         },
         "require": {
@@ -304,7 +344,7 @@
             "illuminate/support": "5.8.*",
             "php": "^7.1.3"
         },
-        "time": "2018-11-05T18:55:15+00:00",
+        "time": "2019-02-11T13:53:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -332,17 +372,17 @@
     },
     {
         "name": "illuminate/filesystem",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/filesystem.git",
-            "reference": "0b78f3ddc6a2ab0e0c8f7ca7591f87f2ed758d74"
+            "reference": "10b84eed83e33b6ab9c42c9e9cddd7d1b53cb194"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/filesystem/zipball/0b78f3ddc6a2ab0e0c8f7ca7591f87f2ed758d74",
-            "reference": "0b78f3ddc6a2ab0e0c8f7ca7591f87f2ed758d74",
+            "url": "https://api.github.com/repos/illuminate/filesystem/zipball/10b84eed83e33b6ab9c42c9e9cddd7d1b53cb194",
+            "reference": "10b84eed83e33b6ab9c42c9e9cddd7d1b53cb194",
             "shasum": ""
         },
         "require": {
@@ -358,7 +398,7 @@
             "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (^1.0).",
             "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (^1.0)."
         },
-        "time": "2019-01-18T17:07:52+00:00",
+        "time": "2019-02-11T13:53:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -386,17 +426,17 @@
     },
     {
         "name": "illuminate/support",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/support.git",
-            "reference": "b0dd52bb0a9d5b177713a9be8d1289d88e521188"
+            "reference": "cc60d6e7919ed87c3ecc446294fbba93a7decc3e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/support/zipball/b0dd52bb0a9d5b177713a9be8d1289d88e521188",
-            "reference": "b0dd52bb0a9d5b177713a9be8d1289d88e521188",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/cc60d6e7919ed87c3ecc446294fbba93a7decc3e",
+            "reference": "cc60d6e7919ed87c3ecc446294fbba93a7decc3e",
             "shasum": ""
         },
         "require": {
@@ -417,7 +457,7 @@
             "symfony/process": "Required to use the composer class (^4.2).",
             "symfony/var-dumper": "Required to use the dd function (^4.2)."
         },
-        "time": "2019-01-22T23:57:09+00:00",
+        "time": "2019-02-12T14:57:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -448,17 +488,17 @@
     },
     {
         "name": "illuminate/view",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "5.8.x-dev",
+        "version_normalized": "5.8.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/view.git",
-            "reference": "96bd8000da94ac02c269396fd3001c7a058f6452"
+            "reference": "aa4ca86df4ce899c2afcc8d11962cff945760682"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/view/zipball/96bd8000da94ac02c269396fd3001c7a058f6452",
-            "reference": "96bd8000da94ac02c269396fd3001c7a058f6452",
+            "url": "https://api.github.com/repos/illuminate/view/zipball/aa4ca86df4ce899c2afcc8d11962cff945760682",
+            "reference": "aa4ca86df4ce899c2afcc8d11962cff945760682",
             "shasum": ""
         },
         "require": {
@@ -471,7 +511,7 @@
             "php": "^7.1.3",
             "symfony/debug": "^4.2"
         },
-        "time": "2018-11-30T13:53:58+00:00",
+        "time": "2019-02-11T13:53:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -549,32 +589,32 @@
     },
     {
         "name": "nesbot/carbon",
-        "version": "2.10.0",
-        "version_normalized": "2.10.0.0",
+        "version": "2.11.0",
+        "version_normalized": "2.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/briannesbitt/Carbon.git",
-            "reference": "69ff95a9ccdfd5e907678ae844b3fc402110d1a3"
+            "reference": "48d211435ecb3671a2237614dc19fc2be185acb6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/69ff95a9ccdfd5e907678ae844b3fc402110d1a3",
-            "reference": "69ff95a9ccdfd5e907678ae844b3fc402110d1a3",
+            "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/48d211435ecb3671a2237614dc19fc2be185acb6",
+            "reference": "48d211435ecb3671a2237614dc19fc2be185acb6",
             "shasum": ""
         },
         "require": {
             "ext-json": "*",
             "php": "^7.1.8",
-            "symfony/translation": "^4.0"
+            "symfony/translation": "^3.4 || ^4.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "^7.1.5"
+            "friendsofphp/php-cs-fixer": "^2.14 || ^3.0",
+            "phpmd/phpmd": "^2.6",
+            "phpstan/phpstan": "^0.10.8",
+            "phpunit/phpunit": "^7.1.5",
+            "squizlabs/php_codesniffer": "^3.4"
         },
-        "suggest": {
-            "friendsofphp/php-cs-fixer": "Needed for the `composer phpcs` command. Allow to automatically fix code style.",
-            "phpstan/phpstan": "Needed for the `composer phpstan` command. Allow to detect potential errors."
-        },
-        "time": "2019-01-02T21:35:25+00:00",
+        "time": "2019-01-29T16:35:35+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -835,12 +875,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/debug.git",
-            "reference": "7cdd4f6f1236daed2fbd6f910bbc1503eb037442"
+            "reference": "8f517eb954fd24d5c13e81eab8452abe3f697391"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/debug/zipball/7cdd4f6f1236daed2fbd6f910bbc1503eb037442",
-            "reference": "7cdd4f6f1236daed2fbd6f910bbc1503eb037442",
+            "url": "https://api.github.com/repos/symfony/debug/zipball/8f517eb954fd24d5c13e81eab8452abe3f697391",
+            "reference": "8f517eb954fd24d5c13e81eab8452abe3f697391",
             "shasum": ""
         },
         "require": {
@@ -853,7 +893,7 @@
         "require-dev": {
             "symfony/http-kernel": "~3.4|~4.0"
         },
-        "time": "2019-01-16T22:37:52+00:00",
+        "time": "2019-02-07T09:41:41+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -939,17 +979,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
             "shasum": ""
         },
         "require": {
@@ -958,11 +998,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2018-09-21T13:07:52+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -1005,12 +1045,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "3a3a3ec887afff5475483ddd416f9733b70e4baf"
+            "reference": "1155caa45b23f89f140a14af08e934a71a60f7e8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/3a3a3ec887afff5475483ddd416f9733b70e4baf",
-            "reference": "3a3a3ec887afff5475483ddd416f9733b70e4baf",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/1155caa45b23f89f140a14af08e934a71a60f7e8",
+            "reference": "1155caa45b23f89f140a14af08e934a71a60f7e8",
             "shasum": ""
         },
         "require": {
@@ -1040,7 +1080,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2019-01-16T21:53:45+00:00",
+        "time": "2019-02-07T18:43:24+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
