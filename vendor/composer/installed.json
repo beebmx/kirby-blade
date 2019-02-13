@@ -191,46 +191,6 @@
         ]
     },
     {
-        "name": "getkirby/composer-installer",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/getkirby/composer-installer.git",
-            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/2d6b8f5601a31caeeea45623e1643fbb437eb94e",
-            "reference": "2d6b8f5601a31caeeea45623e1643fbb437eb94e",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0"
-        },
-        "require-dev": {
-            "composer/composer": "^1.8",
-            "phpunit/phpunit": "^7.0"
-        },
-        "time": "2019-02-11T20:27:36+00:00",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "Kirby\\ComposerInstaller\\Plugin"
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Kirby\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Kirby's custom Composer installer for the Kirby CMS and for Kirby plugins",
-        "homepage": "https://getkirby.com"
-    },
-    {
         "name": "illuminate/container",
         "version": "5.8.x-dev",
         "version_normalized": "5.8.9999999.9999999-dev",
@@ -431,12 +391,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/support.git",
-            "reference": "cc60d6e7919ed87c3ecc446294fbba93a7decc3e"
+            "reference": "2b077b720a15941c6bd804c2c873af8871bcca69"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/support/zipball/cc60d6e7919ed87c3ecc446294fbba93a7decc3e",
-            "reference": "cc60d6e7919ed87c3ecc446294fbba93a7decc3e",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/2b077b720a15941c6bd804c2c873af8871bcca69",
+            "reference": "2b077b720a15941c6bd804c2c873af8871bcca69",
             "shasum": ""
         },
         "require": {
@@ -457,7 +417,7 @@
             "symfony/process": "Required to use the composer class (^4.2).",
             "symfony/var-dumper": "Required to use the dd function (^4.2)."
         },
-        "time": "2019-02-12T14:57:21+00:00",
+        "time": "2019-02-13T15:21:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1045,12 +1005,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "1155caa45b23f89f140a14af08e934a71a60f7e8"
+            "reference": "83008de5cdad1e014b4b3903309c611bc181d872"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/1155caa45b23f89f140a14af08e934a71a60f7e8",
-            "reference": "1155caa45b23f89f140a14af08e934a71a60f7e8",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/83008de5cdad1e014b4b3903309c611bc181d872",
+            "reference": "83008de5cdad1e014b4b3903309c611bc181d872",
             "shasum": ""
         },
         "require": {
@@ -1080,7 +1040,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2019-02-07T18:43:24+00:00",
+        "time": "2019-02-08T17:20:37+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
