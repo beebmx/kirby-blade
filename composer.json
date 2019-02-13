@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "blade", "view", "template"
     ],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -24,7 +24,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "vendor-dir": "bundle/"
     },
     "autoload": {
         "files": [
