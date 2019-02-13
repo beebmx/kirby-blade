@@ -28,10 +28,6 @@ class ComposerStaticInit2c91700192d9c99dbce0b749e9c83dec
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
         ),
-        'K' => 
-        array (
-            'Kirby\\' => 6,
-        ),
         'J' => 
         array (
             'Jenssegers\\Blade\\' => 17,
@@ -91,10 +87,6 @@ class ComposerStaticInit2c91700192d9c99dbce0b749e9c83dec
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'Kirby\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/getkirby/composer-installer/src',
         ),
         'Jenssegers\\Blade\\' => 
         array (
@@ -381,10 +373,6 @@ class ComposerStaticInit2c91700192d9c99dbce0b749e9c83dec
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/illuminate/view/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/illuminate/view/ViewServiceProvider.php',
         'Jenssegers\\Blade\\Blade' => __DIR__ . '/..' . '/jenssegers/blade/src/Blade.php',
-        'Kirby\\ComposerInstaller\\CmsInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
-        'Kirby\\ComposerInstaller\\Installer' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Installer.php',
-        'Kirby\\ComposerInstaller\\Plugin' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Plugin.php',
-        'Kirby\\ComposerInstaller\\PluginInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/PluginInstaller.php',
         'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
         'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
         'Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',
