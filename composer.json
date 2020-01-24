@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "blade", "view", "template"
     ],
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [

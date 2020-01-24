@@ -109,6 +109,50 @@ class Template extends KirbyTemplate
             return "<?php echo kirbytext($text) ?>";
         });
 
+        $this->blade->compiler()->directive('kirbytextinline', function ($text) {
+            return "<?php echo kirbytextinline($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('kti', function ($text) {
+            return "<?php echo kirbytextinline($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('image', function ($text) {
+            return "<?php echo image($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('page', function ($page) {
+            return "<?php echo kirbytextinline($page) ?>";
+        });
+
+        $this->blade->compiler()->directive('markdown', function ($text) {
+            return "<?php echo markdown($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('url', function ($path) {
+            return "<?php echo url($path) ?>";
+        });
+
+        $this->blade->compiler()->directive('asset', function ($path) {
+            return "<?php echo asset($path) ?>";
+        });
+
+        $this->blade->compiler()->directive('translate', function ($text) {
+            return "<?php echo t($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('t', function ($text) {
+            return "<?php echo t($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('dump', function ($variable) {
+            return "<?php echo dump($variable) ?>";
+        });
+
+        $this->blade->compiler()->directive('csrf', function ($text) {
+            return "<?php echo csrf() ?>";
+        });
+
         foreach ($directives = option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
             $this->blade->compiler()->directive($directive, $callback);
         }
