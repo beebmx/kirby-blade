@@ -9,25 +9,43 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - François B
+ * - Serhan Apaydın
+ * - JD Isaacks
+ * - Glavić
+ */
 return [
-    'year' => 'година|:count години',
+    'year' => ':count година|:count години',
+    'a_year' => 'година|:count години',
     'y' => ':count година|:count години',
-    'month' => 'месец|:count месеца',
+    'month' => ':count месец|:count месеца',
+    'a_month' => 'месец|:count месеца',
     'm' => ':count месец|:count месеца',
     'week' => ':count седмица|:count седмици',
+    'a_week' => 'седмица|:count седмици',
     'w' => ':count седмица|:count седмици',
-    'day' => 'ден|:count дни',
+    'day' => ':count ден|:count дни',
+    'a_day' => 'ден|:count дни',
     'd' => ':count ден|:count дни',
-    'hour' => 'час|:count часа',
+    'hour' => ':count час|:count часа',
+    'a_hour' => 'час|:count часа',
     'h' => ':count час|:count часа',
-    'minute' => 'минута|:count минути',
+    'minute' => ':count минута|:count минути',
+    'a_minute' => 'минута|:count минути',
     'min' => ':count минута|:count минути',
-    'second' => 'няколко секунди|:count секунди',
+    'second' => ':count секунда|:count секунди',
+    'a_second' => 'няколко секунди|:count секунди',
     's' => ':count секунда|:count секунди',
     'ago' => 'преди :time',
     'from_now' => 'след :time',
     'after' => 'след :time',
     'before' => 'преди :time',
+    'diff_now' => 'сега',
+    'diff_yesterday' => 'вчера',
+    'diff_tomorrow' => 'утре',
     'formats' => [
         'LT' => 'H:mm',
         'LTS' => 'H:mm:ss',
@@ -53,7 +71,7 @@ return [
         },
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
+    'ordinal' => function ($number) {
         $lastDigit = $number % 10;
         $last2Digits = $number % 100;
         if ($number === 0) {
@@ -78,11 +96,12 @@ return [
         return "$number-ти";
     },
     'months' => ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'],
-    'months_short' => ['янр', 'фев', 'мар', 'апр', 'май', 'юни', 'юли', 'авг', 'сеп', 'окт', 'ное', 'дек'],
+    'months_short' => ['яну', 'фев', 'мар', 'апр', 'май', 'юни', 'юли', 'авг', 'сеп', 'окт', 'ное', 'дек'],
     'weekdays' => ['неделя', 'понеделник', 'вторник', 'сряда', 'четвъртък', 'петък', 'събота'],
     'weekdays_short' => ['нед', 'пон', 'вто', 'сря', 'чет', 'пет', 'съб'],
     'weekdays_min' => ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 1,
     'list' => [', ', ' и '],
+    'meridiem' => ['преди обяд', 'следобед'],
 ];

@@ -9,25 +9,43 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - François B
+ * - JD Isaacks
+ * - Fadion Dashi
+ */
 return [
-    'year' => 'një vit|:count vite',
-    'y' => ':count vit|:count vjet',
-    'month' => 'një muaj|:count muaj',
-    'm' => ':count muaj|:count muaj',
-    'week' => ':count javë|:count javë',
-    'w' => ':count javë|:count javë',
-    'day' => 'një ditë|:count ditë',
-    'd' => ':count ditë|:count ditë',
-    'hour' => 'një orë|:count orë',
-    'h' => ':count orë|:count orë',
-    'minute' => 'një minutë|:count minuta',
-    'min' => ':count minutë|:count minuta',
-    'second' => 'disa sekonda|:count sekonda',
-    's' => ':count sekondë|:count sekonda',
+    'year' => ':count vit|:count vjet',
+    'a_year' => 'një vit|:count vite',
+    'y' => ':count v.',
+    'month' => ':count muaj',
+    'a_month' => 'një muaj|:count muaj',
+    'm' => ':count muaj',
+    'week' => ':count javë',
+    'a_week' => ':count javë|:count javë',
+    'w' => ':count j.',
+    'day' => ':count ditë',
+    'a_day' => 'një ditë|:count ditë',
+    'd' => ':count d.',
+    'hour' => ':count orë',
+    'a_hour' => 'një orë|:count orë',
+    'h' => ':count o.',
+    'minute' => ':count minutë|:count minuta',
+    'a_minute' => 'një minutë|:count minuta',
+    'min' => ':count min.',
+    'second' => ':count sekondë|:count sekonda',
+    'a_second' => 'disa sekonda|:count sekonda',
+    's' => ':count s.',
     'ago' => ':time më parë',
     'from_now' => 'në :time',
     'after' => ':time pas',
     'before' => ':time para',
+    'diff_now' => 'tani',
+    'diff_yesterday' => 'dje',
+    'diff_tomorrow' => 'nesër',
+    'diff_before_yesterday' => 'pardje',
+    'diff_after_tomorrow' => 'pasnesër',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -45,16 +63,12 @@ return [
         'sameElse' => 'L',
     ],
     'ordinal' => ':number.',
-    'meridiem' => function ($hour, $minute, $isLower) {
-        $meridiem = $hour < 12 ? 'PD' : 'MD';
-
-        return $isLower ? strtolower($meridiem) : $meridiem;
-    },
-    'months' => ['Janar', 'Shkurt', 'Mars', 'Prill', 'Maj', 'Qershor', 'Korrik', 'Gusht', 'Shtator', 'Tetor', 'Nëntor', 'Dhjetor'],
-    'months_short' => ['Jan', 'Shk', 'Mar', 'Pri', 'Maj', 'Qer', 'Kor', 'Gus', 'Sht', 'Tet', 'Nën', 'Dhj'],
-    'weekdays' => ['E Diel', 'E Hënë', 'E Martë', 'E Mërkurë', 'E Enjte', 'E Premte', 'E Shtunë'],
-    'weekdays_short' => ['Die', 'Hën', 'Mar', 'Mër', 'Enj', 'Pre', 'Sht'],
-    'weekdays_min' => ['D', 'H', 'Ma', 'Më', 'E', 'P', 'Sh'],
+    'meridiem' => ['PD', 'MD'],
+    'months' => ['janar', 'shkurt', 'mars', 'prill', 'maj', 'qershor', 'korrik', 'gusht', 'shtator', 'tetor', 'nëntor', 'dhjetor'],
+    'months_short' => ['jan', 'shk', 'mar', 'pri', 'maj', 'qer', 'kor', 'gus', 'sht', 'tet', 'nën', 'dhj'],
+    'weekdays' => ['e diel', 'e hënë', 'e martë', 'e mërkurë', 'e enjte', 'e premte', 'e shtunë'],
+    'weekdays_short' => ['die', 'hën', 'mar', 'mër', 'enj', 'pre', 'sht'],
+    'weekdays_min' => ['d', 'h', 'ma', 'më', 'e', 'p', 'sh'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' dhe '],

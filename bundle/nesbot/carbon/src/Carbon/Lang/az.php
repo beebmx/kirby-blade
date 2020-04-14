@@ -9,20 +9,37 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - Kunal Marwaha
+ * - François B
+ * - JD Isaacks
+ * - Orxan
+ * - Şəhriyar İmanov
+ * - Baran Şengül
+ */
 return [
-    'year' => '{1}bir il|]1,Inf[:count il',
+    'year' => ':count il',
+    'a_year' => '{1}bir il|]1,Inf[:count il',
     'y' => ':count il',
-    'month' => '{1}bir ay|]1,Inf[:count ay',
+    'month' => ':count ay',
+    'a_month' => '{1}bir ay|]1,Inf[:count ay',
     'm' => ':count ay',
     'week' => ':count həftə',
-    'w' => ':count həftə',
-    'day' => '{1}bir gün|]1,Inf[:count gün',
-    'd' => ':count gün',
-    'hour' => '{1}bir saat|]1,Inf[:count saat',
+    'a_week' => '{1}bir həftə|]1,Inf[:count həftə',
+    'w' => ':count h.',
+    'day' => ':count gün',
+    'a_day' => '{1}bir gün|]1,Inf[:count gün',
+    'd' => ':count g.',
+    'hour' => ':count saat',
+    'a_hour' => '{1}bir saat|]1,Inf[:count saat',
     'h' => ':count saat',
-    'minute' => '{1}bir dəqiqə|]1,Inf[:count dəqiqə',
+    'minute' => ':count d.',
+    'a_minute' => '{1}bir dəqiqə|]1,Inf[:count dəqiqə',
     'min' => ':count dəqiqə',
-    'second' => '{1}birneçə saniyə|]1,Inf[:count saniyə',
+    'second' => ':count san.',
+    'a_second' => '{1}birneçə saniyə|]1,Inf[:count saniyə',
     's' => ':count saniyə',
     'ago' => ':time əvvəl',
     'from_now' => ':time sonra',
@@ -53,8 +70,8 @@ return [
         'lastWeek' => '[keçən həftə] dddd [saat] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
-        if ($number === 0) {  // special case for zero
+    'ordinal' => function ($number) {
+        if ($number === 0) { // special case for zero
             return "$number-ıncı";
         }
 
@@ -77,15 +94,13 @@ return [
             30 => '-uncu',
             60 => '-ıncı',
             90 => '-ıncı',
-            'first_day_of_week' => 1,
-    'day_of_first_week_of_year' => 1,
-];
+        ];
 
         $lastDigit = $number % 10;
 
         return $number.($suffixes[$lastDigit] ?? $suffixes[$number % 100 - $lastDigit] ?? $suffixes[$number >= 100 ? 100 : -1] ?? '');
     },
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 4) {
             return 'gecə';
         }
@@ -100,9 +115,10 @@ return [
     },
     'months' => ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avqust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'],
     'months_short' => ['yan', 'fev', 'mar', 'apr', 'may', 'iyn', 'iyl', 'avq', 'sen', 'okt', 'noy', 'dek'],
-    'weekdays' => ['Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə'],
-    'weekdays_short' => ['Baz', 'BzE', 'ÇAx', 'Çər', 'CAx', 'Cüm', 'Şən'],
-    'weekdays_min' => ['Bz', 'BE', 'ÇA', 'Çə', 'CA', 'Cü', 'Şə'],
+    'months_standalone' => ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
+    'weekdays' => ['bazar', 'bazar ertəsi', 'çərşənbə axşamı', 'çərşənbə', 'cümə axşamı', 'cümə', 'şənbə'],
+    'weekdays_short' => ['baz', 'bze', 'çax', 'çər', 'cax', 'cüm', 'şən'],
+    'weekdays_min' => ['bz', 'be', 'ça', 'çə', 'ca', 'cü', 'şə'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 1,
     'list' => [', ', ' və '],

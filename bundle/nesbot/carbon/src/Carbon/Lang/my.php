@@ -8,24 +8,27 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'my');
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - JD Isaacks
+ * - Nay Lin Aung
+ */
 return [
-    'year' => 'တစ်နှစ်|:count နှစ်',
+    'year' => '{1}တစ်နှစ်|]1,Inf[:count နှစ်',
     'y' => ':count နှစ်',
-    'month' => 'တစ်လ|:count လ',
+    'month' => '{1}တစ်လ|]1,Inf[:count လ',
     'm' => ':count လ',
     'week' => ':count ပတ်',
     'w' => ':count ပတ်',
-    'day' => 'တစ်ရက်|:count ရက်',
+    'day' => '{1}တစ်ရက်|]1,Inf[:count ရက်',
     'd' => ':count ရက်',
-    'hour' => 'တစ်နာရီ|:count နာရီ',
+    'hour' => '{1}တစ်နာရီ|]1,Inf[:count နာရီ',
     'h' => ':count နာရီ',
-    'minute' => 'တစ်မိနစ်|:count မိနစ်',
+    'minute' => '{1}တစ်မိနစ်|]1,Inf[:count မိနစ်',
     'min' => ':count မိနစ်',
-    'second' => 'စက္ကန်.အနည်းငယ်|:count စက္ကန့်',
+    'second' => '{1}စက္ကန်.အနည်းငယ်|]1,Inf[:count စက္ကန့်',
     's' => ':count စက္ကန့်',
     'ago' => 'လွန်ခဲ့သော :time က',
     'from_now' => 'လာမည့် :time မှာ',
@@ -38,12 +41,12 @@ return [
     'diff_after_tomorrow' => 'တဘက်ခါ',
     'period_recurrences' => ':count ကြိမ်',
     'formats' => [
-        'LT' => 'HH:mm',
-        'LTS' => 'HH:mm:ss',
-        'L' => 'DD/MM/YYYY',
-        'LL' => 'D MMMM YYYY',
-        'LLL' => 'D MMMM YYYY HH:mm',
-        'LLLL' => 'dddd D MMMM YYYY HH:mm',
+        'LT' => 'Oh:Om A',
+        'LTS' => 'Oh:Om:Os A',
+        'L' => 'OD/OM/OY',
+        'LL' => 'OD MMMM OY',
+        'LLL' => 'OD MMMM OY Oh:Om A',
+        'LLLL' => 'dddd OD MMMM OY Oh:Om A',
     ],
     'calendar' => [
         'sameDay' => '[ယနေ.] LT [မှာ]',
@@ -60,4 +63,6 @@ return [
     'weekdays_min' => ['နွေ', 'လာ', 'ဂါ', 'ဟူး', 'ကြာ', 'သော', 'နေ'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
+    'alt_numbers' => ['၀၀', '၀၁', '၀၂', '၀၃', '၀၄', '၀၅', '၀၆', '၀၇', '၀၈', '၀၉', '၁၀', '၁၁', '၁၂', '၁၃', '၁၄', '၁၅', '၁၆', '၁၇', '၁၈', '၁၉', '၂၀', '၂၁', '၂၂', '၂၃', '၂၄', '၂၅', '၂၆', '၂၇', '၂၈', '၂၉', '၃၀', '၃၁', '၃၂', '၃၃', '၃၄', '၃၅', '၃၆', '၃၇', '၃၈', '၃၉', '၄၀', '၄၁', '၄၂', '၄၃', '၄၄', '၄၅', '၄၆', '၄၇', '၄၈', '၄၉', '၅၀', '၅၁', '၅၂', '၅၃', '၅၄', '၅၅', '၅၆', '၅၇', '၅၈', '၅၉', '၆၀', '၆၁', '၆၂', '၆၃', '၆၄', '၆၅', '၆၆', '၆၇', '၆၈', '၆၉', '၇၀', '၇၁', '၇၂', '၇၃', '၇၄', '၇၅', '၇၆', '၇၇', '၇၈', '၇၉', '၈၀', '၈၁', '၈၂', '၈၃', '၈၄', '၈၅', '၈၆', '၈၇', '၈၈', '၈၉', '၉၀', '၉၁', '၉၂', '၉၃', '၉၄', '၉၅', '၉၆', '၉၇', '၉၈', '၉၉'],
+    'meridiem' => ['နံနက်', 'ညနေ'],
 ];

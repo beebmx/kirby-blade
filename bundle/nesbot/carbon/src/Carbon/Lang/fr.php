@@ -9,21 +9,44 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Dieter Sting
+ * - François B
+ * - Maxime VALY
+ * - JD Isaacks
+ * - Dieter Sting
+ * - François B
+ * - JD Isaacks
+ * - Sebastian Thierer
+ * - Fastfuel
+ * - Pete Scopes (pdscopes)
+ */
 return [
-    'year' => 'un an|:count ans',
+    'year' => ':count an|:count ans',
+    'a_year' => 'un an|:count ans',
     'y' => ':count an|:count ans',
-    'month' => 'un mois|:count mois',
+    'month' => ':count mois|:count mois',
+    'a_month' => 'un mois|:count mois',
     'm' => ':count mois',
-    'week' => 'une semaine|:count semaines',
+    'week' => ':count semaine|:count semaines',
+    'a_week' => 'une semaine|:count semaines',
     'w' => ':count sem.',
-    'day' => 'un jour|:count jours',
-    'd' => ':count j.',
-    'hour' => 'une heure|:count heures',
-    'h' => ':count h.',
-    'minute' => 'une minute|:count minutes',
-    'min' => ':count min.',
-    'second' => 'quelques secondes|:count secondes',
-    's' => ':count sec.',
+    'day' => ':count jour|:count jours',
+    'a_day' => 'un jour|:count jours',
+    'd' => ':count j',
+    'hour' => ':count heure|:count heures',
+    'a_hour' => 'une heure|:count heures',
+    'h' => ':count h',
+    'minute' => ':count minute|:count minutes',
+    'a_minute' => 'une minute|:count minutes',
+    'min' => ':count min',
+    'second' => ':count seconde|:count secondes',
+    'a_second' => 'quelques secondes|:count secondes',
+    's' => ':count s',
+    'millisecond' => ':count milliseconde:count millisecondes',
+    'a_millisecond' => 'une milliseconde|:count millisecondes',
+    'ms' => ':countms',
     'ago' => 'il y a :time',
     'from_now' => 'dans :time',
     'after' => ':time après',

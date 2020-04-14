@@ -9,21 +9,42 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Cassiano Montanari
+ * - Matt Pope
+ * - François B
+ * - Prodis
+ * - JD Isaacks
+ * - Raphael Amorim
+ * - João Magalhães
+ * - victortobias
+ * - Paulo Freitas
+ * - Sebastian Thierer
+ * - Claudson Martins (claudsonm)
+ */
 return [
-    'year' => 'um ano|:count anos',
-    'y' => ':count ano|:count anos',
-    'month' => 'um mês|:count meses',
-    'm' => ':count mês|:count meses',
+    'year' => ':count ano|:count anos',
+    'a_year' => 'um ano|:count anos',
+    'y' => ':counta',
+    'month' => ':count mês|:count meses',
+    'a_month' => 'um mês|:count meses',
+    'm' => ':countm',
     'week' => ':count semana|:count semanas',
-    'w' => ':count semana|:count semanas',
-    'day' => 'um dia|:count dias',
-    'd' => ':count dia|:count dias',
-    'hour' => 'uma hora|:count horas',
-    'h' => ':count hora|:count horas',
-    'minute' => 'um minuto|:count minutos',
-    'min' => ':count minuto|:count minutos',
-    'second' => 'segundos|:count segundos',
-    's' => ':count segundo|:count segundos',
+    'a_week' => 'uma semana|:count semanas',
+    'w' => ':countsem',
+    'day' => ':count dia|:count dias',
+    'a_day' => 'um dia|:count dias',
+    'd' => ':countd',
+    'hour' => ':count hora|:count horas',
+    'a_hour' => 'uma hora|:count horas',
+    'h' => ':counth',
+    'minute' => ':count minuto|:count minutos',
+    'a_minute' => 'um minuto|:count minutos',
+    'min' => ':countmin',
+    'second' => ':count segundo|:count segundos',
+    'a_second' => 'alguns segundos|:count segundos',
+    's' => ':counts',
     'ago' => 'há :time',
     'from_now' => 'em :time',
     'after' => ':time depois',
@@ -64,8 +85,8 @@ return [
     'ordinal' => ':numberº',
     'months' => ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
     'months_short' => ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
-    'weekdays' => ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
-    'weekdays_short' => ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    'weekdays' => ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
+    'weekdays_short' => ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'],
     'weekdays_min' => ['Do', '2ª', '3ª', '4ª', '5ª', '6ª', 'Sá'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,

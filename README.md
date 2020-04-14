@@ -2,7 +2,7 @@
 
 Kirby Blade use Laravel `illuminate/view` and `jenssegers/blade` packages.
 
-This package enable [Laravel Blade](https://laravel.com/docs/5.7/blade) for your own Kirby applications.
+This package enable [Laravel Blade](https://laravel.com/docs/7.x/blade) for your own Kirby applications.
 
 ## Installation
 
@@ -20,16 +20,16 @@ According to Laravel Blade documentation is:
 
 ## Usage
 
-You can use the power of Blade like [Layouts](https://laravel.com/docs/5.7/blade#template-inheritance), [Control Structures](https://laravel.com/docs/5.7/blade#control-structures), [Sub-Views](https://laravel.com/docs/5.7/blade#including-sub-views), Directives and your Custom If Statements.
+You can use the power of Blade like [Layouts](https://laravel.com/docs/7.x/blade#template-inheritance), [Control Structures](https://laravel.com/docs/7.x/blade#control-structures), [Sub-Views](https://laravel.com/docs/7.x/blade#including-sub-views), [Directives](#Directives), your Custom [If Statements](#if-statements) and [Blade components](#components).
 
-All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/5.7/blade).
+All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/7.x/blade).
 
 ## Options
 
 The default values of the package are:
 
 | Option | Default | Values | Description |
-|:--|:--|:--|:--|
+|:----|:----|:----|:----|
 | beebmx.kirby-blade.views | site/cache/views | (string) | Location of the views cached |
 | beebmx.kirby-blade.directives | [] | (array) | Array with the custom directives |
 | beebmx.kirby-blade.ifs | [] | (array) | Array with the custom if statements |
@@ -46,13 +46,26 @@ All the views generated are stored in `site/cache/views` directory or wherever y
 
 ### Directives
 
-By default Kirby Blade comes with 4 directives:
+By default Kirby Blade comes with the follows directives:
 
 ```php
 @js('js/app.js')
 @css('css/app.css')
 @kirbytext($page->text())
 @kt($page->text())
+@kirbytextinline($page->text())
+@kti($page->text())
+@image($page->image())
+@markdown($page->text())
+@url($page->url())
+@u($page->url())
+@go($url)
+@asset($page->image())
+@translate($translation)
+@t($translation)
+@tc($translation, $count)
+@dump($variable)
+@csrf()
 ```
 
 But you can create your own:
@@ -86,3 +99,47 @@ After declaration you can use it like:
     Please Log In
 @endlogged
 ```
+
+### Components
+
+Now you can use natively blade components in Kirby 3. To display a component its required to place your component in `templates/components` and then you can call it with the prefix `x-` in kebab case.
+
+```php
+
+<!-- ../templates/components/alert.blade.php -->
+
+<x-alert/>
+
+
+<!-- ../templates/components/button.blade.php -->
+
+<x-button></x-button>
+
+```
+
+If your component is nested deeper inside the `components` directory, you can use the `.` character to indicate the place:
+
+```php
+
+<!-- ../templates/components/inputs/button.blade.php -->
+
+<x-inputs.button/>
+
+```
+
+You can also send data to the components via "slots" and attributes:
+
+````php
+
+<x-alert title="Danger">Message</x-alert>
+
+<!-- /resources/views/components/alert.blade.php -->
+
+<div class="alert">
+    <div>{{$title}}</div>
+    <div>{{ $slot }}</div
+</div>
+
+````
+
+All the documentation related with [Components](https://laravel.com/docs/7.x/blade#components) is in the Laravel website.

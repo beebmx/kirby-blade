@@ -11,6 +11,7 @@
 namespace Carbon\Traits;
 
 use Carbon\CarbonInterface;
+use DateTimeInterface;
 
 /**
  * Trait Options.
@@ -129,6 +130,27 @@ trait Options
     protected static $strictModeEnabled = true;
 
     /**
+     * Function to call instead of format.
+     *
+     * @var string|callable|null
+     */
+    protected static $formatFunction = null;
+
+    /**
+     * Function to call instead of createFromFormat.
+     *
+     * @var string|callable|null
+     */
+    protected static $createFromFormatFunction = null;
+
+    /**
+     * Function to call instead of parse.
+     *
+     * @var string|callable|null
+     */
+    protected static $parseFunction = null;
+
+    /**
      * Indicates if months should be calculated with overflow.
      * Specific setting.
      *
@@ -186,6 +208,13 @@ trait Options
      * @var array|null
      */
     protected $localGenericMacros = null;
+
+    /**
+     * Function to call instead of format.
+     *
+     * @var string|callable|null
+     */
+    protected $localFormatFunction = null;
 
     /**
      * @deprecated To avoid conflict between different third-party libraries, static setters should not be used.
@@ -315,7 +344,7 @@ trait Options
      *
      * @param array $settings
      *
-     * @return $this
+     * @return $this|static
      */
     public function settings(array $settings)
     {
@@ -327,15 +356,23 @@ trait Options
         $this->localSerializer = $settings['toJsonFormat'] ?? null;
         $this->localMacros = $settings['macros'] ?? null;
         $this->localGenericMacros = $settings['genericMacros'] ?? null;
-        $date = $this;
+        $this->localFormatFunction = $settings['formatFunction'] ?? null;
+
         if (isset($settings['locale'])) {
-            $date = $date->locale($settings['locale']);
-        }
-        if (isset($settings['timezone'])) {
-            $date = $date->shiftTimezone($settings['timezone']);
+            $locales = $settings['locale'];
+
+            if (!is_array($locales)) {
+                $locales = [$locales];
+            }
+
+            $this->locale(...$locales);
         }
 
-        return $date;
+        if (isset($settings['timezone'])) {
+            return $this->shiftTimezone($settings['timezone']);
+        }
+
+        return $this;
     }
 
     /**
@@ -357,6 +394,7 @@ trait Options
             'localGenericMacros' => 'genericMacros',
             'locale' => 'locale',
             'tzName' => 'timezone',
+            'localFormatFunction' => 'formatFunction',
         ];
         foreach ($map as $property => $key) {
             $value = $this->$property ?? null;
@@ -366,5 +404,39 @@ trait Options
         }
 
         return $settings;
+    }
+
+    /**
+     * Show truthy properties on var_dump().
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $infos = array_filter(get_object_vars($this), function ($var) {
+            return $var;
+        });
+
+        foreach (['dumpProperties', 'constructedObjectId'] as $property) {
+            if (isset($infos[$property])) {
+                unset($infos[$property]);
+            }
+        }
+
+        // @codeCoverageIgnoreStart
+
+        if ($this instanceof CarbonInterface || $this instanceof DateTimeInterface) {
+            if (!isset($infos['date'])) {
+                $infos['date'] = $this->format(CarbonInterface::MOCK_DATETIME_FORMAT);
+            }
+
+            if (!isset($infos['timezone'])) {
+                $infos['timezone'] = $this->tzName;
+            }
+        }
+
+        // @codeCoverageIgnoreEnd
+
+        return $infos;
     }
 }

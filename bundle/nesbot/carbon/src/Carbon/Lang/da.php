@@ -9,25 +9,45 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Rune Mønnike
+ * - François B
+ * - codenhagen
+ * - JD Isaacks
+ * - Jens Herlevsen
+ * - Ulrik McArdle (mcardle)
+ * - Frederik Sauer (FrittenKeeZ)
+ */
 return [
-    'year' => 'et år|:count år',
+    'year' => ':count år|:count år',
+    'a_year' => 'et år|:count år',
     'y' => ':count år|:count år',
-    'month' => 'en måned|:count måneder',
-    'm' => ':count måned|:count måneder',
+    'month' => ':count måned|:count måneder',
+    'a_month' => 'en måned|:count måneder',
+    'm' => ':count mdr.',
     'week' => ':count uge|:count uger',
-    'w' => ':count uge|:count uger',
-    'day' => 'en dag|:count dage',
-    'd' => ':count dag|:count dage',
-    'hour' => 'en time|:count timer',
-    'h' => ':count time|:count timer',
-    'minute' => 'et minut|:count minutter',
-    'min' => ':count minut|:count minutter',
-    'second' => 'få sekunder|:count sekunder',
-    's' => ':count sekund|:count sekunder',
+    'a_week' => 'en uge|:count uger',
+    'w' => ':count u.',
+    'day' => ':count dag|:count dage',
+    'a_day' => ':count dag|:count dage',
+    'd' => ':count d.',
+    'hour' => ':count time|:count timer',
+    'a_hour' => 'en time|:count timer',
+    'h' => ':count t.',
+    'minute' => ':count minut|:count minutter',
+    'a_minute' => 'et minut|:count minutter',
+    'min' => ':count min.',
+    'second' => ':count sekund|:count sekunder',
+    'a_second' => 'få sekunder|:count sekunder',
+    's' => ':count s.',
     'ago' => ':time siden',
     'from_now' => 'om :time',
     'after' => ':time efter',
     'before' => ':time før',
+    'diff_now' => 'nu',
+    'diff_yesterday' => 'i går',
+    'diff_tomorrow' => 'i morgen',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',

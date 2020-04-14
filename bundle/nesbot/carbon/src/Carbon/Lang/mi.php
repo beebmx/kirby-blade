@@ -8,18 +8,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'mi');
 
+/*
+ * Authors:
+ * - François B
+ * - John Corrigan
+ * - François B
+ */
 return [
-    'year' => 'he tau|:count tau',
-    'month' => 'he marama|:count marama',
-    'week' => 'he wiki|:count wiki',
-    'day' => 'he ra|:count ra',
-    'hour' => 'te haora|:count haora',
-    'minute' => 'he meneti|:count meneti',
-    'second' => 'te hēkona ruarua|:count hēkona',
+    'year' => ':count tau',
+    'a_year' => '{1}he tau|:count tau',
+    'month' => ':count marama',
+    'a_month' => '{1}he marama|:count marama',
+    'week' => ':count wiki',
+    'a_week' => '{1}he wiki|:count wiki',
+    'day' => ':count ra',
+    'a_day' => '{1}he ra|:count ra',
+    'hour' => ':count haora',
+    'a_hour' => '{1}te haora|:count haora',
+    'minute' => ':count meneti',
+    'a_minute' => '{1}he meneti|:count meneti',
+    'second' => ':count hēkona',
+    'a_second' => '{1}te hēkona ruarua|:count hēkona',
     'ago' => ':time i mua',
     'from_now' => 'i roto i :time',
     'diff_yesterday' => 'inanahi',

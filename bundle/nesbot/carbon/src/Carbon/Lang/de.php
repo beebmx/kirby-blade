@@ -9,21 +9,40 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Michael Hohl
+ * - sheriffmarley
+ * - dennisoderwald
+ * - Timo
+ * - Karag2006
+ * - Pete Scopes (pdscopes)
+ */
 return [
     'year' => ':count Jahr|:count Jahre',
-    'y' => ':countJ|:countJ',
+    'a_year' => 'ein Jahr|:count Jahre',
+    'y' => ':count J.',
     'month' => ':count Monat|:count Monate',
-    'm' => ':countMon|:countMon',
+    'a_month' => 'ein Monat|:count Monate',
+    'm' => ':count Mon.',
     'week' => ':count Woche|:count Wochen',
-    'w' => ':countWo|:countWo',
+    'a_week' => 'eine Woche|:count Wochen',
+    'w' => ':count Wo.',
     'day' => ':count Tag|:count Tage',
-    'd' => ':countTg|:countTg',
+    'a_day' => 'ein Tag|:count Tage',
+    'd' => ':count Tg.',
     'hour' => ':count Stunde|:count Stunden',
-    'h' => ':countStd|:countStd',
+    'a_hour' => 'eine Stunde|:count Stunden',
+    'h' => ':count Std.',
     'minute' => ':count Minute|:count Minuten',
-    'min' => ':countMin|:countMin',
+    'a_minute' => 'eine Minute|:count Minuten',
+    'min' => ':count Min.',
     'second' => ':count Sekunde|:count Sekunden',
-    's' => ':countSek|:countSek',
+    'a_second' => 'ein paar Sekunden|:count Sekunden',
+    's' => ':count Sek.',
+    'millisecond' => ':count Millisekunde|:count Millisekunde',
+    'a_millisecond' => 'eine Millisekunde|:count Millisekunde',
+    'ms' => ':countms',
     'ago' => 'vor :time',
     'from_now' => 'in :time',
     'after' => ':time später',
@@ -37,10 +56,18 @@ return [
     'month_ago' => ':count Monat|:count Monaten',
     'week_ago' => ':count Woche|:count Wochen',
     'day_ago' => ':count Tag|:count Tagen',
+    'a_year_from_now' => 'ein Jahr|:count Jahren',
+    'a_month_from_now' => 'ein Monat|:count Monaten',
+    'a_week_from_now' => 'eine Woche|:count Wochen',
+    'a_day_from_now' => 'ein Tag|:count Tagen',
+    'a_year_ago' => 'ein Jahr|:count Jahren',
+    'a_month_ago' => 'ein Monat|:count Monaten',
+    'a_week_ago' => 'eine Woche|:count Wochen',
+    'a_day_ago' => 'ein Tag|:count Tagen',
 
     'diff_now' => 'Gerade eben',
     'diff_yesterday' => 'Gestern',
-    'diff_tomorrow' => 'Heute',
+    'diff_tomorrow' => 'Morgen',
     'diff_before_yesterday' => 'Vorgestern',
     'diff_after_tomorrow' => 'Übermorgen',
 
@@ -63,7 +90,7 @@ return [
     ],
 
     'months' => ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-    'months_short' => ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'],
+    'months_short' => ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
     'weekdays' => ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
     'weekdays_short' => ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.'],
     'weekdays_min' => ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],

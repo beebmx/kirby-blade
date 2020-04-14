@@ -9,16 +9,40 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - François B
+ * - JD Isaacks
+ * - Satheez
+ */
 return [
-    'year' => 'ஒரு வருடம்|:count ஆண்டுகள்',
-    'month' => 'ஒரு மாதம்|:count மாதங்கள்',
-    'week' => 'ஒரு வாரம்|:count வாரங்கள்',
-    'day' => 'ஒரு நாள்|:count நாட்கள்',
-    'hour' => 'ஒரு மணி நேரம்|:count மணி நேரம்',
-    'minute' => 'ஒரு நிமிடம்|:count நிமிடங்கள்',
-    'second' => 'ஒரு சில விநாடிகள்|:count விநாடிகள்',
+    'year' => ':count வருடம்|:count ஆண்டுகள்',
+    'a_year' => 'ஒரு வருடம்|:count ஆண்டுகள்',
+    'y' => ':count வருட.|:count ஆண்.',
+    'month' => ':count மாதம்|:count மாதங்கள்',
+    'a_month' => 'ஒரு மாதம்|:count மாதங்கள்',
+    'm' => ':count மாத.',
+    'week' => ':count வாரம்|:count வாரங்கள்',
+    'a_week' => 'ஒரு வாரம்|:count வாரங்கள்',
+    'w' => ':count வார.',
+    'day' => ':count நாள்|:count நாட்கள்',
+    'a_day' => 'ஒரு நாள்|:count நாட்கள்',
+    'd' => ':count நாள்|:count நாட்.',
+    'hour' => ':count மணி நேரம்|:count மணி நேரம்',
+    'a_hour' => 'ஒரு மணி நேரம்|:count மணி நேரம்',
+    'h' => ':count மணி.',
+    'minute' => ':count நிமிடம்|:count நிமிடங்கள்',
+    'a_minute' => 'ஒரு நிமிடம்|:count நிமிடங்கள்',
+    'min' => ':count நிமி.',
+    'second' => ':count சில விநாடிகள்|:count விநாடிகள்',
+    'a_second' => 'ஒரு சில விநாடிகள்|:count விநாடிகள்',
+    's' => ':count விநா.',
     'ago' => ':time முன்',
     'from_now' => ':time இல்',
+    'before' => ':time முன்',
+    'after' => ':time பின்',
+    'diff_now' => 'இப்போது',
     'diff_yesterday' => 'நேற்று',
     'diff_tomorrow' => 'நாளை',
     'formats' => [
@@ -38,7 +62,7 @@ return [
         'sameElse' => 'L',
     ],
     'ordinal' => ':numberவது',
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 2) {
             return ' யாமம்';
         }
@@ -65,4 +89,8 @@ return [
     'weekdays' => ['ஞாயிற்றுக்கிழமை', 'திங்கட்கிழமை', 'செவ்வாய்கிழமை', 'புதன்கிழமை', 'வியாழக்கிழமை', 'வெள்ளிக்கிழமை', 'சனிக்கிழமை'],
     'weekdays_short' => ['ஞாயிறு', 'திங்கள்', 'செவ்வாய்', 'புதன்', 'வியாழன்', 'வெள்ளி', 'சனி'],
     'weekdays_min' => ['ஞா', 'தி', 'செ', 'பு', 'வி', 'வெ', 'ச'],
+    'first_day_of_week' => 0,
+    'day_of_first_week_of_year' => 1,
+    'list' => [', ', ' மற்றும் '],
+    'weekend' => [0, 0],
 ];

@@ -8,6 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+/*
+ * Authors:
+ * - Halwest Manguri
+ */
 $months = ['کانونی دووەم', 'شوبات', 'ئازار', 'نیسان', 'ئایار', '‌حوزەیران', 'تەمموز', 'ئاب', 'ئەیلول', 'تشرینی یەکەم', 'تشرینی دووەم', 'کانونی یەکەم'];
 
 $weekdays = ['دوو شەممە', 'سێ شەممە', 'چوار شەممە', 'پێنج شەممە', 'هەینی', 'شەممە', 'یەک شەممە'];
@@ -31,4 +36,6 @@ return [
     'weekdays_short' => $weekdays,
     'weekdays_min' => $weekdays,
     'list' => [', ', ' û '],
+    'first_day_of_week' => 6,
+    'day_of_first_week_of_year' => 1,
 ];

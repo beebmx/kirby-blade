@@ -9,23 +9,42 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - mestremuten
+ * - François B
+ * - Marc Ordinas i Llopis
+ * - Pere Orga
+ * - JD Isaacks
+ * - Quentí
+ * - Víctor Díaz
+ * - Xavi
+ * - qcardona
+ */
 return [
-    'year' => 'un any|:count anys',
+    'year' => ':count any|:count anys',
+    'a_year' => 'un any|:count anys',
     'y' => ':count any|:count anys',
-    'month' => 'un mes|:count mesos',
+    'month' => ':count mes|:count mesos',
+    'a_month' => 'un mes|:count mesos',
     'm' => ':count mes|:count mesos',
     'week' => ':count setmana|:count setmanes',
+    'a_week' => 'una setmana|:count setmanes',
     'w' => ':count setmana|:count setmanes',
-    'day' => 'un dia|:count dies',
-    'd' => ':count dia|:count dies',
-    'hour' => 'una hora|:count hores',
-    'h' => ':count hora|:count hores',
-    'minute' => 'un minut|:count minuts',
-    'min' => ':count minut|:count minuts',
-    'second' => 'uns segons|:count segons',
-    's' => ':count segon|:count segons',
+    'day' => ':count dia|:count dies',
+    'a_day' => 'un dia|:count dies',
+    'd' => ':count d',
+    'hour' => ':count hora|:count hores',
+    'a_hour' => 'una hora|:count hores',
+    'h' => ':count h',
+    'minute' => ':count minut|:count minuts',
+    'a_minute' => 'un minut|:count minuts',
+    'min' => ':count min',
+    'second' => ':count segon|:count segons',
+    'a_second' => 'uns segons|:count segons',
+    's' => ':count s',
     'ago' => 'fa :time',
-    'from_now' => 'd\'aquí :time',
+    'from_now' => 'd\'aquí a :time',
     'after' => ':time després',
     'before' => ':time abans',
     'diff_now' => 'ara mateix',
@@ -78,12 +97,14 @@ return [
     },
     'months' => ['de gener', 'de febrer', 'de març', 'd\'abril', 'de maig', 'de juny', 'de juliol', 'd\'agost', 'de setembre', 'd\'octubre', 'de novembre', 'de desembre'],
     'months_standalone' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'],
-    'months_short' => ['gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.', 'set.', 'oct.', 'nov.', 'des.'],
-    'months_regexp' => '/D[oD]?[\s,]+MMMM?/',
+    'months_short' => ['de gen.', 'de febr.', 'de març', 'd\'abr.', 'de maig', 'de juny', 'de jul.', 'd\'ag.', 'de set.', 'd\'oct.', 'de nov.', 'de des.'],
+    'months_short_standalone' => ['gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.', 'set.', 'oct.', 'nov.', 'des.'],
+    'months_regexp' => '/(D[oD]?[\s,]+MMMM?|L{2,4}|l{2,4})/',
     'weekdays' => ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'],
     'weekdays_short' => ['dg.', 'dl.', 'dt.', 'dc.', 'dj.', 'dv.', 'ds.'],
     'weekdays_min' => ['dg', 'dl', 'dt', 'dc', 'dj', 'dv', 'ds'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' i '],
+    'meridiem' => ['a. m.', 'p. m.'],
 ];

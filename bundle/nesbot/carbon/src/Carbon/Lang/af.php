@@ -9,25 +9,39 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - François B
+ * - JD Isaacks
+ * - Pierre du Plessis
+ */
 return [
-    'year' => '\'n jaar|:count jare',
-    'y' => ':count jaar|:count jare',
-    'month' => '\'n maand|:count maande',
-    'm' => ':count maand|:count maande',
+    'year' => ':count jaar',
+    'a_year' => '\'n jaar|:count jaar',
+    'y' => ':count j.',
+    'month' => ':count maand|:count maande',
+    'a_month' => '\'n maand|:count maande',
+    'm' => ':count maa.',
     'week' => ':count week|:count weke',
-    'w' => ':count week|:count weke',
-    'day' => '\'n dag|:count dae',
-    'd' => ':count dag|:count dae',
-    'hour' => '\'n uur|:count ure',
-    'h' => ':count uur|:count ure',
-    'minute' => '\'n minuut|:count minute',
-    'min' => ':count minuut|:count minute',
-    'second' => '\'n paar sekondes|:count sekondes',
-    's' => ':count sekond|:count sekondes',
+    'a_week' => '\'n week|:count weke',
+    'w' => ':count w.',
+    'day' => ':count dag|:count dae',
+    'a_day' => '\'n dag|:count dae',
+    'd' => ':count d.',
+    'hour' => ':count uur',
+    'a_hour' => '\'n uur|:count uur',
+    'h' => ':count u.',
+    'minute' => ':count minuut|:count minute',
+    'a_minute' => '\'n minuut|:count minute',
+    'min' => ':count min.',
+    'second' => ':count sekond|:count sekondes',
+    'a_second' => '\'n paar sekondes|:count sekondes',
+    's' => ':count s.',
     'ago' => ':time gelede',
     'from_now' => 'oor :time',
     'after' => ':time na',
     'before' => ':time voor',
+    'diff_now' => 'Nou',
     'diff_yesterday' => 'Gister',
     'diff_tomorrow' => 'Môre',
     'formats' => [
@@ -46,14 +60,10 @@ return [
         'lastWeek' => '[Laas] dddd [om] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
+    'ordinal' => function ($number) {
         return $number.(($number === 1 || $number === 8 || $number >= 20) ? 'ste' : 'de');
     },
-    'meridiem' => function ($hour, $minute, $isLower) {
-        $meridiem = $hour < 12 ? 'VM' : 'NM';
-
-        return $isLower ? strtolower($meridiem) : $meridiem;
-    },
+    'meridiem' => ['VM', 'NM'],
     'months' => ['Januarie', 'Februarie', 'Maart', 'April', 'Mei', 'Junie', 'Julie', 'Augustus', 'September', 'Oktober', 'November', 'Desember'],
     'months_short' => ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'],
     'weekdays' => ['Sondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrydag', 'Saterdag'],

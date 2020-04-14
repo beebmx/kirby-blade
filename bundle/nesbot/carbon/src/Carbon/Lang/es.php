@@ -9,21 +9,49 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Kunal Marwaha
+ * - kostas
+ * - François B
+ * - Tim Fish
+ * - Claire Coloma
+ * - Steven Heinrich
+ * - JD Isaacks
+ * - Raphael Amorim
+ * - Jorge Y. Castillo
+ * - Víctor Díaz
+ * - Diego
+ * - Sebastian Thierer
+ * - quinterocesar
+ * - Daniel Commesse Liévanos (danielcommesse)
+ * - Pete Scopes (pdscopes)
+ */
 return [
-    'year' => 'un año|:count años',
+    'year' => ':count año|:count años',
+    'a_year' => 'un año|:count años',
     'y' => ':count año|:count años',
-    'month' => 'un mes|:count meses',
+    'month' => ':count mes|:count meses',
+    'a_month' => 'un mes|:count meses',
     'm' => ':count mes|:count meses',
     'week' => ':count semana|:count semanas',
-    'w' => ':count semana|:count semanas',
-    'day' => 'un día|:count días',
-    'd' => ':count día|:count días',
-    'hour' => 'una hora|:count horas',
-    'h' => ':count hora|:count horas',
-    'minute' => 'un minuto|:count minutos',
-    'min' => ':count minuto|:count minutos',
-    'second' => 'unos segundos|:count segundos',
-    's' => ':count segundo|:count segundos',
+    'a_week' => 'una semana|:count semanas',
+    'w' => ':countsem',
+    'day' => ':count día|:count días',
+    'a_day' => 'un día|:count días',
+    'd' => ':countd',
+    'hour' => ':count hora|:count horas',
+    'a_hour' => 'una hora|:count horas',
+    'h' => ':counth',
+    'minute' => ':count minuto|:count minutos',
+    'a_minute' => 'un minuto|:count minutos',
+    'min' => ':countm',
+    'second' => ':count segundo|:count segundos',
+    'a_second' => 'unos segundos|:count segundos',
+    's' => ':counts',
+    'millisecond' => ':count milisegundo|:count milisegundos',
+    'a_millisecond' => 'un milisegundo|:count milisegundos',
+    'ms' => ':countms',
     'ago' => 'hace :time',
     'from_now' => 'en :time',
     'after' => ':time después',
@@ -69,4 +97,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' y '],
+    'meridiem' => ['a. m.', 'p. m.'],
 ];

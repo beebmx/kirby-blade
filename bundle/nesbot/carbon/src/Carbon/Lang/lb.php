@@ -9,6 +9,12 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Philippe Vaucher
+ * - Tsutomu Kuroda
+ * - dan-nl
+ */
 return [
     'year' => ':count Joer',
     'y' => ':countJ',
@@ -61,4 +67,7 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' an '],
+    'meridiem' => ['moies', 'mëttes'],
+    'weekdays_short_standalone' => ['Son', 'Méi', 'Dën', 'Mët', 'Don', 'Fre', 'Sam'],
+    'months_short_standalone' => ['Jan', 'Feb', 'Mäe', 'Abr', 'Mee', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
 ];

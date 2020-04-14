@@ -9,20 +9,51 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Roy
+ * - Stephan
+ * - François B
+ * - Tim Fish
+ * - Kevin Huang
+ * - Jacob Middag
+ * - JD Isaacks
+ * - Roy
+ * - Stephan
+ * - François B
+ * - Tim Fish
+ * - Jacob Middag
+ * - JD Isaacks
+ * - Propaganistas
+ * - MegaXLR
+ * - adriaanzon
+ * - MonkeyPhysics
+ * - JeroenG
+ * - RikSomers
+ * - proclame
+ * - Rik de Groot (hwdegroot)
+ */
 return [
-    'year' => 'één jaar|:count jaar',
+    'year' => ':count jaar|:count jaar',
+    'a_year' => 'een jaar|:count jaar',
     'y' => ':countj',
-    'month' => 'één maand|:count maanden',
-    'm' => ':countma',
+    'month' => ':count maand|:count maanden',
+    'a_month' => 'een maand|:count maanden',
+    'm' => ':countmnd',
     'week' => ':count week|:count weken',
+    'a_week' => 'een week|:count weken',
     'w' => ':countw',
-    'day' => 'één dag|:count dagen',
+    'day' => ':count dag|:count dagen',
+    'a_day' => 'een dag|:count dagen',
     'd' => ':countd',
-    'hour' => 'één uur|:count uur',
+    'hour' => ':count uur|:count uur',
+    'a_hour' => 'een uur|:count uur',
     'h' => ':countu',
-    'minute' => 'één minuut|:count minuten',
-    'min' => ':countmi',
-    'second' => 'een paar seconden|:count seconden',
+    'minute' => ':count minuut|:count minuten',
+    'a_minute' => 'een minuut|:count minuten',
+    'min' => ':countmin',
+    'second' => ':count seconde|:count seconden',
+    'a_second' => 'een paar seconden|:count seconden',
     's' => ':counts',
     'ago' => ':time geleden',
     'from_now' => 'over :time',
@@ -33,6 +64,19 @@ return [
     'diff_tomorrow' => 'morgen',
     'diff_after_tomorrow' => 'overmorgen',
     'diff_before_yesterday' => 'eergisteren',
+    'period_recurrences' => ':count keer',
+    'period_interval' => function ($interval) {
+        /** @var string $output */
+        $output = preg_replace('/^(een|één|1)\s+/', '', $interval);
+
+        if (preg_match('/^(een|één|1)( jaar|j| uur|u)/', $interval)) {
+            return "elk $output";
+        }
+
+        return "elke $output";
+    },
+    'period_start_date' => 'van :date',
+    'period_end_date' => 'tot :date',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -61,4 +105,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' en '],
+    'meridiem' => ['\'s ochtends', '\'s middags'],
 ];

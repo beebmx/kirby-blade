@@ -9,25 +9,39 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - mhamlet
+ */
 return [
-    'year' => 'տարի|:count տարի',
+    'year' => ':count տարի',
+    'a_year' => 'տարի|:count տարի',
     'y' => ':countտ',
-    'month' => 'ամիս|:count ամիս',
+    'month' => ':count ամիս',
+    'a_month' => 'ամիս|:count ամիս',
     'm' => ':countամ',
     'week' => ':count շաբաթ',
+    'a_week' => 'շաբաթ|:count շաբաթ',
     'w' => ':countշ',
-    'day' => 'օր|:count օր',
+    'day' => ':count օր',
+    'a_day' => 'օր|:count օր',
     'd' => ':countօր',
-    'hour' => 'ժամ|:count ժամ',
+    'hour' => ':count ժամ',
+    'a_hour' => 'ժամ|:count ժամ',
     'h' => ':countժ',
-    'minute' => 'րոպե|:count րոպե',
+    'minute' => ':count րոպե',
+    'a_minute' => 'րոպե|:count րոպե',
     'min' => ':countր',
-    'second' => 'մի քանի վայրկյան|:count վայրկյան',
+    'second' => ':count վայրկյան',
+    'a_second' => 'մի քանի վայրկյան|:count վայրկյան',
     's' => ':countվրկ',
     'ago' => ':time առաջ',
-    'from_now' => ':time ներկա պահից',
+    'from_now' => ':timeից',
     'after' => ':time հետո',
     'before' => ':time առաջ',
+    'diff_now' => 'հիմա',
+    'diff_yesterday' => 'երեկ',
+    'diff_tomorrow' => 'վաղը',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -55,7 +69,7 @@ return [
                 return $number;
         }
     },
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 4) {
             return 'գիշերվա';
         }
@@ -71,9 +85,10 @@ return [
     'months' => ['հունվարի', 'փետրվարի', 'մարտի', 'ապրիլի', 'մայիսի', 'հունիսի', 'հուլիսի', 'օգոստոսի', 'սեպտեմբերի', 'հոկտեմբերի', 'նոյեմբերի', 'դեկտեմբերի'],
     'months_standalone' => ['հունվար', 'փետրվար', 'մարտ', 'ապրիլ', 'մայիս', 'հունիս', 'հուլիս', 'օգոստոս', 'սեպտեմբեր', 'հոկտեմբեր', 'նոյեմբեր', 'դեկտեմբեր'],
     'months_short' => ['հնվ', 'փտր', 'մրտ', 'ապր', 'մյս', 'հնս', 'հլս', 'օգս', 'սպտ', 'հկտ', 'նմբ', 'դկտ'],
-    'months_regexp' => '/D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/',
+    'months_regexp' => '/(D[oD]?(\[[^\[\]]*\]|\s)+MMMM?|L{2,4}|l{2,4})/',
     'weekdays' => ['կիրակի', 'երկուշաբթի', 'երեքշաբթի', 'չորեքշաբթի', 'հինգշաբթի', 'ուրբաթ', 'շաբաթ'],
     'weekdays_short' => ['կրկ', 'երկ', 'երք', 'չրք', 'հնգ', 'ուրբ', 'շբթ'],
     'weekdays_min' => ['կրկ', 'երկ', 'երք', 'չրք', 'հնգ', 'ուրբ', 'շբթ'],
     'list' => [', ', ' եւ '],
+    'first_day_of_week' => 1,
 ];

@@ -9,21 +9,44 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Ash
+ * - François B
+ * - Marco Perrando
+ * - Massimiliano Caniparoli
+ * - JD Isaacks
+ * - Andrea Martini
+ * - Francesco Marasco
+ * - Tizianoz93
+ * - Davide Casiraghi (davide-casiraghi)
+ * - Pete Scopes (pdscopes)
+ */
 return [
-    'year' => 'un anno|:count anni',
+    'year' => ':count anno|:count anni',
+    'a_year' => 'un anno|:count anni',
     'y' => ':count anno|:count anni',
-    'month' => 'un mese|:count mesi',
+    'month' => ':count mese|:count mesi',
+    'a_month' => 'un mese|:count mesi',
     'm' => ':count mese|:count mesi',
     'week' => ':count settimana|:count settimane',
-    'w' => ':count settimana|:count settimane',
-    'day' => 'un giorno|:count giorni',
-    'd' => ':count giorno|:count giorni',
-    'hour' => 'un\'ora|:count ore',
-    'h' => ':count ora|:count ore',
-    'minute' => 'un minuto|:count minuti',
-    'min' => ':count minuto|:count minuti',
-    'second' => 'alcuni secondi|:count secondi',
-    's' => ':count secondo|:count secondi',
+    'a_week' => 'una settimana|:count settimane',
+    'w' => ':count set.',
+    'day' => ':count giorno|:count giorni',
+    'a_day' => 'un giorno|:count giorni',
+    'd' => ':count g|:count gg',
+    'hour' => ':count ora|:count ore',
+    'a_hour' => 'un\'ora|:count ore',
+    'h' => ':count h',
+    'minute' => ':count minuto|:count minuti',
+    'a_minute' => 'un minuto|:count minuti',
+    'min' => ':count min.',
+    'second' => ':count secondo|:count secondi',
+    'a_second' => 'alcuni secondi|:count secondi',
+    's' => ':count sec.',
+    'millisecond' => ':count millisecondo|:count millisecondi',
+    'a_millisecond' => 'un millisecondo|:count millisecondi',
+    'ms' => ':countms',
     'ago' => ':time fa',
     'from_now' => function ($time) {
         return (preg_match('/^[0-9].+$/', $time) ? 'tra' : 'in')." $time";
@@ -35,6 +58,9 @@ return [
     'diff_tomorrow' => 'domani',
     'diff_before_yesterday' => 'l\'altro ieri',
     'diff_after_tomorrow' => 'dopodomani',
+    'period_interval' => 'ogni :interval',
+    'period_start_date' => 'dal :date',
+    'period_end_date' => 'al :date',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',

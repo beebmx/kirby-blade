@@ -133,23 +133,35 @@ class Template extends KirbyTemplate
             return "<?php echo url($path) ?>";
         });
 
+        $this->blade->compiler()->directive('u', function ($path) {
+            return "<?php echo u($path) ?>";
+        });
+
+        $this->blade->compiler()->directive('go', function ($path, $code = 302) {
+            return "<?php echo go($path, $code) ?>";
+        });
+
         $this->blade->compiler()->directive('asset', function ($path) {
             return "<?php echo asset($path) ?>";
         });
 
-        $this->blade->compiler()->directive('translate', function ($text) {
-            return "<?php echo t($text) ?>";
+        $this->blade->compiler()->directive('translate', function ($text, $fallback) {
+            return "<?php echo t($text, $fallback) ?>";
         });
 
-        $this->blade->compiler()->directive('t', function ($text) {
-            return "<?php echo t($text) ?>";
+        $this->blade->compiler()->directive('t', function ($text, $fallback = null) {
+            return "<?php echo t($text, $fallback) ?>";
+        });
+
+        $this->blade->compiler()->directive('tc', function ($text, $count) {
+            return "<?php echo tc($text, $count) ?>";
         });
 
         $this->blade->compiler()->directive('dump', function ($variable) {
             return "<?php echo dump($variable) ?>";
         });
 
-        $this->blade->compiler()->directive('csrf', function ($text) {
+        $this->blade->compiler()->directive('csrf', function () {
             return "<?php echo csrf() ?>";
         });
 

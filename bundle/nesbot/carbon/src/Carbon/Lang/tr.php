@@ -9,25 +9,49 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - Alan Agius
+ * - Erhan Gundogan
+ * - François B
+ * - JD Isaacks
+ * - Murat Yüksel
+ * - Baran Şengül
+ * - Selami (selamialtin)
+ * - TeomanBey
+ */
 return [
-    'year' => '{1}bir yıl|]1,Inf[:count yıl',
-    'y' => ':count yıl',
-    'month' => '{1}bir ay|]1,Inf[:count ay',
-    'm' => ':count ay',
-    'week' => '{1}bir hafta|]1,Inf[:count hafta',
-    'w' => ':count hafta',
-    'day' => '{1}bir gün|]1,Inf[:count gün',
-    'd' => ':count gün',
-    'hour' => '{1}bir saat|]1,Inf[:count saat',
-    'h' => ':count saat',
-    'minute' => '{1}bir dakika|]1,Inf[:count dakika',
-    'min' => ':count dakika',
-    'second' => '{1}birkaç saniye|]1,Inf[:count saniye',
-    's' => ':count saniye',
+    'year' => ':count yıl',
+    'a_year' => '{1}bir yıl|]1,Inf[:count yıl',
+    'y' => ':county',
+    'month' => ':count ay',
+    'a_month' => '{1}bir ay|]1,Inf[:count ay',
+    'm' => ':countay',
+    'week' => ':count hafta',
+    'a_week' => '{1}bir hafta|]1,Inf[:count hafta',
+    'w' => ':counth',
+    'day' => ':count gün',
+    'a_day' => '{1}bir gün|]1,Inf[:count gün',
+    'd' => ':countg',
+    'hour' => ':count saat',
+    'a_hour' => '{1}bir saat|]1,Inf[:count saat',
+    'h' => ':countsa',
+    'minute' => ':count dakika',
+    'a_minute' => '{1}bir dakika|]1,Inf[:count dakika',
+    'min' => ':countdk',
+    'second' => ':count saniye',
+    'a_second' => '{1}birkaç saniye|]1,Inf[:count saniye',
+    's' => ':countsn',
     'ago' => ':time önce',
     'from_now' => ':time sonra',
     'after' => ':time sonra',
     'before' => ':time önce',
+    'diff_now' => 'şimdi',
+    'diff_yesterday' => 'dün',
+    'diff_tomorrow' => 'yarın',
+    'diff_before_yesterday' => 'evvelsi gün',
+    'diff_after_tomorrow' => 'öbür gün',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -82,13 +106,7 @@ return [
                 return $number.($suffixes[$lastDigit] ?? $suffixes[$number % 100 - $lastDigit] ?? $suffixes[$number >= 100 ? 100 : -1] ?? '');
         }
     },
-    'meridiem' => function ($hours, $minutes, $isLower) {
-        if ($hours < 12) {
-            return $isLower ? 'öö' : 'ÖÖ';
-        }
-
-        return $isLower ? 'ös' : 'ÖS';
-    },
+    'meridiem' => ['ÖÖ', 'ÖS', 'öö', 'ös'],
     'months' => ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
     'months_short' => ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
     'weekdays' => ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
@@ -96,4 +114,5 @@ return [
     'weekdays_min' => ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 1,
+    'list' => [', ', ' ve '],
 ];

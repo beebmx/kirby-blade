@@ -9,6 +9,12 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - François B
+ * - JD Isaacks
+ * - Daniel Monaghan
+ */
 return [
     'year' => '{1}blwyddyn|]1,Inf[:count flynedd',
     'y' => ':countbl',
@@ -28,8 +34,9 @@ return [
     'from_now' => 'mewn :time',
     'after' => ':time ar ôl',
     'before' => ':time o\'r blaen',
-    'diff_yesterday' => 'Ddoe',
-    'diff_tomorrow' => 'Yfory',
+    'diff_now' => 'nawr',
+    'diff_yesterday' => 'ddoe',
+    'diff_tomorrow' => 'yfory',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -46,13 +53,14 @@ return [
         'lastWeek' => 'dddd [diwethaf am] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
-        return $number.($number > 20
-            ? (in_array($number, [40, 50, 60, 80, 100]) ? 'fed' : 'ain')
-            : ([
-                '', 'af', 'il', 'ydd', 'ydd', 'ed', 'ed', 'ed', 'fed', 'fed', 'fed', // 1af to 10fed
-                'eg', 'fed', 'eg', 'eg', 'fed', 'eg', 'eg', 'fed', 'eg', 'fed', // 11eg to 20fed
-            ])[$number] ?? ''
+    'ordinal' => function ($number) {
+        return $number.(
+            $number > 20
+                ? (in_array($number, [40, 50, 60, 80, 100]) ? 'fed' : 'ain')
+                : ([
+                    '', 'af', 'il', 'ydd', 'ydd', 'ed', 'ed', 'ed', 'fed', 'fed', 'fed', // 1af to 10fed
+                    'eg', 'fed', 'eg', 'eg', 'fed', 'eg', 'eg', 'fed', 'eg', 'fed', // 11eg to 20fed
+                ])[$number] ?? ''
         );
     },
     'months' => ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref', 'Tachwedd', 'Rhagfyr'],
@@ -63,4 +71,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' a '],
+    'meridiem' => ['yb', 'yh'],
 ];

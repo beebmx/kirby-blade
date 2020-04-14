@@ -9,25 +9,79 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Bari Badamshin
+ * - Jørn Ølmheim
+ * - François B
+ * - Tim Fish
+ * - Коренберг Марк (imac)
+ * - Serhan Apaydın
+ * - RomeroMsk
+ * - vsn4ik
+ * - JD Isaacks
+ * - Bari Badamshin
+ * - Jørn Ølmheim
+ * - François B
+ * - Коренберг Марк (imac)
+ * - Serhan Apaydın
+ * - RomeroMsk
+ * - vsn4ik
+ * - JD Isaacks
+ * - Fellzo
+ * - andrey-helldar
+ * - Pavel Skripkin (psxx)
+ * - AlexWalkerson
+ * - Vladislav UnsealedOne
+ * - dima-bzz
+ */
+$transformDiff = function ($input) {
+    return strtr($input, [
+        'неделя' => 'неделю',
+        'секунда' => 'секунду',
+        'минута' => 'минуту',
+    ]);
+};
+
 return [
     'year' => ':count год|:count года|:count лет',
-    'y' => ':count г|:count г|:count л',
+    'y' => ':count г.|:count г.|:count л.',
+    'a_year' => '{1}год|:count год|:count года|:count лет',
     'month' => ':count месяц|:count месяца|:count месяцев',
-    'm' => ':count м|:count м|:count м',
-    'week' => ':count неделю|:count недели|:count недель',
-    'w' => ':count н|:count н|:count н',
+    'm' => ':count мес.',
+    'a_month' => '{1}месяц|:count месяц|:count месяца|:count месяцев',
+    'week' => ':count неделя|:count недели|:count недель',
+    'w' => ':count нед.',
+    'a_week' => '{1}неделя|:count неделю|:count недели|:count недель',
     'day' => ':count день|:count дня|:count дней',
-    'd' => ':count д|:count д|:count д',
+    'd' => ':count д.',
+    'a_day' => '{1}день|:count день|:count дня|:count дней',
     'hour' => ':count час|:count часа|:count часов',
-    'h' => ':count ч|:count ч|:count ч',
-    'minute' => ':count минуту|:count минуты|:count минут',
-    'min' => ':count мин|:count мин|:count мин',
-    'second' => ':count секунду|:count секунды|:count секунд',
-    's' => ':count с|:count с|:count с',
-    'ago' => ':time назад',
-    'from_now' => 'через :time',
-    'after' => ':time после',
-    'before' => ':time до',
+    'h' => ':count ч.',
+    'a_hour' => '{1}час|:count час|:count часа|:count часов',
+    'minute' => ':count минута|:count минуты|:count минут',
+    'min' => ':count мин.',
+    'a_minute' => '{1}минута|:count минута|:count минуты|:count минут',
+    'second' => ':count секунда|:count секунды|:count секунд',
+    's' => ':count сек.',
+    'a_second' => '{1}несколько секунд|:count секунду|:count секунды|:count секунд',
+    'ago' => function ($time) use ($transformDiff) {
+        return $transformDiff($time).' назад';
+    },
+    'from_now' => function ($time) use ($transformDiff) {
+        return 'через '.$transformDiff($time);
+    },
+    'after' => function ($time) use ($transformDiff) {
+        return $transformDiff($time).' после';
+    },
+    'before' => function ($time) use ($transformDiff) {
+        return $transformDiff($time).' до';
+    },
+    'diff_now' => 'только что',
+    'diff_yesterday' => 'вчера',
+    'diff_tomorrow' => 'завтра',
+    'diff_before_yesterday' => 'позавчера',
+    'diff_after_tomorrow' => 'послезавтра',
     'formats' => [
         'LT' => 'H:mm',
         'LTS' => 'H:mm:ss',
@@ -101,7 +155,7 @@ return [
                 return $number;
         }
     },
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 4) {
             return 'ночи';
         }
@@ -116,15 +170,15 @@ return [
     },
     'months' => ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
     'months_standalone' => ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'],
-    'months_short' => ['янв.', 'февр.', 'мар.', 'апр.', 'мая', 'июня', 'июля', 'авг.', 'сент.', 'окт.', 'нояб.', 'дек.'],
-    'months_short_standalone' => ['янв.', 'февр.', 'март', 'апр.', 'май', 'июнь', 'июль', 'авг.', 'сент.', 'окт.', 'нояб.', 'дек.'],
-    'months_regexp' => '/D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/',
+    'months_short' => ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+    'months_short_standalone' => ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+    'months_regexp' => '/(DD?o?\.?(\[[^\[\]]*\]|\s)+MMMM?|L{2,4}|l{2,4})/',
     'weekdays' => ['воскресенье', 'понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу'],
     'weekdays_standalone' => ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-    'weekdays_short' => ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+    'weekdays_short' => ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
     'weekdays_min' => ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
     'weekdays_regexp' => '/\[\s*(В|в)\s*((?:прошлую|следующую|эту)\s*)?\]\s*dddd/',
     'first_day_of_week' => 1,
-    'day_of_first_week_of_year' => 4,
+    'day_of_first_week_of_year' => 1,
     'list' => [', ', ' и '],
 ];

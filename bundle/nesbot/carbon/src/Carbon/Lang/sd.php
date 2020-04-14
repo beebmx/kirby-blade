@@ -33,18 +33,20 @@ $weekdays = [
     'ڇنڇر',
 ];
 
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'sd');
-
+/*
+ * Authors:
+ * - Narain Sagar
+ * - Sawood Alam
+ * - Narain Sagar
+ */
 return [
-    'year' => 'هڪ سال|:count سال',
-    'month' => 'هڪ مهينو|:count مهينا',
-    'week' => 'ھڪ ھفتو|:count هفتا',
-    'day' => 'هڪ ڏينهن|:count ڏينهن',
-    'hour' => 'هڪ ڪلاڪ|:count ڪلاڪ',
-    'minute' => 'هڪ منٽ|:count منٽ',
-    'second' => 'چند سيڪنڊ|:count سيڪنڊ',
+    'year' => '{1}'.'هڪ سال'.'|:count '.'سال',
+    'month' => '{1}'.'هڪ مهينو'.'|:count '.'مهينا',
+    'week' => '{1}'.'ھڪ ھفتو'.'|:count '.'هفتا',
+    'day' => '{1}'.'هڪ ڏينهن'.'|:count '.'ڏينهن',
+    'hour' => '{1}'.'هڪ ڪلاڪ'.'|:count '.'ڪلاڪ',
+    'minute' => '{1}'.'هڪ منٽ'.'|:count '.'منٽ',
+    'second' => '{1}'.'چند سيڪنڊ'.'|:count '.'سيڪنڊ',
     'ago' => ':time اڳ',
     'from_now' => ':time پوء',
     'diff_yesterday' => 'ڪالهه',
@@ -65,9 +67,7 @@ return [
         'lastWeek' => '[گزريل هفتي] dddd [تي] LT',
         'sameElse' => 'L',
     ],
-    'meridiem' => function ($hour, $minute, $isLower) {
-        return $hour < 12 ? 'صبح' : 'شام';
-    },
+    'meridiem' => ['صبح', 'شام'],
     'months' => $months,
     'months_short' => $months,
     'weekdays' => $weekdays,

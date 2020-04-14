@@ -11,7 +11,7 @@ class BladeCompiler extends Compiler
      *
      * @var string
      */
-    protected $echoFormat = 'b(%s)';
+    protected $echoFormat = '_e(%s)';
 
     /**
      * Register an "if" statement directive.
@@ -45,7 +45,7 @@ class BladeCompiler extends Compiler
      */
     public function withDoubleEncoding()
     {
-        $this->setEchoFormat('b(%s, true)');
+        $this->setEchoFormat('_e(%s, true)');
     }
 
     /**
@@ -55,6 +55,37 @@ class BladeCompiler extends Compiler
      */
     public function withoutDoubleEncoding()
     {
-        $this->setEchoFormat('b(%s, false)');
+        $this->setEchoFormat('_e(%s, false)');
+    }
+
+    /**
+     * Compile the component tags.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileComponentTags($value)
+    {
+        if (!$this->compilesComponentTags) {
+            return $value;
+        }
+
+        return (new ComponentTagCompiler(
+            $this->classComponentAliases
+        ))->compile($value);
+    }
+
+    /**
+     * Sanitize the given component attribute value.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public static function sanitizeComponentAttribute($value)
+    {
+        return is_string($value) ||
+        (is_object($value) && method_exists($value, '__toString'))
+            ? _e($value)
+            : $value;
     }
 }

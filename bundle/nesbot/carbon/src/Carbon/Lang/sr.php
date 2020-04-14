@@ -9,31 +9,46 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - François B
+ * - shaishavgandhi05
+ * - Serhan Apaydın
+ * - JD Isaacks
+ * - Glavić
+ * - Milos Sakovic
+ */
 return [
     'year' => ':count godina|:count godine|:count godina',
-    'y' => ':count godina|:count godine|:count godina',
+    'y' => ':count g.',
     'month' => ':count mesec|:count meseca|:count meseci',
-    'm' => ':count mesec|:count meseca|:count meseci',
+    'm' => ':count mj.',
     'week' => ':count nedelja|:count nedelje|:count nedelja',
-    'w' => ':count nedelja|:count nedelje|:count nedelja',
+    'w' => ':count ned.',
     'day' => ':count dan|:count dana|:count dana',
-    'd' => ':count dan|:count dana|:count dana',
+    'd' => ':count d.',
     'hour' => ':count sat|:count sata|:count sati',
-    'h' => ':count sat|:count sata|:count sati',
-    'minute' => ':count minut|:count minuta |:count minuta',
-    'min' => ':count minut|:count minuta |:count minuta',
-    'second' => ':count sekund|:count sekunde|:count sekunde',
-    's' => ':count sekund|:count sekunde|:count sekunde',
+    'h' => ':count č.',
+    'minute' => ':count minut|:count minuta|:count minuta',
+    'min' => ':count min.',
+    'second' => ':count sekundu|:count sekunde|:count sekundi',
+    's' => ':count sek.',
     'ago' => 'pre :time',
     'from_now' => 'za :time',
     'after' => 'nakon :time',
     'before' => 'pre :time',
-    'year_from_now' => '{1,21,31,41,51}:count godinu|{0,2,3,4,22,23,24,32,33,34,42,43,44,52,53,54}:count godine|[0,Inf[:count godina',
-    'year_ago' => '{1,21,31,41,51}:count godinu|{0,2,3,4,22,23,24,32,33,34,42,43,44,52,53,54}:count godine|[0,Inf[:count godina',
-    'week_from_now' => '{1}:count nedelju|{0,2,3,4}:count nedelje|[0,Inf[:count nedelja',
-    'week_ago' => '{1}:count nedelju|{0,2,3,4}:count nedelje|[0,Inf[:count nedelja',
+
+    'year_from_now' => ':count godinu|:count godine|:count godina',
+    'year_ago' => ':count godinu|:count godine|:count godina',
+    'week_from_now' => ':count nedelju|:count nedelje|:count nedelja',
+    'week_ago' => ':count nedelju|:count nedelje|:count nedelja',
+
+    'diff_now' => 'upravo sada',
     'diff_yesterday' => 'juče',
     'diff_tomorrow' => 'sutra',
+    'diff_before_yesterday' => 'prekjuče',
+    'diff_after_tomorrow' => 'preksutra',
     'formats' => [
         'LT' => 'H:mm',
         'LTS' => 'H:mm:ss',
@@ -48,32 +63,32 @@ return [
         'nextWeek' => function (\Carbon\CarbonInterface $date) {
             switch ($date->dayOfWeek) {
                 case 0:
-                    return '[у недељу у] LT';
+                    return '[u nedelju u] LT';
                 case 3:
-                    return '[у среду у] LT';
+                    return '[u sredu u] LT';
                 case 6:
-                    return '[у суботу у] LT';
+                    return '[u subotu u] LT';
                 default:
-                    return '[у] dddd [у] LT';
+                    return '[u] dddd [u] LT';
             }
         },
         'lastDay' => '[juče u] LT',
         'lastWeek' => function (\Carbon\CarbonInterface $date) {
             switch ($date->dayOfWeek) {
                 case 0:
-                    return '[прошле недеље у] LT';
+                    return '[prošle nedelje u] LT';
                 case 1:
-                    return '[прошлог понедељка у] LT';
+                    return '[prošlog ponedeljka u] LT';
                 case 2:
-                    return '[прошлог уторка у] LT';
+                    return '[prošlog utorka u] LT';
                 case 3:
-                    return '[прошле среде у] LT';
+                    return '[prošle srede u] LT';
                 case 4:
-                    return '[прошлог четвртка у] LT';
+                    return '[prošlog četvrtka u] LT';
                 case 5:
-                    return '[прошлог петка у] LT';
+                    return '[prošlog petka u] LT';
                 default:
-                    return '[прошле суботе у] LT';
+                    return '[prošle subote u] LT';
             }
         },
         'sameElse' => 'L',

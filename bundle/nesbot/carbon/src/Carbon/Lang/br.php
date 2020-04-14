@@ -8,27 +8,40 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'br');
 
+/*
+ * Authors:
+ * - François B
+ * - Serhan Apaydın
+ * - JD Isaacks
+ */
 return [
-    'year' => '{1}ur bloaz|{3,4,5,9}:count bloaz|[0,Inf[:count vloaz',
-    'month' => '{1}ur miz|{2}:count viz|[0,Inf[:count miz',
+    'year' => '{1}:count bloaz|{3,4,5,9}:count bloaz|[0,Inf[:count vloaz',
+    'a_year' => '{1}ur bloaz|{3,4,5,9}:count bloaz|[0,Inf[:count vloaz',
+    'month' => '{1}:count miz|{2}:count viz|[0,Inf[:count miz',
+    'a_month' => '{1}ur miz|{2}:count viz|[0,Inf[:count miz',
     'week' => ':count sizhun',
-    'day' => '{1}un devezh|{2}:count zevezh|[0,Inf[:count devezh',
-    'hour' => 'un eur|:count eur',
-    'minute' => '{1}ur vunutenn|{2}:count vunutenn|[0,Inf[:count munutenn',
-    'second' => '{1}un nebeud segondennoù|[0,Inf[:count eilenn',
+    'a_week' => '{1}ur sizhun|:count sizhun',
+    'day' => '{1}:count devezh|{2}:count zevezh|[0,Inf[:count devezh',
+    'a_day' => '{1}un devezh|{2}:count zevezh|[0,Inf[:count devezh',
+    'hour' => ':count eur',
+    'a_hour' => '{1}un eur|:count eur',
+    'minute' => '{1}:count vunutenn|{2}:count vunutenn|[0,Inf[:count munutenn',
+    'a_minute' => '{1}ur vunutenn|{2}:count vunutenn|[0,Inf[:count munutenn',
+    'second' => ':count eilenn',
+    'a_second' => '{1}un nebeud segondennoù|[0,Inf[:count eilenn',
     'ago' => ':time \'zo',
     'from_now' => 'a-benn :time',
+    'diff_now' => 'bremañ',
+    'diff_yesterday' => 'decʼh',
+    'diff_tomorrow' => 'warcʼhoazh',
     'formats' => [
-        'LT' => 'h[e]mm A',
-        'LTS' => 'h[e]mm:ss A',
+        'LT' => 'HH:mm',
+        'LTS' => 'HH:mm:ss',
         'L' => 'DD/MM/YYYY',
         'LL' => 'D [a viz] MMMM YYYY',
-        'LLL' => 'D [a viz] MMMM YYYY h[e]mm A',
-        'LLLL' => 'dddd, D [a viz] MMMM YYYY h[e]mm A',
+        'LLL' => 'D [a viz] MMMM YYYY HH:mm',
+        'LLLL' => 'dddd, D [a viz] MMMM YYYY HH:mm',
     ],
     'calendar' => [
         'sameDay' => '[Hiziv da] LT',
@@ -38,7 +51,7 @@ return [
         'lastWeek' => 'dddd [paset da] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
+    'ordinal' => function ($number) {
         return $number.($number === 1 ? 'añ' : 'vet');
     },
     'months' => ['Genver', 'C\'hwevrer', 'Meurzh', 'Ebrel', 'Mae', 'Mezheven', 'Gouere', 'Eost', 'Gwengolo', 'Here', 'Du', 'Kerzu'],
@@ -49,4 +62,11 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' hag '],
+    'meridiem' => ['A.M.', 'G.M.'],
+
+    'y' => ':count bl.',
+    'd' => ':count d',
+    'h' => ':count e',
+    'min' => ':count min',
+    's' => ':count s',
 ];

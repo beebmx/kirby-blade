@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 return [
     'year' => ':count voros|:count vorsam',
     'y' => ':countv',
@@ -54,7 +53,7 @@ return [
         return $number.($period === 'D' ? 'er' : '');
     },
 
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 4) {
             return 'rati';
         }

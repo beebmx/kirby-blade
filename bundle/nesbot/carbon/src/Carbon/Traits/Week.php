@@ -10,8 +10,6 @@
  */
 namespace Carbon\Traits;
 
-use Carbon\CarbonInterface;
-
 /**
  * Trait Week.
  *
@@ -26,14 +24,14 @@ use Carbon\CarbonInterface;
  *
  * Depends on the following methods:
  *
- * @method CarbonInterface|static addWeeks(int $weeks = 1)
- * @method CarbonInterface|static copy()
- * @method CarbonInterface|static dayOfYear(int $dayOfYear)
- * @method string                 getTranslationMessage(string $key)
- * @method CarbonInterface|static next(int $day)
- * @method CarbonInterface|static startOfWeek(int $day = 1)
- * @method CarbonInterface|static subWeeks(int $weeks = 1)
- * @method CarbonInterface|static year(int $year = null)
+ * @method static addWeeks(int $weeks = 1)
+ * @method static copy()
+ * @method static dayOfYear(int $dayOfYear)
+ * @method string getTranslationMessage(string $key, string $locale = null, string $default = null, $translator = null)
+ * @method static next(int $day)
+ * @method static startOfWeek(int $day = 1)
+ * @method static subWeeks(int $weeks = 1)
+ * @method static year(int $year = null)
  */
 trait Week
 {
@@ -52,8 +50,8 @@ trait Week
     {
         return $this->weekYear(
             $year,
-            $dayOfWeek ?? $this->getTranslationMessage('first_day_of_week') ?? 1,
-            $dayOfYear ?? $this->getTranslationMessage('day_of_first_week_of_year') ?? 4
+            $dayOfWeek ?? 1,
+            $dayOfYear ?? 4
         );
     }
 
@@ -66,7 +64,7 @@ trait Week
      * @param int|null $dayOfWeek first date of week from 0 (Sunday) to 6 (Saturday)
      * @param int|null $dayOfYear first day of year included in the week #1
      *
-     * @return int|static|CarbonInterface
+     * @return int|static
      */
     public function weekYear($year = null, $dayOfWeek = null, $dayOfYear = null)
     {
@@ -86,9 +84,11 @@ trait Week
             switch ($date->weekYear(null, $dayOfWeek, $dayOfYear) - $year) {
                 case 1:
                     $date = $date->subWeeks(26);
+
                     break;
                 case -1:
                     $date = $date->addWeeks(26);
+
                     break;
             }
 
@@ -131,8 +131,8 @@ trait Week
     public function isoWeeksInYear($dayOfWeek = null, $dayOfYear = null)
     {
         return $this->weeksInYear(
-            $dayOfWeek ?? $this->getTranslationMessage('first_day_of_week') ?? 1,
-            $dayOfYear ?? $this->getTranslationMessage('day_of_first_week_of_year') ?? 4
+            $dayOfWeek ?? 1,
+            $dayOfYear ?? 4
         );
     }
 
@@ -211,8 +211,8 @@ trait Week
     {
         return $this->week(
             $week,
-            $dayOfWeek ?? $this->getTranslationMessage('first_day_of_week') ?? 1,
-            $dayOfYear ?? $this->getTranslationMessage('day_of_first_week_of_year') ?? 4
+            $dayOfWeek ?? 1,
+            $dayOfYear ?? 4
         );
     }
 }

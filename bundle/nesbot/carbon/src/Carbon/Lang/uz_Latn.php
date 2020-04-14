@@ -8,20 +8,39 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'uz');
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - Rasulbek
+ * - Ilyosjon Kamoldinov (ilyosjon09)
+ */
 return [
-    'year' => 'bir yil|:count yil',
-    'month' => 'bir oy|:count oy',
-    'week' => 'bir hafta|:count hafta',
-    'day' => 'bir kun|:count kun',
-    'hour' => 'bir soat|:count soat',
-    'minute' => 'bir daqiqa|:count daqiqa',
-    'second' => 'soniya|:count soniya',
-    'ago' => 'Bir necha :time oldin',
+    'year' => ':count yil',
+    'a_year' => '{1}bir yil|:count yil',
+    'y' => ':count y',
+    'month' => ':count oy',
+    'a_month' => '{1}bir oy|:count oy',
+    'm' => ':count o',
+    'week' => ':count hafta',
+    'a_week' => '{1}bir hafta|:count hafta',
+    'w' => ':count h',
+    'day' => ':count kun',
+    'a_day' => '{1}bir kun|:count kun',
+    'd' => ':count k',
+    'hour' => ':count soat',
+    'a_hour' => '{1}bir soat|:count soat',
+    'h' => ':count soat',
+    'minute' => ':count daqiqa',
+    'a_minute' => '{1}bir daqiqa|:count daqiqa',
+    'min' => ':count d',
+    'second' => ':count soniya',
+    'a_second' => '{1}soniya|:count soniya',
+    's' => ':count son.',
+    'ago' => ':time avval',
     'from_now' => 'Yaqin :time ichida',
+    'after' => ':timedan keyin',
+    'before' => ':time oldin',
     'diff_yesterday' => 'Kecha',
     'diff_tomorrow' => 'Ertaga',
     'formats' => [
@@ -48,4 +67,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 1,
     'list' => [', ', ' va '],
+    'meridiem' => ['TO', 'TK'],
 ];

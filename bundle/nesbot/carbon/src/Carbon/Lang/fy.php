@@ -9,14 +9,34 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - François B
+ * - Tim Fish
+ * - JD Isaacks
+ */
 return [
-    'year' => 'ien jier|:count jierren',
-    'month' => 'ien moanne|:count moannen',
-    'week' => 'in wike|:count wiken',
-    'day' => 'ien dei|:count dagen',
-    'hour' => 'ien oere|:count oeren',
-    'minute' => 'ien minút|:count minuten',
-    'second' => 'in pear sekonden|:count sekonden',
+    'year' => ':count jier|:count jierren',
+    'a_year' => 'ien jier|:count jierren',
+    'y' => ':count j',
+    'month' => ':count moanne|:count moannen',
+    'a_month' => 'ien moanne|:count moannen',
+    'm' => ':count moa.',
+    'week' => ':count wike|:count wiken',
+    'a_week' => 'in wike|:count wiken',
+    'a' => ':count w.',
+    'day' => ':count dei|:count dagen',
+    'a_day' => 'ien dei|:count dagen',
+    'd' => ':count d.',
+    'hour' => ':count oere|:count oeren',
+    'a_hour' => 'ien oere|:count oeren',
+    'h' => ':count o.',
+    'minute' => ':count minút|:count minuten',
+    'a_minute' => 'ien minút|:count minuten',
+    'min' => ':count min.',
+    'second' => ':count sekonde|:count sekonden',
+    'a_second' => 'in pear sekonden|:count sekonden',
+    's' => ':count s.',
     'ago' => ':time lyn',
     'from_now' => 'oer :time',
     'diff_yesterday' => 'juster',
@@ -37,7 +57,7 @@ return [
         'lastWeek' => '[ôfrûne] dddd [om] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
+    'ordinal' => function ($number) {
         return $number.(($number === 1 || $number === 8 || $number >= 20) ? 'ste' : 'de');
     },
     'months' => ['jannewaris', 'febrewaris', 'maart', 'april', 'maaie', 'juny', 'july', 'augustus', 'septimber', 'oktober', 'novimber', 'desimber'],

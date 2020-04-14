@@ -33,6 +33,19 @@ $weekdays = [
     'ہفتہ',
 ];
 
+/*
+ * Authors:
+ * - Sawood Alam
+ * - Mehshan
+ * - Philippe Vaucher
+ * - Tsutomu Kuroda
+ * - tjku
+ * - Zaid Akram
+ * - Max Melentiev
+ * - hafezdivandari
+ * - Hossein Jabbari
+ * - nimamo
+ */
 return [
     'year' => 'ایک سال|:count سال',
     'month' => 'ایک ماہ|:count ماہ',
@@ -45,6 +58,9 @@ return [
     'from_now' => ':time بعد',
     'after' => ':time بعد',
     'before' => ':time پہلے',
+    'diff_now' => 'اب',
+    'diff_yesterday' => 'گزشتہ کل',
+    'diff_tomorrow' => 'آئندہ کل',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',
@@ -61,9 +77,7 @@ return [
         'lastWeek' => '[گذشتہ] dddd [بوقت] LT',
         'sameElse' => 'L',
     ],
-    'meridiem' => function ($hour, $minute, $isLower) {
-        return $hour < 12 ? 'صبح' : 'شام';
-    },
+    'meridiem' => ['صبح', 'شام'],
     'months' => $months,
     'months_short' => $months,
     'weekdays' => $weekdays,

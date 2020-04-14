@@ -8,20 +8,30 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'lo');
 
+/*
+ * Authors:
+ * - François B
+ * - ryanhart2
+ */
 return [
     'year' => ':count ປີ',
+    'y' => ':count ປີ',
     'month' => ':count ເດືອນ',
+    'm' => ':count ດ. ',
     'week' => ':count ອາທິດ',
+    'w' => ':count ອທ. ',
     'day' => ':count ມື້',
+    'd' => ':count ມື້',
     'hour' => ':count ຊົ່ວໂມງ',
+    'h' => ':count ຊມ. ',
     'minute' => ':count ນາທີ',
-    'second' => 'ບໍ່ເທົ່າໃດວິນາທີ|:count ວິນາທີ',
+    'min' => ':count ນທ. ',
+    'second' => '{1}ບໍ່ເທົ່າໃດວິນາທີ|]1,Inf[:count ວິນາທີ',
+    's' => ':count ວິ. ',
     'ago' => ':timeຜ່ານມາ',
     'from_now' => 'ອີກ :time',
+    'diff_now' => 'ຕອນນີ້',
     'diff_yesterday' => 'ມື້ວານນີ້ເວລາ',
     'diff_tomorrow' => 'ມື້ອື່ນເວລາ',
     'formats' => [
@@ -41,9 +51,7 @@ return [
         'sameElse' => 'L',
     ],
     'ordinal' => 'ທີ່:number',
-    'meridiem' => function ($hour, $minute, $isLower) {
-        return $hour < 12 ? 'ຕອນເຊົ້າ' : 'ຕອນແລງ';
-    },
+    'meridiem' => ['ຕອນເຊົ້າ', 'ຕອນແລງ'],
     'months' => ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ', 'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'],
     'months_short' => ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ', 'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'],
     'weekdays' => ['ອາທິດ', 'ຈັນ', 'ອັງຄານ', 'ພຸດ', 'ພະຫັດ', 'ສຸກ', 'ເສົາ'],

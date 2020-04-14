@@ -9,6 +9,11 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - JD Isaacks
+ */
 return [
     'year' => '{1}ལོ་གཅིག|]1,Inf[:count ལོ',
     'month' => '{1}ཟླ་བ་གཅིག|]1,Inf[:count ཟླ་བ',
@@ -37,7 +42,7 @@ return [
         'lastWeek' => '[བདུན་ཕྲག་མཐའ་མ] dddd, LT',
         'sameElse' => 'L',
     ],
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 4) {
             return 'མཚན་མོ';
         }
@@ -59,4 +64,7 @@ return [
     'weekdays_short' => ['ཉི་མ་', 'ཟླ་བ་', 'མིག་དམར་', 'ལྷག་པ་', 'ཕུར་བུ', 'པ་སངས་', 'སྤེན་པ་'],
     'weekdays_min' => ['ཉི་མ་', 'ཟླ་བ་', 'མིག་དམར་', 'ལྷག་པ་', 'ཕུར་བུ', 'པ་སངས་', 'སྤེན་པ་'],
     'list' => [', ', ' ཨནད་ '],
+    'first_day_of_week' => 0,
+    'day_of_first_week_of_year' => 1,
+    'months_standalone' => ['ཟླ་བ་དང་པོ་', 'ཟླ་བ་གཉིས་པ་', 'ཟླ་བ་གསུམ་པ་', 'ཟླ་བ་བཞི་པ་', 'ཟླ་བ་ལྔ་པ་', 'ཟླ་བ་དྲུག་པ་', 'ཟླ་བ་བདུན་པ་', 'ཟླ་བ་བརྒྱད་པ་', 'ཟླ་བ་དགུ་པ་', 'ཟླ་བ་བཅུ་པ་', 'ཟླ་བ་བཅུ་གཅིག་པ་', 'ཟླ་བ་བཅུ་གཉིས་པ་'],
 ];

@@ -12,10 +12,11 @@ namespace Illuminate\Support\Facades;
  * @method static string route(string $name, $parameters = [], bool $absolute = true)
  * @method static string action(string $action, $parameters = [], bool $absolute = true)
  * @method static \Illuminate\Contracts\Routing\UrlGenerator setRootControllerNamespace(string $rootNamespace)
- * @method static string signedRoute(string $name, array $parameters = [], \DateTimeInterface|\DateInterval|int $expiration = null)
- * @method static string temporarySignedRoute(string $name, \DateTimeInterface|\DateInterval|int $expiration, array $parameters = [])
- * @method static string hasValidSignature(\Illuminate\Http\Request $request, bool $absolute)
+ * @method static string signedRoute(string $name, array $parameters = [], \DateTimeInterface|\DateInterval|int $expiration = null, bool $absolute = true)
+ * @method static string temporarySignedRoute(string $name, \DateTimeInterface|\DateInterval|int $expiration, array $parameters = [], bool $absolute = true)
+ * @method static bool hasValidSignature(\Illuminate\Http\Request $request, bool $absolute = true)
  * @method static void defaults(array $defaults)
+ * @method static void forceScheme(string $scheme)
  *
  * @see \Illuminate\Routing\UrlGenerator
  */

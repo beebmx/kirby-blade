@@ -9,6 +9,11 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Muhammad Nasir Rahimi
+ * - Nassim Nasibullah (spinzar)
+ */
 return [
     'year' => ':count کال|:count کاله',
     'y' => ':countکال|:countکاله',
@@ -29,4 +34,22 @@ return [
     'after' => ':time وروسته',
     'before' => ':time دمخه',
     'list' => ['، ', ' او '],
+    'meridiem' => ['غ.م.', 'غ.و.'],
+    'weekdays' => ['اتوار', 'ګل', 'نهه', 'شورو', 'زيارت', 'جمعه', 'خالي'],
+    'weekdays_short' => ['ا', 'ګ', 'ن', 'ش', 'ز', 'ج', 'خ'],
+    'weekdays_min' => ['ا', 'ګ', 'ن', 'ش', 'ز', 'ج', 'خ'],
+    'months' => ['جنوري', 'فبروري', 'مارچ', 'اپریل', 'مۍ', 'جون', 'جولای', 'اگست', 'سېپتمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
+    'months_short' => ['جنوري', 'فبروري', 'مارچ', 'اپریل', 'مۍ', 'جون', 'جولای', 'اگست', 'سېپتمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
+    'months_standalone' => ['جنوري', 'فېبروري', 'مارچ', 'اپریل', 'مۍ', 'جون', 'جولای', 'اگست', 'سپتمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
+    'months_short_standalone' => ['جنوري', 'فبروري', 'مارچ', 'اپریل', 'مۍ', 'جون', 'جولای', 'اگست', 'سپتمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
+    'first_day_of_week' => 6,
+    'weekend' => [4, 5],
+    'formats' => [
+        'LT' => 'H:mm',
+        'LTS' => 'H:mm:ss',
+        'L' => 'YYYY/M/d',
+        'LL' => 'YYYY MMM D',
+        'LLL' => 'د YYYY د MMMM D H:mm',
+        'LLLL' => 'dddd د YYYY د MMMM D H:mm',
+    ],
 ];

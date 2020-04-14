@@ -9,6 +9,15 @@
  * file that was distributed with this source code.
  */
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - Azri Jamil
+ * - JD Isaacks
+ * - Josh Soref
+ * - Azri Jamil
+ * - Hariadi Hinta
+ */
 return [
     'year' => '{1}setahun|]1,Inf[:count tahun',
     'y' => ':count tahun',
@@ -25,9 +34,12 @@ return [
     'second' => '{1}beberapa saat|]1,Inf[:count saat',
     's' => ':count saat',
     'ago' => ':time yang lepas',
-    'from_now' => 'dalam :time',
+    'from_now' => ':time dari sekarang',
     'after' => ':time selepas',
     'before' => ':time sebelum',
+    'diff_now' => 'sekarang',
+    'diff_yesterday' => 'semalam',
+    'diff_tomorrow' => 'esok',
     'formats' => [
         'LT' => 'HH.mm',
         'LTS' => 'HH.mm.ss',
@@ -44,7 +56,7 @@ return [
         'lastWeek' => 'dddd [lepas pukul] LT',
         'sameElse' => 'L',
     ],
-    'meridiem' => function ($hour, $minute, $isLower) {
+    'meridiem' => function ($hour) {
         if ($hour < 11) {
             return 'pagi';
         }

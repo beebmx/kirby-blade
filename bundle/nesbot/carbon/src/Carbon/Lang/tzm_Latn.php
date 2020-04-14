@@ -8,18 +8,27 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'tzm');
 
+/*
+ * Authors:
+ * - Josh Soref
+ * - JD Isaacks
+ */
 return [
-    'year' => 'asgas|:count isgasn',
-    'month' => 'ayowr|:count iyyirn',
-    'week' => ':count ⵉⵎⴰⵍⴰⵙⵙ',
-    'day' => 'ass|:count ossan',
-    'hour' => 'saɛa|:count tassaɛin',
-    'minute' => 'minuḍ|:count minuḍ',
-    'second' => 'imik|:count imik',
+    'year' => '{1}:count asgas|:count isgasn',
+    'a_year' => 'asgas|:count isgasn',
+    'month' => '{1}:count ayowr|:count iyyirn',
+    'a_month' => 'ayowr|:count iyyirn',
+    'week' => ':count imalass',
+    'a_week' => ':imalass',
+    'day' => '{1}:count ass|:count ossan',
+    'a_day' => 'ass|:count ossan',
+    'hour' => '{1}:count saɛa|:count tassaɛin',
+    'a_hour' => '{1}saɛa|:count tassaɛin',
+    'minute' => ':count minuḍ',
+    'a_minute' => '{1}minuḍ|:count minuḍ',
+    'second' => ':count imik',
+    'a_second' => '{1}imik|:count imik',
     'ago' => 'yan :time',
     'from_now' => 'dadkh s yan :time',
     'diff_yesterday' => 'assant',
@@ -45,6 +54,7 @@ return [
     'weekdays' => ['asamas', 'aynas', 'asinas', 'akras', 'akwas', 'asimwas', 'asiḍyas'],
     'weekdays_short' => ['asamas', 'aynas', 'asinas', 'akras', 'akwas', 'asimwas', 'asiḍyas'],
     'weekdays_min' => ['asamas', 'aynas', 'asinas', 'akras', 'akwas', 'asimwas', 'asiḍyas'],
+    'meridiem' => ['Zdat azal', 'Ḍeffir aza'],
     'first_day_of_week' => 6,
     'day_of_first_week_of_year' => 1,
 ];

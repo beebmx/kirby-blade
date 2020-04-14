@@ -8,18 +8,34 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'gd');
 
+/*
+ * Authors:
+ * - François B
+ * - Jon Ashdown
+ */
 return [
-    'year' => 'bliadhna|:count bliadhna',
-    'month' => 'mìos|:count mìosan',
-    'week' => 'seachdain|:count seachdainean',
-    'day' => 'latha|:count latha',
-    'hour' => 'uair|:count uairean',
-    'minute' => 'mionaid|:count mionaidean',
-    'second' => 'beagan diogan|:count diogan',
+    'year' => ':count bliadhna',
+    'a_year' => '{1}bliadhna|:count bliadhna',
+    'y' => ':count b.',
+    'month' => ':count mìosan',
+    'a_month' => '{1}mìos|:count mìosan',
+    'm' => ':count ms.',
+    'week' => ':count seachdainean',
+    'a_week' => '{1}seachdain|:count seachdainean',
+    'w' => ':count s.',
+    'day' => ':count latha',
+    'a_day' => '{1}latha|:count latha',
+    'd' => ':count l.',
+    'hour' => ':count uairean',
+    'a_hour' => '{1}uair|:count uairean',
+    'h' => ':count u.',
+    'minute' => ':count mionaidean',
+    'a_minute' => '{1}mionaid|:count mionaidean',
+    'min' => ':count md.',
+    'second' => ':count diogan',
+    'a_second' => '{1}beagan diogan|:count diogan',
+    's' => ':count d.',
     'ago' => 'bho chionn :time',
     'from_now' => 'ann an :time',
     'diff_yesterday' => 'An-dè',
@@ -40,7 +56,7 @@ return [
         'lastWeek' => 'dddd [seo chaidh] [aig] LT',
         'sameElse' => 'L',
     ],
-    'ordinal' => function ($number, $period) {
+    'ordinal' => function ($number) {
         return $number.($number === 1 ? 'd' : ($number % 10 === 2 ? 'na' : 'mh'));
     },
     'months' => ['Am Faoilleach', 'An Gearran', 'Am Màrt', 'An Giblean', 'An Cèitean', 'An t-Ògmhios', 'An t-Iuchar', 'An Lùnastal', 'An t-Sultain', 'An Dàmhair', 'An t-Samhain', 'An Dùbhlachd'],
@@ -51,4 +67,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' agus '],
+    'meridiem' => ['m', 'f'],
 ];

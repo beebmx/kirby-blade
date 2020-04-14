@@ -8,18 +8,34 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return $number === 1 ? 0 : 1;
-}, 'se');
 
+/*
+ * Authors:
+ * - François B
+ * - Karamell
+ */
 return [
-    'year' => 'okta jahki|:count jagit',
-    'month' => 'okta mánnu|:count mánut',
-    'week' => 'okta vahkku|:count vahkku',
-    'day' => 'okta beaivi|:count beaivvit',
-    'hour' => 'okta diimmu|:count diimmut',
-    'minute' => 'okta minuhta|:count minuhtat',
-    'second' => 'moadde sekunddat|:count sekunddat',
+    'year' => '{1}:count jahki|:count jagit',
+    'a_year' => '{1}okta jahki|:count jagit',
+    'y' => ':count j.',
+    'month' => '{1}:count mánnu|:count mánut',
+    'a_month' => '{1}okta mánnu|:count mánut',
+    'm' => ':count mán.',
+    'week' => '{1}:count vahkku|:count vahkku',
+    'a_week' => '{1}okta vahkku|:count vahkku',
+    'w' => ':count v.',
+    'day' => '{1}:count beaivi|:count beaivvit',
+    'a_day' => '{1}okta beaivi|:count beaivvit',
+    'd' => ':count b.',
+    'hour' => '{1}:count diimmu|:count diimmut',
+    'a_hour' => '{1}okta diimmu|:count diimmut',
+    'h' => ':count d.',
+    'minute' => '{1}:count minuhta|:count minuhtat',
+    'a_minute' => '{1}okta minuhta|:count minuhtat',
+    'min' => ':count min.',
+    'second' => '{1}:count sekunddat|:count sekunddat',
+    'a_second' => '{1}moadde sekunddat|:count sekunddat',
+    's' => ':count s.',
     'ago' => 'maŋit :time',
     'from_now' => ':time geažes',
     'diff_yesterday' => 'ikte',
@@ -49,4 +65,5 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' ja '],
+    'meridiem' => ['i.b.', 'e.b.'],
 ];
