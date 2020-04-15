@@ -22,8 +22,6 @@ class Factory extends FactoryView
      */
     public function __construct(EngineResolver $engines, FileViewFinder $finder, Dispatcher $events = null)
     {
-//        dump('xEngines');
-//        dump($engines);
         $this->finder = $finder;
         $this->events = $events;
         $this->engines = $engines;

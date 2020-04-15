@@ -13,18 +13,6 @@ class ViewServiceProvider extends ViewProvider
         return new Factory($resolver, $finder, $events);
     }
 
-//    /**
-//     * Register the view finder implementation.
-//     *
-//     * @return void
-//     */
-//    public function registerViewFinder()
-//    {
-//        $this->app->bind('view.finder', function ($app) {
-//            return new FileViewFinder($app['files'], $app['config']['view.paths']);
-//        });
-//    }
-
     /**
      * Register the Blade compiler implementation.
      *
@@ -39,17 +27,4 @@ class ViewServiceProvider extends ViewProvider
             );
         });
     }
-
-//    /**
-//     * Register the Blade engine implementation.
-//     *
-//     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
-//     * @return void
-//     */
-//    public function registerBladeEngine($resolver)
-//    {
-//        $resolver->register('blade', function () {
-//            return new CompilerEngine($this->app['blade.compiler']);
-//        });
-//    }
 }
