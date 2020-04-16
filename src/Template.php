@@ -16,13 +16,13 @@ class Template extends KirbyTemplate
     protected $views;
     protected $defaultType;
     protected $name;
-    protected $templates;
+    protected $template;
     protected $type;
     public static $data = [];
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
     {
-        $this->templates = $kirby->roots()->templates();
+        $this->template = $kirby->roots()->templates();
         $this->views = $this->getPathViews();
 
         $this->name = strtolower($name);
@@ -72,7 +72,7 @@ class Template extends KirbyTemplate
     {
         if ($this->isBlade()) {
             $this->blade = new Blade(
-                $this->templates,
+                $this->template,
                 $this->views
             );
             $this->setDirectives();
@@ -162,7 +162,14 @@ class Template extends KirbyTemplate
         });
 
         $this->blade->compiler()->directive('csrf', function () {
-            return "<?php echo csrf() ?>";
+            return '<?php echo csrf() ?>';
+        });
+
+        $this->blade->compiler()->directive('snippet', function ($name, mixed $data = null) {
+            if ($data) {
+                return "<?php snippet($name, $data) ?>";
+            }
+            return "<?php snippet($name) ?>";
         });
 
         foreach ($directives = option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
@@ -188,7 +195,7 @@ class Template extends KirbyTemplate
 
     public function isBlade()
     {
-        return !!file_exists($this->root() . '/' . $this->name() . '.' . $this->bladeExtension());
+        return !!file_exists($this->template . '/' . $this->name() . '.' . $this->bladeExtension());
     }
 
     /**
