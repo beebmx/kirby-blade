@@ -55,8 +55,15 @@ By default Kirby Blade comes with the follows directives:
 @kt($page->text())
 @kirbytextinline($page->text())
 @kti($page->text())
+@smartypants($page->text())
+@esc($string)
 @image($page->image())
+@svg($file)
+@page($id)
+@pages($id)
 @markdown($page->text())
+@html($page->text())
+@h($page->text())
 @url($page->url())
 @u($page->url())
 @go($url)
@@ -66,6 +73,12 @@ By default Kirby Blade comes with the follows directives:
 @tc($translation, $count)
 @dump($variable)
 @csrf()
+@snippet($name, $data)
+@twitter($username, $text, $title, $class)
+@video($url)
+@vimeo($url)
+@youtube($url)
+@gist($url)
 ```
 
 But you can create your own:

@@ -117,16 +117,46 @@ class Template extends KirbyTemplate
             return "<?php echo kirbytextinline($text) ?>";
         });
 
+        $this->blade->compiler()->directive('smartypants', function ($text) {
+            return "<?php echo smartypants($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('esc', function (string $string, string $context = 'html', bool $strict = false) {
+            return "<?php echo esc($string, $context, $strict) ?>";
+        });
+
         $this->blade->compiler()->directive('image', function ($text) {
             return "<?php echo image($text) ?>";
         });
 
-        $this->blade->compiler()->directive('page', function ($page) {
-            return "<?php echo kirbytextinline($page) ?>";
+        $this->blade->compiler()->directive('svg', function ($file) {
+            return "<?php echo svg($file) ?>";
+        });
+
+        $this->blade->compiler()->directive('page', function (mixed $page) {
+            return "<?php echo page($page) ?>";
+        });
+
+        $this->blade->compiler()->directive('pages', function (mixed $page) {
+            return "<?php echo pages($page) ?>";
         });
 
         $this->blade->compiler()->directive('markdown', function ($text) {
             return "<?php echo markdown($text) ?>";
+        });
+
+        $this->blade->compiler()->directive('html', function ($string, bool $tags = false) {
+            if ($tags) {
+                return "<?php echo html($string, $tags) ?>";
+            }
+            return "<?php echo html($string) ?>";
+        });
+
+        $this->blade->compiler()->directive('h', function ($string, bool $tags = false) {
+            if ($tags) {
+                return "<?php echo html($string, $tags) ?>";
+            }
+            return "<?php echo html($string) ?>";
         });
 
         $this->blade->compiler()->directive('url', function ($path) {
@@ -137,7 +167,7 @@ class Template extends KirbyTemplate
             return "<?php echo u($path) ?>";
         });
 
-        $this->blade->compiler()->directive('go', function ($path, $code = 302) {
+        $this->blade->compiler()->directive('go', function (string $path, int $code = 302) {
             return "<?php echo go($path, $code) ?>";
         });
 
@@ -170,6 +200,26 @@ class Template extends KirbyTemplate
                 return "<?php snippet($name, $data) ?>";
             }
             return "<?php snippet($name) ?>";
+        });
+
+        $this->blade->compiler()->directive('twitter', function (string $username, string $text = null, string $title = null, string $class = null) {
+            return "<?php echo twitter($username, $text, $title, $class) ?>";
+        });
+
+        $this->blade->compiler()->directive('video', function (string $url, array $options = [], array $attr = []) {
+            return "<?php echo video($url, $options, $attr) ?>";
+        });
+
+        $this->blade->compiler()->directive('vimeo', function (string $url, array $options = [], array $attr = []) {
+            return "<?php echo vimeo($url, $options, $attr) ?>";
+        });
+
+        $this->blade->compiler()->directive('youtube', function (string $url, array $options = [], array $attr = []) {
+            return "<?php echo youtube($url, $options, $attr) ?>";
+        });
+
+        $this->blade->compiler()->directive('gist', function (string $url, string $file = null) {
+            return "<?php echo gist($url, $url, $file) ?>";
         });
 
         foreach ($directives = option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
