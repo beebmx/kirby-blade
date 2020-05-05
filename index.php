@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/bundle/autoload.php';
+@include_once __DIR__ . '/bundle/autoload.php';
 
 use Beebmx\Snippet;
 use Illuminate\Support\Str;

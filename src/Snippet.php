@@ -16,6 +16,12 @@ class Snippet extends Template
         $this->views = $this->getPathViews();
         $this->snippet = $this->template . '/' . $name . '.php';
 
+        $blade = $this->template . '/' . $name . '.' . $this->bladeExtension();
+
+        if (file_exists($this->snippet) === false && file_exists($blade) === false) {
+            $this->snippet = $kirby->extensions('snippets')[$name];
+        }
+
         $this->name = strtolower($name);
         $this->type = $type;
         $this->defaultType = $defaultType;
