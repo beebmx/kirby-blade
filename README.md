@@ -146,7 +146,7 @@ You can also send data to the components via "slots" and attributes:
 
 <x-alert title="Danger">Message</x-alert>
 
-<!-- /resources/views/components/alert.blade.php -->
+<!-- ../templates/components/alert.blade.php -->
 
 <div class="alert">
     <div>{{$title}}</div>
