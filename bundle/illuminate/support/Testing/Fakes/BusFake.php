@@ -3,12 +3,17 @@
 namespace Illuminate\Support\Testing\Fakes;
 
 use Closure;
+use Illuminate\Bus\PendingBatch;
 use Illuminate\Contracts\Bus\QueueingDispatcher;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\ReflectsClosures;
 use PHPUnit\Framework\Assert as PHPUnit;
 
 class BusFake implements QueueingDispatcher
 {
+    use ReflectsClosures;
+
     /**
      * The original Bus dispatcher implementation.
      *
@@ -38,6 +43,13 @@ class BusFake implements QueueingDispatcher
     protected $commandsAfterResponse = [];
 
     /**
+     * The batches that have been dispatched.
+     *
+     * @var array
+     */
+    protected $batches = [];
+
+    /**
      * Create a new bus fake instance.
      *
      * @param  \Illuminate\Contracts\Bus\QueueingDispatcher  $dispatcher
@@ -54,12 +66,16 @@ class BusFake implements QueueingDispatcher
     /**
      * Assert if a job was dispatched based on a truth-test callback.
      *
-     * @param  string  $command
+     * @param  string|\Closure  $command
      * @param  callable|int|null  $callback
      * @return void
      */
     public function assertDispatched($command, $callback = null)
     {
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        }
+
         if (is_numeric($callback)) {
             return $this->assertDispatchedTimes($command, $callback);
         }
@@ -92,12 +108,16 @@ class BusFake implements QueueingDispatcher
     /**
      * Determine if a job was dispatched based on a truth-test callback.
      *
-     * @param  string  $command
+     * @param  string|\Closure  $command
      * @param  callable|null  $callback
      * @return void
      */
     public function assertNotDispatched($command, $callback = null)
     {
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        }
+
         PHPUnit::assertTrue(
             $this->dispatched($command, $callback)->count() === 0 &&
             $this->dispatchedAfterResponse($command, $callback)->count() === 0,
@@ -108,12 +128,16 @@ class BusFake implements QueueingDispatcher
     /**
      * Assert if a job was dispatched after the response was sent based on a truth-test callback.
      *
-     * @param  string  $command
+     * @param  string|\Closure  $command
      * @param  callable|int|null  $callback
      * @return void
      */
     public function assertDispatchedAfterResponse($command, $callback = null)
     {
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        }
+
         if (is_numeric($callback)) {
             return $this->assertDispatchedAfterResponseTimes($command, $callback);
         }
@@ -144,15 +168,169 @@ class BusFake implements QueueingDispatcher
     /**
      * Determine if a job was dispatched based on a truth-test callback.
      *
-     * @param  string  $command
+     * @param  string|\Closure  $command
      * @param  callable|null  $callback
      * @return void
      */
     public function assertNotDispatchedAfterResponse($command, $callback = null)
     {
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        }
+
         PHPUnit::assertCount(
             0, $this->dispatchedAfterResponse($command, $callback),
             "The unexpected [{$command}] job was dispatched for after sending the response."
+        );
+    }
+
+    /**
+     * Assert if a chain of jobs was dispatched.
+     *
+     * @param  array  $expectedChain
+     * @return void
+     */
+    public function assertChained(array $expectedChain)
+    {
+        $command = $expectedChain[0];
+
+        $expectedChain = array_slice($expectedChain, 1);
+
+        $callback = null;
+
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        } elseif (! is_string($command)) {
+            $instance = $command;
+
+            $command = get_class($instance);
+
+            $callback = function ($job) use ($instance) {
+                return serialize($this->resetChainPropertiesToDefaults($job)) === serialize($instance);
+            };
+        }
+
+        PHPUnit::assertTrue(
+            $this->dispatched($command, $callback)->isNotEmpty(),
+            "The expected [{$command}] job was not dispatched."
+        );
+
+        PHPUnit::assertTrue(
+            collect($expectedChain)->isNotEmpty(),
+            'The expected chain can not be empty.'
+        );
+
+        $this->isChainOfObjects($expectedChain)
+            ? $this->assertDispatchedWithChainOfObjects($command, $expectedChain, $callback)
+            : $this->assertDispatchedWithChainOfClasses($command, $expectedChain, $callback);
+    }
+
+    /**
+     * Reset the chain properties to their default values on the job.
+     *
+     * @param  mixed  $job
+     * @return mixed
+     */
+    protected function resetChainPropertiesToDefaults($job)
+    {
+        return tap(clone $job, function ($job) {
+            $job->chainConnection = null;
+            $job->chainQueue = null;
+            $job->chainCatchCallbacks = null;
+            $job->chained = [];
+        });
+    }
+
+    /**
+     * Assert if a job was dispatched with an empty chain based on a truth-test callback.
+     *
+     * @param  string|\Closure  $command
+     * @param  callable|null  $callback
+     * @return void
+     */
+    public function assertDispatchedWithoutChain($command, $callback = null)
+    {
+        if ($command instanceof Closure) {
+            [$command, $callback] = [$this->firstClosureParameterType($command), $command];
+        }
+
+        PHPUnit::assertTrue(
+            $this->dispatched($command, $callback)->isNotEmpty(),
+            "The expected [{$command}] job was not dispatched."
+        );
+
+        $this->assertDispatchedWithChainOfClasses($command, [], $callback);
+    }
+
+    /**
+     * Assert if a job was dispatched with chained jobs based on a truth-test callback.
+     *
+     * @param  string  $command
+     * @param  array  $expectedChain
+     * @param  callable|null  $callback
+     * @return void
+     */
+    protected function assertDispatchedWithChainOfObjects($command, $expectedChain, $callback)
+    {
+        $chain = collect($expectedChain)->map(function ($job) {
+            return serialize($job);
+        })->all();
+
+        PHPUnit::assertTrue(
+            $this->dispatched($command, $callback)->filter(function ($job) use ($chain) {
+                return $job->chained == $chain;
+            })->isNotEmpty(),
+            'The expected chain was not dispatched.'
+        );
+    }
+
+    /**
+     * Assert if a job was dispatched with chained jobs based on a truth-test callback.
+     *
+     * @param  string  $command
+     * @param  array  $expectedChain
+     * @param  callable|null  $callback
+     * @return void
+     */
+    protected function assertDispatchedWithChainOfClasses($command, $expectedChain, $callback)
+    {
+        $matching = $this->dispatched($command, $callback)->map->chained->map(function ($chain) {
+            return collect($chain)->map(function ($job) {
+                return get_class(unserialize($job));
+            });
+        })->filter(function ($chain) use ($expectedChain) {
+            return $chain->all() === $expectedChain;
+        });
+
+        PHPUnit::assertTrue(
+            $matching->isNotEmpty(), 'The expected chain was not dispatched.'
+        );
+    }
+
+    /**
+     * Determine if the given chain is entirely composed of objects.
+     *
+     * @param  array  $chain
+     * @return bool
+     */
+    protected function isChainOfObjects($chain)
+    {
+        return ! collect($chain)->contains(function ($job) {
+            return ! is_object($job);
+        });
+    }
+
+    /**
+     * Assert if a batch was dispatched based on a truth-test callback.
+     *
+     * @param  callable  $callback
+     * @return void
+     */
+    public function assertBatched(callable $callback)
+    {
+        PHPUnit::assertTrue(
+            $this->batched($callback)->count() > 0,
+            'The expected batch was not dispatched.'
         );
     }
 
@@ -201,6 +379,23 @@ class BusFake implements QueueingDispatcher
     }
 
     /**
+     * Get all of the pending batches matching a truth-test callback.
+     *
+     * @param  callable  $callback
+     * @return \Illuminate\Support\Collection
+     */
+    public function batched(callable $callback)
+    {
+        if (empty($this->batches)) {
+            return collect();
+        }
+
+        return collect($this->batches)->filter(function ($batch) use ($callback) {
+            return $callback($batch);
+        });
+    }
+
+    /**
      * Determine if there are any stored commands for a given class.
      *
      * @param  string  $command
@@ -234,6 +429,24 @@ class BusFake implements QueueingDispatcher
             $this->commands[get_class($command)][] = $command;
         } else {
             return $this->dispatcher->dispatch($command);
+        }
+    }
+
+    /**
+     * Dispatch a command to its appropriate handler in the current process.
+     *
+     * Queuable jobs will be dispatched to the "sync" queue.
+     *
+     * @param  mixed  $command
+     * @param  mixed  $handler
+     * @return mixed
+     */
+    public function dispatchSync($command, $handler = null)
+    {
+        if ($this->shouldFakeJob($command)) {
+            $this->commands[get_class($command)][] = $command;
+        } else {
+            return $this->dispatcher->dispatchSync($command, $handler);
         }
     }
 
@@ -284,7 +497,54 @@ class BusFake implements QueueingDispatcher
     }
 
     /**
-     * Determine if an command should be faked or actually dispatched.
+     * Create a new chain of queueable jobs.
+     *
+     * @param  \Illuminate\Support\Collection|array  $jobs
+     * @return \Illuminate\Foundation\Bus\PendingChain
+     */
+    public function chain($jobs)
+    {
+        $jobs = Collection::wrap($jobs);
+
+        return new PendingChainFake($this, $jobs->shift(), $jobs->toArray());
+    }
+
+    /**
+     * Attempt to find the batch with the given ID.
+     *
+     * @param  string  $batchId
+     * @return \Illuminate\Bus\Batch|null
+     */
+    public function findBatch(string $batchId)
+    {
+    }
+
+    /**
+     * Create a new batch of queueable jobs.
+     *
+     * @param  \Illuminate\Support\Collection|array  $jobs
+     * @return \Illuminate\Bus\PendingBatch
+     */
+    public function batch($jobs)
+    {
+        return new PendingBatchFake($this, Collection::wrap($jobs));
+    }
+
+    /**
+     * Record the fake pending batch dispatch.
+     *
+     * @param  \Illuminate\Bus\PendingBatch $pendingBatch
+     * @return \Illuminate\Bus\Batch
+     */
+    public function recordPendingBatch(PendingBatch $pendingBatch)
+    {
+        $this->batches[] = $pendingBatch;
+
+        return (new BatchRepositoryFake)->store($pendingBatch);
+    }
+
+    /**
+     * Determine if a command should be faked or actually dispatched.
      *
      * @param  mixed  $command
      * @return bool

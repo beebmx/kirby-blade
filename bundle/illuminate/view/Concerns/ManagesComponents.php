@@ -2,6 +2,8 @@
 
 namespace Illuminate\View\Concerns;
 
+use Closure;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\View;
@@ -40,7 +42,7 @@ trait ManagesComponents
     /**
      * Start a component rendering process.
      *
-     * @param  \Illuminate\View\View|string  $view
+     * @param  \Illuminate\Contracts\View\View|\Illuminate\Contracts\Support\Htmlable|\Closure|string  $view
      * @param  array  $data
      * @return void
      */
@@ -80,10 +82,18 @@ trait ManagesComponents
     {
         $view = array_pop($this->componentStack);
 
+        $data = $this->componentData();
+
+        if ($view instanceof Closure) {
+            $view = $view($data);
+        }
+
         if ($view instanceof View) {
-            return $view->with($this->componentData())->render();
+            return $view->with($data)->render();
+        } elseif ($view instanceof Htmlable) {
+            return $view->toHtml();
         } else {
-            return $this->make($view, $this->componentData())->render();
+            return $this->make($view, $data)->render();
         }
     }
 
@@ -94,10 +104,17 @@ trait ManagesComponents
      */
     protected function componentData()
     {
+        $defaultSlot = new HtmlString(trim(ob_get_clean()));
+
+        $slots = array_merge([
+            '__default' => $defaultSlot,
+        ], $this->slots[count($this->componentStack)]);
+
         return array_merge(
             $this->componentData[count($this->componentStack)],
-            ['slot' => new HtmlString(trim(ob_get_clean()))],
-            $this->slots[count($this->componentStack)]
+            ['slot' => $defaultSlot],
+            $this->slots[count($this->componentStack)],
+            ['__laravel_slots' => $slots]
         );
     }
 

@@ -71,7 +71,7 @@ class BladeCompiler extends Compiler
         }
 
         return (new ComponentTagCompiler(
-            $this->classComponentAliases
+            $this->classComponentAliases, $this->classComponentNamespaces, $this
         ))->compile($value);
     }
 

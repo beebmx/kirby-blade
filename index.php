@@ -21,6 +21,7 @@ Kirby::plugin('beebmx/kirby-blade', [
             if (Str::endsWith($kirby->request()->url(), '.php')) {
                 Header::redirect(substr($kirby->request()->url(), 0, -4), 301);
             }
+
             return new Template($kirby, $name, $contentType);
         },
         'snippet' => function (Kirby $kirby, string $name, array $data = []) {

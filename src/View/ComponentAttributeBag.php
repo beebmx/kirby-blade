@@ -3,41 +3,58 @@
 
 namespace Beebmx\View;
 
+use Illuminate\View\AppendableAttributeValue;
 use Illuminate\View\ComponentAttributeBag as AttributeBag;
 
 class ComponentAttributeBag extends AttributeBag
 {
-
     /**
      * Merge additional attributes / values into the attribute bag.
      *
-     * @param  array  $attributes
-     * @return \Beebmx\View\ComponentAttributeBag
+     * @param  array  $attributeDefaults
+     * @param  bool  $escape
+     * @return static
      */
-    public function merge(array $attributeDefaults = [])
+    public function merge(array $attributeDefaults = [], $escape = true)
     {
-        $attributes = [];
-
-        $attributeDefaults = array_map(function ($value) {
-            if (is_null($value) || is_bool($value)) {
-                return $value;
-            }
-
-            return _e($value);
+        $attributeDefaults = array_map(function ($value) use ($escape) {
+            return $this->shouldEscapeAttributeValue($escape, $value)
+                ? _e($value)
+                : $value;
         }, $attributeDefaults);
 
-        foreach ($this->attributes as $key => $value) {
-            if ($key !== 'class') {
-                $attributes[$key] = $value;
+        [$appendableAttributes, $nonAppendableAttributes] = collect($this->attributes)
+            ->partition(function ($value, $key) use ($attributeDefaults) {
+                return $key === 'class' ||
+                    (isset($attributeDefaults[$key]) &&
+                        $attributeDefaults[$key] instanceof AppendableAttributeValue);
+            });
 
-                continue;
-            }
+        $attributes = $appendableAttributes->mapWithKeys(function ($value, $key) use ($attributeDefaults, $escape) {
+            $defaultsValue = isset($attributeDefaults[$key]) && $attributeDefaults[$key] instanceof AppendableAttributeValue
+                ? $this->resolveAppendableAttributeDefault($attributeDefaults, $key, $escape)
+                : ($attributeDefaults[$key] ?? '');
 
-            $attributes[$key] = implode(' ', array_unique(
-                array_filter([$attributeDefaults[$key] ?? '', $value])
-            ));
-        }
+            return [$key => implode(' ', array_unique(array_filter([$defaultsValue, $value])))];
+        })->merge($nonAppendableAttributes)->all();
 
         return new static(array_merge($attributeDefaults, $attributes));
+    }
+
+    /**
+     * Resolve an appendable attribute value default value.
+     *
+     * @param  array  $attributeDefaults
+     * @param  string  $key
+     * @param  bool  $escape
+     * @return mixed
+     */
+    protected function resolveAppendableAttributeDefault($attributeDefaults, $key, $escape)
+    {
+        if ($this->shouldEscapeAttributeValue($escape, $value = $attributeDefaults[$key]->value)) {
+            $value = _e($value);
+        }
+
+        return $value;
     }
 }

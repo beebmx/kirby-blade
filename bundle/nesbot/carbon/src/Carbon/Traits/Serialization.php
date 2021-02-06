@@ -10,7 +10,7 @@
  */
 namespace Carbon\Traits;
 
-use InvalidArgumentException;
+use Carbon\Exceptions\InvalidFormatException;
 
 /**
  * Trait Serialization.
@@ -26,7 +26,7 @@ use InvalidArgumentException;
  *
  * Depends on the following methods:
  *
- * @method string|static locale(string $locale = null)
+ * @method string|static locale(string $locale = null, string ...$fallbackLocales)
  * @method string        toJSON()
  */
 trait Serialization
@@ -69,7 +69,7 @@ trait Serialization
      *
      * @param string $value
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidFormatException
      *
      * @return static
      */
@@ -78,7 +78,7 @@ trait Serialization
         $instance = @unserialize("$value");
 
         if (!$instance instanceof static) {
-            throw new InvalidArgumentException('Invalid serialized value.');
+            throw new InvalidFormatException("Invalid serialized value: $value");
         }
 
         return $instance;
@@ -93,7 +93,7 @@ trait Serialization
      */
     public static function __set_state($dump)
     {
-        if (is_string($dump)) {
+        if (\is_string($dump)) {
             return static::parse($dump);
         }
 
@@ -149,10 +149,11 @@ trait Serialization
     public function jsonSerialize()
     {
         $serializer = $this->localSerializer ?? static::$serializer;
+
         if ($serializer) {
-            return is_string($serializer)
+            return \is_string($serializer)
                 ? $this->rawFormat($serializer)
-                : call_user_func($serializer, $this);
+                : $serializer($this);
         }
 
         return $this->toJSON();

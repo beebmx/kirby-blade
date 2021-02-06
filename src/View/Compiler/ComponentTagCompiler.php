@@ -5,6 +5,7 @@ namespace Beebmx\View\Compiler;
 use Beebmx\View\AnonymousComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Illuminate\View\DynamicComponent;
 use InvalidArgumentException;
 use \Illuminate\View\Compilers\ComponentTagCompiler as TagCompiler;
 
@@ -43,9 +44,8 @@ class ComponentTagCompiler extends TagCompiler
             $parameters = $data->all();
         }
 
-        return " @component('{$class}', [".$this->attributesToString($parameters, $escapeBound = false).'])
-<?php $component->withName(\''.$component.'\'); ?>
-<?php $component->withAttributes(['.$this->attributesToString($attributes->all()).']); ?>';
+        return " @component('{$class}', '{$component}', [".$this->attributesToString($parameters, $escapeBound = false).'])
+<?php $component->withAttributes(['.$this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
     }
 
     /**
@@ -56,7 +56,7 @@ class ComponentTagCompiler extends TagCompiler
      *
      * @throws \InvalidArgumentException
      */
-    protected function componentClass(string $component)
+    public function componentClass(string $component)
     {
         $viewFactory = Container::getInstance()->get('view');
 

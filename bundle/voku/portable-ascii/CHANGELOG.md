@@ -1,5 +1,45 @@
 # Changelog
 
+### 1.5.6 (2020-11-12)
+    
+- "ASCII::normalize_whitespace()" -> can now also remove "control characters" if needed v2
+
+### 1.5.5 (2020-11-12)
+
+- fix "Greeklish" char-mapping (thanks @sebdesign)
+- "ASCII::normalize_whitespace()" -> can now also remove "control characters" if needed
+
+### 1.5.4 (2020-11-08)
+
+- add some missing replacements in U+23xx page (thanks @marcoffee)
+- fix "Russian" char-mapping (thanks @ilyahoilik)
+- running test with PHP 8.0 rc3
+
+### 1.5.3 (2020-07-23)
+
+- fix "Georgian" char-mapping (thanks @waska14)
+
+### 1.5.2 (2020-06-16)
+
+- add "Bengali" (bn) language support (thanks @eliyas5044)
+- fix "Portuguese" char-mapping
+- reduce the file size (removed extra comments from "avian2/unidecode")
+
+### 1.5.1 (2020-05-26)
+
+- fix merge ASCII transliterations from "avian2/unidecode" (python)
+  -> https://github.com/avian2/unidecode/
+  
+### 1.5.0 (2020-05-24)
+
+- merge ASCII transliterations from "avian2/unidecode" (python)
+  -> https://github.com/avian2/unidecode/
+
+### 1.4.11 (2020-05-23)
+
+- "composer.json" -> remove "autoload-dev" stuff from "autoload"
+- "voku/php-readme-helper" -> auto-generate the API documentation in the README
+
 ### 1.4.10 (2020-03-13)
 
 - ASCII::to_ascii() -> fix extra symbol handling in the regex

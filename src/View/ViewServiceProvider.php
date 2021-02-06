@@ -3,7 +3,6 @@
 namespace Beebmx\View;
 
 use Illuminate\View\ViewServiceProvider as ViewProvider;
-use Illuminate\View\Engines\CompilerEngine;
 use Beebmx\View\Compiler\BladeCompiler;
 
 class ViewServiceProvider extends ViewProvider

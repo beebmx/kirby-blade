@@ -24,6 +24,7 @@
         <exclude name="StaticAccess" />
         <exclude name="IfStatementAssignment" />
         <exclude name="UndefinedVariable" />
+        <exclude name="ErrorControlOperator" />
     </rule>
     <rule ref="rulesets/controversial.xml" />
     <rule ref="rulesets/design.xml">
@@ -33,7 +34,7 @@
     </rule>
     <rule ref="rulesets/design.xml/CouplingBetweenObjects">
         <properties>
-            <property name="maximum" value="20" />
+            <property name="maximum" value="25" />
         </properties>
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">
