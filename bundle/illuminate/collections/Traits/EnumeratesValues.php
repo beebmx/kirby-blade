@@ -669,14 +669,24 @@ trait EnumeratesValues
     }
 
     /**
-     * Filter the items, removing any items that don't match the given type.
+     * Filter the items, removing any items that don't match the given type(s).
      *
-     * @param  string  $type
+     * @param  string|string[]  $type
      * @return static
      */
     public function whereInstanceOf($type)
     {
         return $this->filter(function ($value) use ($type) {
+            if (is_array($type)) {
+                foreach ($type as $classType) {
+                    if ($value instanceof $classType) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
             return $value instanceof $type;
         });
     }
@@ -720,7 +730,7 @@ trait EnumeratesValues
      * Reduce the collection to a single value.
      *
      * @param  callable  $callback
-     * @param  mixed $initial
+     * @param  mixed  $initial
      * @return mixed
      */
     public function reduce(callable $callback, $initial = null)
@@ -738,18 +748,12 @@ trait EnumeratesValues
      * Reduce an associative collection to a single value.
      *
      * @param  callable  $callback
-     * @param  mixed $initial
+     * @param  mixed  $initial
      * @return mixed
      */
     public function reduceWithKeys(callable $callback, $initial = null)
     {
-        $result = $initial;
-
-        foreach ($this as $key => $value) {
-            $result = $callback($result, $value, $key);
-        }
-
-        return $result;
+        return $this->reduce($callback, $initial);
     }
 
     /**

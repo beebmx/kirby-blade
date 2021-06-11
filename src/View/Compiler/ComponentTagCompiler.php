@@ -3,9 +3,9 @@
 namespace Beebmx\View\Compiler;
 
 use Beebmx\View\AnonymousComponent;
+use Beebmx\View\DynamicComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
-use Illuminate\View\DynamicComponent;
 use InvalidArgumentException;
 use \Illuminate\View\Compilers\ComponentTagCompiler as TagCompiler;
 
@@ -33,10 +33,10 @@ class ComponentTagCompiler extends TagCompiler
         // If the component doesn't exists as a class we'll assume it's a class-less
         // component and pass the component as a view parameter to the data so it
         // can be accessed within the component and we can render out the view.
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             $parameters = [
                 'view' => "'$class'",
-                'data' => '['.$this->attributesToString($data->all(), $escapeBound = false).']',
+                'data' => '[' . $this->attributesToString($data->all(), $escapeBound = false) . ']',
             ];
 
             $class = AnonymousComponent::class;
@@ -44,8 +44,8 @@ class ComponentTagCompiler extends TagCompiler
             $parameters = $data->all();
         }
 
-        return " @component('{$class}', '{$component}', [".$this->attributesToString($parameters, $escapeBound = false).'])
-<?php $component->withAttributes(['.$this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
+        return "##BEGIN-COMPONENT-CLASS##@component('{$class}', '{$component}', [" . $this->attributesToString($parameters, $escapeBound = false) . '])
+<?php $component->withAttributes([' . $this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class) . ']); ?>';
     }
 
     /**
@@ -94,7 +94,7 @@ class ComponentTagCompiler extends TagCompiler
     {
         return collect($attributes)
             ->map(function (string $value, string $attribute) use ($escapeBound) {
-                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && ! is_numeric($value)
+                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value)
                     ? "'{$attribute}' => \Beebmx\View\Compiler\BladeCompiler::sanitizeComponentAttribute({$value})"
                     : "'{$attribute}' => {$value}";
             })

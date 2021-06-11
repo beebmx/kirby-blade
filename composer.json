@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "blade", "view", "template"
     ],
-    "version": "3.0.0",
+    "version": "3.1.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "illuminate/view": "^8.0",
-        "jenssegers/blade": "^1.4"
+        "jenssegers/blade": "^1.4",
+        "ramsey/uuid": "^4.1"
     },
     "config": {
         "optimize-autoloader": true,

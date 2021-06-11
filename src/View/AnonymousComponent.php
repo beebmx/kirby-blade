@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Beebmx\View;
 
 use Illuminate\View\AnonymousComponent as Anonymous;
 
 class AnonymousComponent extends Anonymous
 {
-
     /**
      * Get the data that should be supplied to the view.
      *

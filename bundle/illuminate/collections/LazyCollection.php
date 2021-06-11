@@ -316,7 +316,7 @@ class LazyCollection implements Enumerable
     /**
      * Retrieve duplicate items.
      *
-     * @param  callable|null  $callback
+     * @param  callable|string|null  $callback
      * @param  bool  $strict
      * @return static
      */
@@ -328,7 +328,7 @@ class LazyCollection implements Enumerable
     /**
      * Retrieve duplicate items using strict comparison.
      *
-     * @param  callable|null  $callback
+     * @param  callable|string|null  $callback
      * @return static
      */
     public function duplicatesStrict($callback = null)
@@ -554,6 +554,16 @@ class LazyCollection implements Enumerable
     public function isEmpty()
     {
         return ! $this->getIterator()->valid();
+    }
+
+    /**
+     * Determine if the collection contains a single item.
+     *
+     * @return bool
+     */
+    public function containsOneItem()
+    {
+        return $this->take(2)->count() === 1;
     }
 
     /**
@@ -1001,6 +1011,31 @@ class LazyCollection implements Enumerable
     }
 
     /**
+     * Get the first item in the collection, but only if exactly one item exists. Otherwise, throw an exception.
+     *
+     * @param  mixed  $key
+     * @param  mixed  $operator
+     * @param  mixed  $value
+     * @return mixed
+     *
+     * @throws \Illuminate\Collections\ItemNotFoundException
+     * @throws \Illuminate\Collections\MultipleItemsFoundException
+     */
+    public function sole($key = null, $operator = null, $value = null)
+    {
+        $filter = func_num_args() > 1
+            ? $this->operatorForWhere(...func_get_args())
+            : $key;
+
+        return $this
+            ->when($filter)
+            ->filter($filter)
+            ->take(2)
+            ->collect()
+            ->sole();
+    }
+
+    /**
      * Chunk the collection into chunks of the given size.
      *
      * @param  int  $size
@@ -1061,7 +1096,7 @@ class LazyCollection implements Enumerable
         return new static(function () use ($callback) {
             $iterator = $this->getIterator();
 
-            $chunk = new Collection();
+            $chunk = new Collection;
 
             if ($iterator->valid()) {
                 $chunk[$iterator->key()] = $iterator->current();
@@ -1073,7 +1108,7 @@ class LazyCollection implements Enumerable
                 if (! $callback($iterator->current(), $iterator->key(), $chunk)) {
                     yield new static($chunk);
 
-                    $chunk = new Collection();
+                    $chunk = new Collection;
                 }
 
                 $chunk[$iterator->key()] = $iterator->current();

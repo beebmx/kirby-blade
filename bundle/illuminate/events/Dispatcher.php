@@ -71,7 +71,7 @@ class Dispatcher implements DispatcherContract
      * Register an event listener with the dispatcher.
      *
      * @param  \Closure|string|array  $events
-     * @param  \Closure|string|null  $listener
+     * @param  \Closure|string|array|null  $listener
      * @return void
      */
     public function listen($events, $listener = null)
@@ -590,6 +590,8 @@ class Dispatcher implements DispatcherContract
     {
         return tap($job, function ($job) use ($listener) {
             $job->tries = $listener->tries ?? null;
+
+            $job->maxExceptions = $listener->maxExceptions ?? null;
 
             $job->backoff = method_exists($listener, 'backoff')
                                 ? $listener->backoff() : ($listener->backoff ?? null);

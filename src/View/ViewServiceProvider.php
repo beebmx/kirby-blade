@@ -20,10 +20,9 @@ class ViewServiceProvider extends ViewProvider
     public function registerBladeCompiler()
     {
         $this->app->singleton('blade.compiler', function ($app) {
-            return new BladeCompiler(
-                $app['files'],
-                $app['config']['view.compiled']
-            );
+            return tap(new BladeCompiler($app['files'], $app['config']['view.compiled']), function ($blade) {
+                $blade->component('dynamic-component', DynamicComponent::class);
+            });
         });
     }
 }

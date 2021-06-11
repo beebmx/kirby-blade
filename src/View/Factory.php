@@ -2,6 +2,7 @@
 
 namespace Beebmx\View;
 
+use Illuminate\Support\HtmlString;
 use Illuminate\View\FileViewFinder;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\Engines\EngineResolver;
@@ -27,5 +28,25 @@ class Factory extends FactoryView
         $this->engines = $engines;
 
         $this->share('__env', $this);
+    }
+
+    /**
+     * Get the data for the given component.
+     *
+     * @return array
+     */
+    protected function componentData()
+    {
+        $defaultSlot = new HtmlString(trim(ob_get_clean()));
+
+        $slots = array_merge([
+            '__default' => $defaultSlot,
+        ], $this->slots[count($this->componentStack)]);
+
+        return array_merge(
+            $this->componentData[count($this->componentStack)],
+            ['slot' => $defaultSlot],
+            $this->slots[count($this->componentStack)],
+        );
     }
 }

@@ -3,6 +3,7 @@
 namespace Illuminate\Support;
 
 use Closure;
+use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 use JsonSerializable;
@@ -10,7 +11,7 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class Stringable implements JsonSerializable
 {
-    use Macroable, Tappable;
+    use Conditionable, Macroable, Tappable;
 
     /**
      * The underlying string value.
@@ -324,7 +325,7 @@ class Stringable implements JsonSerializable
      * Convert GitHub flavored Markdown into HTML.
      *
      * @param  array  $options
-     * @return string
+     * @return static
      */
     public function markdown(array $options = [])
     {
@@ -335,7 +336,7 @@ class Stringable implements JsonSerializable
      * Get the string matching the given pattern.
      *
      * @param  string  $pattern
-     * @return static|null
+     * @return static
      */
     public function match($pattern)
     {
@@ -363,6 +364,17 @@ class Stringable implements JsonSerializable
         }
 
         return collect($matches[1] ?? $matches[0]);
+    }
+
+    /**
+     * Determine if the string matches the given pattern.
+     *
+     * @param  string  $pattern
+     * @return bool
+     */
+    public function test($pattern)
+    {
+        return $this->match($pattern)->isNotEmpty();
     }
 
     /**
@@ -415,7 +427,7 @@ class Stringable implements JsonSerializable
     /**
      * Call the given callback and return a new string.
      *
-     * @param callable $callback
+     * @param  callable  $callback
      * @return static
      */
     public function pipe(callable $callback)
@@ -457,6 +469,29 @@ class Stringable implements JsonSerializable
     }
 
     /**
+     * Remove any occurrence of the given string in the subject.
+     *
+     * @param  string|array<string>  $search
+     * @param  bool  $caseSensitive
+     * @return static
+     */
+    public function remove($search, $caseSensitive = true)
+    {
+        return new static(Str::remove($search, $this->value, $caseSensitive));
+    }
+
+    /**
+     * Repeat the string.
+     *
+     * @param  int  $times
+     * @return static
+     */
+    public function repeat(int $times)
+    {
+        return new static(Str::repeat($this->value, $times));
+    }
+
+    /**
      * Replace the given value in the given string.
      *
      * @param  string|string[]  $search
@@ -465,7 +500,7 @@ class Stringable implements JsonSerializable
      */
     public function replace($search, $replace)
     {
-        return new static(str_replace($search, $replace, $this->value));
+        return new static(Str::replace($search, $replace, $this->value));
     }
 
     /**
@@ -628,7 +663,7 @@ class Stringable implements JsonSerializable
      */
     public function substrCount($needle, $offset = null, $length = null)
     {
-        return Str::substrCount($this->value, $needle, $offset, $length);
+        return Str::substrCount($this->value, $needle, $offset ?? 0, $length);
     }
 
     /**
@@ -675,25 +710,6 @@ class Stringable implements JsonSerializable
     }
 
     /**
-     * Apply the callback's string changes if the given "value" is true.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function when($value, $callback, $default = null)
-    {
-        if ($value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
-    }
-
-    /**
      * Execute the given callback if the string is empty.
      *
      * @param  callable  $callback
@@ -702,6 +718,23 @@ class Stringable implements JsonSerializable
     public function whenEmpty($callback)
     {
         if ($this->isEmpty()) {
+            $result = $callback($this);
+
+            return is_null($result) ? $this : $result;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Execute the given callback if the string is not empty.
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function whenNotEmpty($callback)
+    {
+        if ($this->isNotEmpty()) {
             $result = $callback($this);
 
             return is_null($result) ? $this : $result;
@@ -720,6 +753,16 @@ class Stringable implements JsonSerializable
     public function words($words = 100, $end = '...')
     {
         return new static(Str::words($this->value, $words, $end));
+    }
+
+    /**
+     * Get the number of words a string contains.
+     *
+     * @return int
+     */
+    public function wordCount()
+    {
+        return str_word_count($this->value);
     }
 
     /**

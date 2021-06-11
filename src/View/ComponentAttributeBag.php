@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Beebmx\View;
 
 use Illuminate\View\AppendableAttributeValue;
