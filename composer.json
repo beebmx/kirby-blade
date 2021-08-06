@@ -15,18 +15,14 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "getkirby/composer-installer": "^1.2"
-    },
-    "require-dev": {
+        "getkirby/composer-installer": "^1.2",
         "illuminate/view": "^8.0",
         "jenssegers/blade": "^1.4",
         "ramsey/uuid": "^4.1"
     },
     "config": {
         "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "vendor-dir": "bundle/"
+        "preferred-install": "dist"
     },
     "autoload": {
         "files": [
