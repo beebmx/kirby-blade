@@ -53,10 +53,16 @@ class Template extends KirbyTemplate
                 return $path;
             }
         }
-        $name = $this->name() . '.' . $this->type();
+
+        if ($this->type() === 'blade') {
+            return null;
+        } else {
+            $name = $this->name() . "." . $this->type();
+        }
+
         try {
             // Try the template with type extension in the default template directory.
-            return F::realpath($this->getFilename(), $this->root());
+            return F::realpath($this->getFilename($name), $this->root());
         } catch (Exception $e) {
             // Look for the template with type extension provided by an extension.
             // This might be null if the template does not exist.
@@ -234,8 +240,12 @@ class Template extends KirbyTemplate
         }
     }
 
-    public function getFilename()
+    public function getFilename(string $name = null)
     {
+        if ($name) {
+            return $this->root() . '/' . $name . '.' . $this->extension();
+        }
+
         if ($this->isBlade()) {
             return $this->root() . '/' . $this->name() . '.' . $this->bladeExtension();
         } else {
