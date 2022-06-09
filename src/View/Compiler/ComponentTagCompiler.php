@@ -74,8 +74,29 @@ class ComponentTagCompiler extends TagCompiler
             );
         }
 
-        if ($viewFactory->exists($view = "components.{$component}")) {
-            return $view;
+        $guess = collect($this->blade->getAnonymousComponentNamespaces())
+            ->filter(function ($directory, $prefix) use ($component) {
+                return Str::startsWith($component, $prefix . '::');
+            })
+            ->prepend('components', $component)
+            ->reduce(function ($carry, $directory, $prefix) use ($component, $viewFactory) {
+                if (!is_null($carry)) {
+                    return $carry;
+                }
+
+                $componentName = Str::after($component, $prefix . '::');
+
+                if ($viewFactory->exists($view = $this->guessViewName($componentName, $directory))) {
+                    return $view;
+                }
+
+                if ($viewFactory->exists($view = $this->guessViewName($componentName, $directory) . '.index')) {
+                    return $view;
+                }
+            });
+
+        if (!is_null($guess)) {
+            return $guess;
         }
 
         throw new InvalidArgumentException(
