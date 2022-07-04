@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "blade", "view", "template"
     ],
-    "version": "4.0.1",
+    "version": "4.0.2",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -15,18 +15,15 @@
     ],
     "require": {
         "php": "^8.0.2",
-        "getkirby/composer-installer": "^1.2",
-        "ramsey/uuid": "^4.2"
-    },
-    "require-dev": {
         "beebmx/blade": "^1.5",
-        "illuminate/view": "^9.19"
+        "getkirby/composer-installer": "^1.2",
+        "illuminate/view": "^9.19",
+        "ramsey/uuid": "^4.2"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "vendor-dir": "bundle/",
         "allow-plugins": {
             "getkirby/composer-installer": true
         }

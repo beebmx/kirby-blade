@@ -24,6 +24,28 @@ You can use the power of Blade like [Layouts](https://laravel.com/docs/7.x/blade
 
 All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/7.x/blade).
 
+### Conflicts
+
+Since Kirby `3.7.0` it's important to add the helpers from `illuminate/support` to your root `index.php` file in your `public` directory.
+
+```php
+const KIRBY_HELPER_E = false;
+// or
+define('KIRBY_HELPER_DUMP', false);
+```
+
+This line should be before your `autoload.php` file. The result file should be like: 
+
+```php
+<?php
+
+define('KIRBY_HELPER_DUMP', false);
+
+include '../vendor/autoload.php';
+
+// ...
+```
+
 ## Options
 
 The default values of the package are:
