@@ -6,18 +6,24 @@ use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Template as KirbyTemplate;
 use Beebmx\Blade\Blade;
 use Exception;
-use Kirby\Toolkit\F;
+use Kirby\Filesystem\Dir;
+use Kirby\Filesystem\F;
 use Kirby\Toolkit\Tpl;
-use Kirby\Toolkit\Dir;
 
 class Template extends KirbyTemplate
 {
     protected $blade;
+
     protected $views;
+
     protected $defaultType;
+
     protected $name;
+
     protected $template;
+
     protected $type;
+
     public static $data = [];
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
@@ -45,7 +51,7 @@ class Template extends KirbyTemplate
                 // Try the default template in the default template directory.
                 return F::realpath($this->getFilename(), $this->root());
             } catch (Exception $e) {
-                //
+                // ignore errors, continue searching
             }
             // Look for the default template provided by an extension.
             $path = Kirby::instance()->extension($this->store(), $this->name());
@@ -53,10 +59,12 @@ class Template extends KirbyTemplate
                 return $path;
             }
         }
+
         $name = $this->name() . '.' . $this->type();
+
         try {
             // Try the template with type extension in the default template directory.
-            return F::realpath($this->getFilename(), $this->root());
+            return F::realpath($this->getFilename($name), $this->root());
         } catch (Exception $e) {
             // Look for the template with type extension provided by an extension.
             // This might be null if the template does not exist.
@@ -78,7 +86,11 @@ class Template extends KirbyTemplate
             $this->setDirectives();
             $this->setIfStatements();
 
-            return $this->blade->make($this->name, $data);
+            if ($this->hasDefaultType() === true) {
+                return $this->blade->make($this->name, $data);
+            }
+
+            return Tpl::load($this->file(), $data);
         } else {
             return Tpl::load($this->file(), $data);
         }
@@ -233,8 +245,12 @@ class Template extends KirbyTemplate
         }
     }
 
-    public function getFilename()
+    public function getFilename(string $name = null)
     {
+        if ($name) {
+            return $this->root() . '/' . $name . '.' . $this->extension();
+        }
+
         if ($this->isBlade()) {
             return $this->root() . '/' . $this->name() . '.' . $this->bladeExtension();
         } else {
