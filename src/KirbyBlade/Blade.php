@@ -1,10 +1,10 @@
 <?php
 
-namespace Beebmx\Blade;
+namespace Beebmx\KirbyBlade;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Compilers\BladeCompiler;
-use Jenssegers\Blade\Blade as BladeProvider;
+use Beebmx\Blade\Blade as BladeProvider;
 use Beebmx\View\ViewServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;

@@ -2,9 +2,10 @@
 
 namespace Beebmx;
 
+use Beebmx\Blade\Application;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Template as KirbyTemplate;
-use Beebmx\Blade\Blade;
+use Beebmx\KirbyBlade\Blade;
 use Exception;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
@@ -79,9 +80,11 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
+            $application = new Application;
             $this->blade = new Blade(
                 $this->template,
-                $this->views
+                $this->views,
+                $application
             );
             $this->setDirectives();
             $this->setIfStatements();
@@ -90,6 +93,7 @@ class Template extends KirbyTemplate
                 return $this->blade->make($this->name, $data);
             }
 
+            $application->terminate();
             return Tpl::load($this->file(), $data);
         } else {
             return Tpl::load($this->file(), $data);

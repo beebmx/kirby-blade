@@ -2,7 +2,8 @@
 
 namespace Beebmx;
 
-use Beebmx\Blade\Blade;
+use Beebmx\Blade\Application;
+use Beebmx\KirbyBlade\Blade;
 use Kirby\Cms\App as Kirby;
 use Kirby\Toolkit\Tpl;
 
@@ -38,7 +39,8 @@ class Snippet extends Template
         if ($this->isBlade()) {
             $this->blade = new Blade(
                 $this->template,
-                $this->views
+                $this->views,
+                new Application
             );
             $this->setDirectives();
             $this->setIfStatements();
