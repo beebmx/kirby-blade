@@ -90,10 +90,11 @@ class Template extends KirbyTemplate
             $this->setIfStatements();
 
             if ($this->hasDefaultType() === true) {
-                return $this->blade->make($this->name, $data);
+                return tap($this->blade->make($this->name, $data), function() use ($application) {
+                    $application->terminate();
+                });
             }
 
-            $application->terminate();
             return Tpl::load($this->file(), $data);
         } else {
             return Tpl::load($this->file(), $data);
