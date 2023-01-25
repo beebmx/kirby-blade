@@ -4,7 +4,7 @@ namespace Beebmx;
 
 use Beebmx\Blade\Application;
 use Kirby\Cms\App as Kirby;
-use Kirby\Cms\Template as KirbyTemplate;
+use Kirby\Template\Template as KirbyTemplate;
 use Beebmx\KirbyBlade\Blade;
 use Exception;
 use Kirby\Filesystem\Dir;
@@ -17,15 +17,15 @@ class Template extends KirbyTemplate
 
     protected $views;
 
-    protected $defaultType;
+    protected string $defaultType;
 
-    protected $name;
+    protected string $name;
 
     protected $template;
 
-    protected $type;
+    protected string $type;
 
-    public static $data = [];
+    public static array $data = [];
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
     {
