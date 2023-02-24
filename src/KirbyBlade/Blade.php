@@ -11,6 +11,12 @@ use Illuminate\Contracts\Container\Container as ContainerInterface;
 
 class Blade extends BladeProvider
 {
+    protected $container;
+
+    private $factory;
+
+    private $compiler;
+
     public function __construct($viewPaths, string $cachePath, ContainerInterface $container = null)
     {
         $this->container = $container ?: new Container;
