@@ -8,10 +8,8 @@ class AnonymousComponent extends Anonymous
 {
     /**
      * Get the data that should be supplied to the view.
-     *
-     * @return array
      */
-    public function data()
+    public function data(): array
     {
         $this->attributes = $this->attributes ?: new ComponentAttributeBag;
 

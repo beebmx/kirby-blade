@@ -2,22 +2,20 @@
 
 namespace Beebmx\View;
 
-use Illuminate\View\ViewServiceProvider as ViewProvider;
 use Beebmx\View\Compiler\BladeCompiler;
+use Illuminate\View\ViewServiceProvider as ViewProvider;
 
 class ViewServiceProvider extends ViewProvider
 {
-    protected function createFactory($resolver, $finder, $events)
+    protected function createFactory($resolver, $finder, $events): Factory
     {
         return new Factory($resolver, $finder, $events);
     }
 
     /**
      * Register the Blade compiler implementation.
-     *
-     * @return void
      */
-    public function registerBladeCompiler()
+    public function registerBladeCompiler(): void
     {
         $this->app->singleton('blade.compiler', function ($app) {
             return tap(new BladeCompiler($app['files'], $app['config']['view.compiled']), function ($blade) {

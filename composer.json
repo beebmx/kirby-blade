@@ -1,24 +1,27 @@
 {
     "name": "beebmx/kirby-blade",
-    "description": "Blade template for Kirby 3",
+    "description": "Blade template for Kirby 3 & 4",
     "keywords": [
-        "kirby", "kirby-3", "blade", "view", "template"
+        "kirby", "kirby-3", "kirby-4", "blade", "view", "template"
     ],
-    "version": "4.5.1",
+    "version": "5.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
         {
             "name": "Fernando Gutierrez",
-            "email": "fernando@beeb.mx"
+            "homepage": "https://beeb.mx"
         }
     ],
     "require": {
-        "php": "^8.0.2",
-        "beebmx/blade": "^1.5",
+        "php": "^8.1",
+        "beebmx/blade": "^1.7",
         "getkirby/composer-installer": "^1.2",
-        "illuminate/view": "^9.19",
-        "ramsey/uuid": "^4.2"
+        "illuminate/view": "^10.0",
+        "ramsey/uuid": "^4.7"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13"
     },
     "config": {
         "optimize-autoloader": true,

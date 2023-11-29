@@ -2,12 +2,12 @@
 
 namespace Beebmx\View;
 
-use Illuminate\Support\HtmlString;
-use Illuminate\View\FileViewFinder;
+use Beebmx\View\Concerns\ManagesLayouts;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory as FactoryView;
-use Beebmx\View\Concerns\ManagesLayouts;
+use Illuminate\View\FileViewFinder;
 
 class Factory extends FactoryView
 {
@@ -16,9 +16,7 @@ class Factory extends FactoryView
     /**
      * Create a new view factory instance.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $engines
      * @param  \Illuminate\View\ViewFinderInterface  $finder
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @return void
      */
     public function __construct(EngineResolver $engines, FileViewFinder $finder, Dispatcher $events = null)
@@ -32,10 +30,8 @@ class Factory extends FactoryView
 
     /**
      * Get the data for the given component.
-     *
-     * @return array
      */
-    protected function componentData()
+    protected function componentData(): array
     {
         $defaultSlot = new HtmlString(trim(ob_get_clean()));
 

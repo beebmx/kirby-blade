@@ -6,21 +6,18 @@ use Beebmx\View\AnonymousComponent;
 use Beebmx\View\DynamicComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Illuminate\View\Compilers\ComponentTagCompiler as TagCompiler;
 use InvalidArgumentException;
-use \Illuminate\View\Compilers\ComponentTagCompiler as TagCompiler;
 
 class ComponentTagCompiler extends TagCompiler
 {
     /**
      * Compile the Blade component string for the given component and attributes.
      *
-     * @param  string  $component
-     * @param  array  $attributes
-     * @return string
      *
      * @throws \InvalidArgumentException
      */
-    protected function componentString(string $component, array $attributes)
+    protected function componentString(string $component, array $attributes): string
     {
         $class = $this->componentClass($component);
 
@@ -33,10 +30,10 @@ class ComponentTagCompiler extends TagCompiler
         // If the component doesn't exists as a class we'll assume it's a class-less
         // component and pass the component as a view parameter to the data so it
         // can be accessed within the component and we can render out the view.
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             $parameters = [
                 'view' => "'$class'",
-                'data' => '[' . $this->attributesToString($data->all(), $escapeBound = false) . ']',
+                'data' => '['.$this->attributesToString($data->all(), $escapeBound = false).']',
             ];
 
             $class = AnonymousComponent::class;
@@ -44,19 +41,17 @@ class ComponentTagCompiler extends TagCompiler
             $parameters = $data->all();
         }
 
-        return "##BEGIN-COMPONENT-CLASS##@component('{$class}', '{$component}', [" . $this->attributesToString($parameters, $escapeBound = false) . '])
-<?php $component->withAttributes([' . $this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class) . ']); ?>';
+        return "##BEGIN-COMPONENT-CLASS##@component('{$class}', '{$component}', [".$this->attributesToString($parameters, $escapeBound = false).'])
+<?php $component->withAttributes(['.$this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
     }
 
     /**
      * Get the component class for a given component alias.
      *
-     * @param  string  $component
-     * @return string
      *
      * @throws \InvalidArgumentException
      */
-    public function componentClass(string $component)
+    public function componentClass(string $component): string
     {
         $viewFactory = Container::getInstance()->get('view');
 
@@ -76,26 +71,26 @@ class ComponentTagCompiler extends TagCompiler
 
         $guess = collect($this->blade->getAnonymousComponentNamespaces())
             ->filter(function ($directory, $prefix) use ($component) {
-                return Str::startsWith($component, $prefix . '::');
+                return Str::startsWith($component, $prefix.'::');
             })
             ->prepend('components', $component)
             ->reduce(function ($carry, $directory, $prefix) use ($component, $viewFactory) {
-                if (!is_null($carry)) {
+                if (! is_null($carry)) {
                     return $carry;
                 }
 
-                $componentName = Str::after($component, $prefix . '::');
+                $componentName = Str::after($component, $prefix.'::');
 
                 if ($viewFactory->exists($view = $this->guessViewName($componentName, $directory))) {
                     return $view;
                 }
 
-                if ($viewFactory->exists($view = $this->guessViewName($componentName, $directory) . '.index')) {
+                if ($viewFactory->exists($view = $this->guessViewName($componentName, $directory).'.index')) {
                     return $view;
                 }
             });
 
-        if (!is_null($guess)) {
+        if (! is_null($guess)) {
             return $guess;
         }
 
@@ -107,15 +102,13 @@ class ComponentTagCompiler extends TagCompiler
     /**
      * Convert an array of attributes to a string.
      *
-     * @param  array  $attributes
      * @param  bool  $escapeBound
-     * @return string
      */
-    protected function attributesToString(array $attributes, $escapeBound = true)
+    protected function attributesToString(array $attributes, $escapeBound = true): string
     {
         return collect($attributes)
             ->map(function (string $value, string $attribute) use ($escapeBound) {
-                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value)
+                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && ! is_numeric($value)
                     ? "'{$attribute}' => \Beebmx\View\Compiler\BladeCompiler::sanitizeComponentAttribute({$value})"
                     : "'{$attribute}' => {$value}";
             })

@@ -16,9 +16,8 @@ trait ManagesLayouts
      *
      * @param  string  $section
      * @param  string|null  $content
-     * @return void
      */
-    public function startSection($section, $content = null)
+    public function startSection($section, $content = null): void
     {
         if ($content === null) {
             if (ob_start()) {
@@ -34,15 +33,15 @@ trait ManagesLayouts
      *
      * @param  string  $section
      * @param  string  $default
-     * @return string
      */
-    public function yieldContent($section, $default = '')
+    public function yieldContent($section, $default = ''): string
     {
         $sectionContent = $default instanceof View ? $default : b($default);
         if (isset($this->sections[$section])) {
             $sectionContent = $this->sections[$section];
         }
         $sectionContent = str_replace('@@parent', '--parent--holder--', $sectionContent);
+
         return str_replace(
             '--parent--holder--',
             '@parent',

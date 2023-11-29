@@ -3,12 +3,12 @@
 namespace Beebmx;
 
 use Beebmx\Blade\Application;
-use Kirby\Cms\App as Kirby;
-use Kirby\Template\Template as KirbyTemplate;
 use Beebmx\KirbyBlade\Blade;
 use Exception;
+use Kirby\Cms\App as Kirby;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
+use Kirby\Template\Template as KirbyTemplate;
 use Kirby\Toolkit\Tpl;
 
 class Template extends KirbyTemplate
@@ -42,8 +42,6 @@ class Template extends KirbyTemplate
     /**
      * Detects the location of the template file
      * if it exists.
-     *
-     * @return string|null
      */
     public function file(): ?string
     {
@@ -61,7 +59,7 @@ class Template extends KirbyTemplate
             }
         }
 
-        $name = $this->name() . '.' . $this->type();
+        $name = $this->name().'.'.$this->type();
 
         try {
             // Try the template with type extension in the default template directory.
@@ -73,10 +71,6 @@ class Template extends KirbyTemplate
         }
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
@@ -90,7 +84,7 @@ class Template extends KirbyTemplate
             $this->setIfStatements();
 
             if ($this->hasDefaultType() === true) {
-                return tap($this->blade->make($this->name, $data), function() use ($application) {
+                return tap($this->blade->make($this->name, $data), function () use ($application) {
                     $application->terminate();
                 });
             }
@@ -103,7 +97,7 @@ class Template extends KirbyTemplate
 
     public function setViewDirectory()
     {
-        if (!file_exists($this->views)) {
+        if (! file_exists($this->views)) {
             Dir::make($this->views);
         }
     }
@@ -250,28 +244,26 @@ class Template extends KirbyTemplate
         }
     }
 
-    public function getFilename(string $name = null)
+    public function getFilename(string $name = null): string
     {
         if ($name) {
-            return $this->root() . '/' . $name . '.' . $this->extension();
+            return $this->root().'/'.$name.'.'.$this->extension();
         }
 
         if ($this->isBlade()) {
-            return $this->root() . '/' . $this->name() . '.' . $this->bladeExtension();
+            return $this->root().'/'.$this->name().'.'.$this->bladeExtension();
         } else {
-            return $this->root() . '/' . $this->name() . '.' . $this->extension();
+            return $this->root().'/'.$this->name().'.'.$this->extension();
         }
     }
 
-    public function isBlade()
+    public function isBlade(): bool
     {
-        return !!file_exists($this->template . '/' . $this->name() . '.' . $this->bladeExtension());
+        return (bool) file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
     }
 
     /**
      * Returns the expected template file extension
-     *
-     * @return string
      */
     public function bladeExtension(): string
     {
@@ -284,6 +276,7 @@ class Template extends KirbyTemplate
         if (is_callable($path)) {
             return $path();
         }
+
         return $path;
     }
 }

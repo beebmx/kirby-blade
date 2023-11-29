@@ -12,38 +12,28 @@ class Vite
 {
     /**
      * The Content Security Policy nonce to apply to all generated tags.
-     *
-     * @var string|null
      */
-    protected $nonce;
+    protected ?string $nonce = null;
 
     /**
      * The key to check for integrity hashes within the manifest.
-     *
-     * @var string|false
      */
-    protected $integrityKey = 'integrity';
+    protected string|false $integrityKey = 'integrity';
 
     /**
      * The script tag attributes resolvers.
-     *
-     * @var array
      */
-    protected $scriptTagAttributesResolvers = [];
+    protected array $scriptTagAttributesResolvers = [];
 
     /**
      * The style tag attributes resolvers.
-     *
-     * @var array
      */
-    protected $styleTagAttributesResolvers = [];
+    protected array $styleTagAttributesResolvers = [];
 
     /**
      * Get the Content Security Policy nonce applied to all generated tags.
-     *
-     * @return string|null
      */
-    public function cspNonce()
+    public function cspNonce(): ?string
     {
         return $this->nonce;
     }
@@ -52,9 +42,8 @@ class Vite
      * Generate or set a Content Security Policy nonce to apply to all generated tags.
      *
      * @param  ?string  $nonce
-     * @return string
      */
-    public function useCspNonce($nonce = null)
+    public function useCspNonce($nonce = null): string
     {
         return $this->nonce = $nonce ?? Str::random(40);
     }
@@ -65,7 +54,7 @@ class Vite
      * @param  string|false  $key
      * @return $this
      */
-    public function useIntegrityKey($key)
+    public function useIntegrityKey($key): static
     {
         $this->integrityKey = $key;
 
@@ -78,9 +67,9 @@ class Vite
      * @param  (callable(string, string, ?array, ?array): array)|array  $attributes
      * @return $this
      */
-    public function useScriptTagAttributes($attributes)
+    public function useScriptTagAttributes($attributes): static
     {
-        if (!is_callable($attributes)) {
+        if (! is_callable($attributes)) {
             $attributes = fn () => $attributes;
         }
 
@@ -95,9 +84,9 @@ class Vite
      * @param  (callable(string, string, ?array, ?array): array)|array  $attributes
      * @return $this
      */
-    public function useStyleTagAttributes($attributes)
+    public function useStyleTagAttributes($attributes): static
     {
-        if (!is_callable($attributes)) {
+        if (! is_callable($attributes)) {
             $attributes = fn () => $attributes;
         }
 
@@ -111,11 +100,10 @@ class Vite
      *
      * @param  string|string[]  $entrypoints
      * @param  string  $buildDirectory
-     * @return \Illuminate\Support\HtmlString
      *
      * @throws \Exception
      */
-    public function __invoke($entrypoints, $buildDirectory = 'build')
+    public function __invoke($entrypoints, $buildDirectory = 'build'): HtmlString
     {
         static $manifests = [];
 
@@ -133,10 +121,10 @@ class Vite
             );
         }
 
-        $manifestPath = public_path($buildDirectory . '/manifest.json');
+        $manifestPath = public_path($buildDirectory.'/manifest.json');
 
-        if (!isset($manifests[$manifestPath])) {
-            if (!is_file($manifestPath)) {
+        if (! isset($manifests[$manifestPath])) {
+            if (! is_file($manifestPath)) {
                 throw new Exception("Vite manifest not found at: {$manifestPath}");
             }
 
@@ -148,7 +136,7 @@ class Vite
         $tags = collect();
 
         foreach ($entrypoints as $entrypoint) {
-            if (!isset($manifest[$entrypoint])) {
+            if (! isset($manifest[$entrypoint])) {
                 throw new Exception("Unable to locate file in Vite manifest: {$entrypoint}.");
             }
 
@@ -184,7 +172,7 @@ class Vite
 
         [$stylesheets, $scripts] = $tags->partition(fn ($tag) => str_starts_with($tag, '<link'));
 
-        return new HtmlString($stylesheets->join('') . $scripts->join(''));
+        return new HtmlString($stylesheets->join('').$scripts->join(''));
     }
 
     /**
@@ -194,14 +182,13 @@ class Vite
      * @param  string  $url
      * @param  ?array  $chunk
      * @param  ?array  $manifest
-     * @return string
      */
-    protected function makeTagForChunk($src, $url, $chunk, $manifest)
+    protected function makeTagForChunk($src, $url, $chunk, $manifest): string
     {
         if (
             $this->nonce === null
             && $this->integrityKey !== false
-            && !array_key_exists($this->integrityKey, $chunk ?? [])
+            && ! array_key_exists($this->integrityKey, $chunk ?? [])
             && $this->scriptTagAttributesResolvers === []
             && $this->styleTagAttributesResolvers === []) {
             return $this->makeTag($url);
@@ -227,9 +214,8 @@ class Vite
      * @param  string  $url
      * @param  ?array  $chunk
      * @param  ?array  $manifest
-     * @return array
      */
-    protected function resolveScriptTagAttributes($src, $url, $chunk, $manifest)
+    protected function resolveScriptTagAttributes($src, $url, $chunk, $manifest): array
     {
         $attributes = $this->integrityKey !== false
             ? ['integrity' => $chunk[$this->integrityKey] ?? false]
@@ -249,9 +235,8 @@ class Vite
      * @param  string  $url
      * @param  ?array  $chunk
      * @param  ?array  $manifest
-     * @return array
      */
-    protected function resolveStylesheetTagAttributes($src, $url, $chunk, $manifest)
+    protected function resolveStylesheetTagAttributes($src, $url, $chunk, $manifest): array
     {
         $attributes = $this->integrityKey !== false
             ? ['integrity' => $chunk[$this->integrityKey] ?? false]
@@ -270,9 +255,8 @@ class Vite
      * @deprecated Will be removed in a future Laravel version.
      *
      * @param  string  $url
-     * @return string
      */
-    protected function makeTag($url)
+    protected function makeTag($url): string
     {
         if ($this->isCssPath($url)) {
             return $this->makeStylesheetTag($url);
@@ -287,9 +271,8 @@ class Vite
      * @deprecated Will be removed in a future Laravel version.
      *
      * @param  string  $url
-     * @return string
      */
-    protected function makeScriptTag($url)
+    protected function makeScriptTag($url): string
     {
         return $this->makeScriptTagWithAttributes($url, []);
     }
@@ -300,9 +283,8 @@ class Vite
      * @deprecated Will be removed in a future Laravel version.
      *
      * @param  string  $url
-     * @return string
      */
-    protected function makeStylesheetTag($url)
+    protected function makeStylesheetTag($url): string
     {
         return $this->makeStylesheetTagWithAttributes($url, []);
     }
@@ -312,9 +294,8 @@ class Vite
      *
      * @param  string  $url
      * @param  array  $attributes
-     * @return string
      */
-    protected function makeScriptTagWithAttributes($url, $attributes)
+    protected function makeScriptTagWithAttributes($url, $attributes): string
     {
         $attributes = $this->parseAttributes(array_merge([
             'type' => 'module',
@@ -322,7 +303,7 @@ class Vite
             'nonce' => $this->nonce ?? false,
         ], $attributes));
 
-        return '<script ' . implode(' ', $attributes) . '></script>';
+        return '<script '.implode(' ', $attributes).'></script>';
     }
 
     /**
@@ -330,9 +311,8 @@ class Vite
      *
      * @param  string  $url
      * @param  array  $attributes
-     * @return string
      */
-    protected function makeStylesheetTagWithAttributes($url, $attributes)
+    protected function makeStylesheetTagWithAttributes($url, $attributes): string
     {
         $attributes = $this->parseAttributes(array_merge([
             'rel' => 'stylesheet',
@@ -340,16 +320,15 @@ class Vite
             'nonce' => $this->nonce ?? false,
         ], $attributes));
 
-        return '<link ' . implode(' ', $attributes) . ' />';
+        return '<link '.implode(' ', $attributes).' />';
     }
 
     /**
      * Determine whether the given path is a CSS file.
      *
      * @param  string  $path
-     * @return bool
      */
-    protected function isCssPath($path)
+    protected function isCssPath($path): bool
     {
         return preg_match('/\.(css|less|sass|scss|styl|stylus|pcss|postcss)$/', $path) === 1;
     }
@@ -358,14 +337,13 @@ class Vite
      * Parse the attributes into key="value" strings.
      *
      * @param  array  $attributes
-     * @return array
      */
-    protected function parseAttributes($attributes)
+    protected function parseAttributes($attributes): array
     {
         return Collection::make($attributes)
             ->reject(fn ($value, $key) => in_array($value, [false, null], true))
             ->flatMap(fn ($value, $key) => $value === true ? [$key] : [$key => $value])
-            ->map(fn ($value, $key) => is_int($key) ? $value : $key . '="' . $value . '"')
+            ->map(fn ($value, $key) => is_int($key) ? $value : $key.'="'.$value.'"')
             ->values()
             ->all();
     }
@@ -377,7 +355,7 @@ class Vite
      */
     public function reactRefresh()
     {
-        if (!is_file(public_path('/hot'))) {
+        if (! is_file(public_path('/hot'))) {
             return;
         }
 

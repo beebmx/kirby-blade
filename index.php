@@ -1,17 +1,17 @@
 <?php
 
-@include_once __DIR__ . '/vendor/autoload.php';
+@include_once __DIR__.'/vendor/autoload.php';
 
 use Beebmx\Snippet;
+use Beebmx\Template;
 use Illuminate\Support\Str;
 use Kirby\Cms\App as Kirby;
 use Kirby\Http\Header;
-use Beebmx\Template;
 
 Kirby::plugin('beebmx/kirby-blade', [
     'options' => [
         'views' => function () {
-            return kirby()->roots()->cache() . '/views';
+            return kirby()->roots()->cache().'/views';
         },
         'directives' => [],
         'ifs' => [],
@@ -26,6 +26,6 @@ Kirby::plugin('beebmx/kirby-blade', [
         },
         'snippet' => function (Kirby $kirby, string $name, array $data = []) {
             return (new Snippet($kirby, $name))->render($data);
-        }
-    ]
+        },
+    ],
 ]);

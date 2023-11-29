@@ -3,12 +3,14 @@
 namespace Beebmx\View;
 
 use Beebmx\View\Compiler\ComponentTagCompiler;
+use Closure;
 use Illuminate\Container\Container;
+use Illuminate\View\Compilers\BladeTagCompiler;
 use Illuminate\View\DynamicComponent as Dynamic;
 
 class DynamicComponent extends Dynamic
 {
-    public function render()
+    public function render(): Closure
     {
         $template = <<<'EOF'
 <?php extract(collect($attributes->getAttributes())->mapWithKeys(function ($value, $key) { return [Illuminate\Support\Str::camel(str_replace([':', '.'], ' ', $key)) => $value]; })->all(), EXTR_SKIP); ?>
@@ -43,9 +45,9 @@ EOF;
         };
     }
 
-    protected function compiler()
+    protected function compiler(): ComponentTagCompiler|BladeTagCompiler
     {
-        if (!static::$compiler) {
+        if (! static::$compiler) {
             static::$compiler = new ComponentTagCompiler(
                 Container::getInstance()->get('blade.compiler')->getClassComponentAliases(),
                 Container::getInstance()->get('blade.compiler')->getClassComponentNamespaces(),
@@ -56,21 +58,21 @@ EOF;
         return static::$compiler;
     }
 
-    protected function createBladeViewFromString($factory, $contents)
+    protected function createBladeViewFromString($factory, $contents): string
     {
         $factory->addNamespace(
             '__components',
             $directory = Container::getInstance()->get('config')['view.compiled']
         );
 
-        if (!is_file($viewFile = $directory . '/' . sha1($contents) . '.blade.php')) {
-            if (!is_dir($directory)) {
+        if (! is_file($viewFile = $directory.'/'.sha1($contents).'.blade.php')) {
+            if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
 
             file_put_contents($viewFile, $contents);
         }
 
-        return '__components::' . basename($viewFile, '.blade.php');
+        return '__components::'.basename($viewFile, '.blade.php');
     }
 }

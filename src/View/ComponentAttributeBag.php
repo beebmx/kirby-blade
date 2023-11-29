@@ -10,11 +10,9 @@ class ComponentAttributeBag extends AttributeBag
     /**
      * Merge additional attributes / values into the attribute bag.
      *
-     * @param  array  $attributeDefaults
      * @param  bool  $escape
-     * @return static
      */
-    public function merge(array $attributeDefaults = [], $escape = true)
+    public function merge(array $attributeDefaults = [], $escape = true): static
     {
         $attributeDefaults = array_map(function ($value) use ($escape) {
             return $this->shouldEscapeAttributeValue($escape, $value)
@@ -46,9 +44,8 @@ class ComponentAttributeBag extends AttributeBag
      * @param  array  $attributeDefaults
      * @param  string  $key
      * @param  bool  $escape
-     * @return mixed
      */
-    protected function resolveAppendableAttributeDefault($attributeDefaults, $key, $escape)
+    protected function resolveAppendableAttributeDefault($attributeDefaults, $key, $escape): mixed
     {
         if ($this->shouldEscapeAttributeValue($escape, $value = $attributeDefaults[$key]->value)) {
             $value = _e($value);

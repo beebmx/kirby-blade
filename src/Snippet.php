@@ -15,9 +15,9 @@ class Snippet extends Template
     {
         $this->template = $kirby->roots()->snippets();
         $this->views = $this->getPathViews();
-        $this->snippet = $this->template . '/' . $name . '.php';
+        $this->snippet = $this->template.'/'.$name.'.php';
 
-        $blade = $this->template . '/' . $name . '.' . $this->bladeExtension();
+        $blade = $this->template.'/'.$name.'.'.$this->bladeExtension();
 
         if (file_exists($this->snippet) === false && file_exists($blade) === false) {
             $this->snippet = $kirby->extensions('snippets')[$name];
@@ -30,10 +30,6 @@ class Snippet extends Template
         $this->setViewDirectory();
     }
 
-    /**
-     * @param array $data
-     * @return string
-     */
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {

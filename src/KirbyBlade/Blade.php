@@ -2,12 +2,12 @@
 
 namespace Beebmx\KirbyBlade;
 
-use Illuminate\Contracts\View\View;
-use Illuminate\View\Compilers\BladeCompiler;
 use Beebmx\Blade\Blade as BladeProvider;
 use Beebmx\View\ViewServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class Blade extends BladeProvider
 {

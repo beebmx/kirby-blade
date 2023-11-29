@@ -17,10 +17,8 @@ class BladeCompiler extends Compiler
      * Register an "if" statement directive.
      *
      * @param  string  $name
-     * @param  callable  $callback
-     * @return void
      */
-    public function if($name, callable $callback)
+    public function if($name, callable $callback): void
     {
         $this->conditions[$name] = $callback;
         $this->directive($name, function ($expression) use ($name) {
@@ -28,32 +26,28 @@ class BladeCompiler extends Compiler
                     ? "<?php if (option('beebmx.kirby-blade.ifs')['{$name}']($expression)): ?>"
                     : "<?php if (option('beebmx.kirby-blade.ifs')['{$name}'](null)): ?>";
         });
-        $this->directive('else' . $name, function ($expression) use ($name) {
+        $this->directive('else'.$name, function ($expression) use ($name) {
             return $expression !== ''
                 ? "<?php elseif (option('beebmx.kirby-blade.ifs')['{$name}']($expression)): ?>"
                 : "<?php elseif (option('beebmx.kirby-blade.ifs')['{$name}'](null)): ?>";
         });
-        $this->directive('end' . $name, function () {
+        $this->directive('end'.$name, function () {
             return '<?php endif; ?>';
         });
     }
 
     /**
      * Set the "echo" format to double encode entities.
-     *
-     * @return void
      */
-    public function withDoubleEncoding()
+    public function withDoubleEncoding(): void
     {
         $this->setEchoFormat('_e(%s, true)');
     }
 
     /**
      * Set the "echo" format to not double encode entities.
-     *
-     * @return void
      */
-    public function withoutDoubleEncoding()
+    public function withoutDoubleEncoding(): void
     {
         $this->setEchoFormat('_e(%s, false)');
     }
@@ -62,11 +56,10 @@ class BladeCompiler extends Compiler
      * Compile the component tags.
      *
      * @param  string  $value
-     * @return string
      */
-    protected function compileComponentTags($value)
+    protected function compileComponentTags($value): string
     {
-        if (!$this->compilesComponentTags) {
+        if (! $this->compilesComponentTags) {
             return $value;
         }
 
@@ -81,9 +74,8 @@ class BladeCompiler extends Compiler
      * Sanitize the given component attribute value.
      *
      * @param  mixed  $value
-     * @return mixed
      */
-    public static function sanitizeComponentAttribute($value)
+    public static function sanitizeComponentAttribute($value): mixed
     {
         return is_string($value) ||
         (is_object($value) && method_exists($value, '__toString'))
