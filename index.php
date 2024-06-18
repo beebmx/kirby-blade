@@ -1,7 +1,6 @@
 <?php
 
 @include_once __DIR__.'/vendor/autoload.php';
-
 use Beebmx\Snippet;
 use Beebmx\Template;
 use Illuminate\Support\Str;
@@ -17,7 +16,7 @@ Kirby::plugin('beebmx/kirby-blade', [
         'ifs' => [],
     ],
     'components' => [
-        'template' => function (Kirby $kirby, string $name, string $contentType = null) {
+        'template' => function (Kirby $kirby, string $name, ?string $contentType = null) {
             if (Str::endsWith($kirby->request()->url(), '.php')) {
                 Header::redirect(substr($kirby->request()->url(), 0, -4), 301);
             }

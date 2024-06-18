@@ -17,7 +17,7 @@ class Blade extends BladeProvider
 
     private $compiler;
 
-    public function __construct($viewPaths, string $cachePath, ContainerInterface $container = null)
+    public function __construct($viewPaths, string $cachePath, ?ContainerInterface $container = null)
     {
         $this->container = $container ?: new Container;
         $this->setupContainer((array) $viewPaths, $cachePath);

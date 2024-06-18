@@ -2,7 +2,7 @@
 
 Kirby Blade use Laravel `illuminate/view` and `jenssegers/blade` packages.
 
-This package enable [Laravel Blade](https://laravel.com/docs/7.x/blade) for your own Kirby applications.
+This package enables [Laravel Blade](https://laravel.com/docs/11.x/blade) for your own Kirby applications.
 
 ## Installation
 
@@ -20,9 +20,9 @@ According to Laravel Blade documentation is:
 
 ## Usage
 
-You can use the power of Blade like [Layouts](https://laravel.com/docs/7.x/blade#template-inheritance), [Control Structures](https://laravel.com/docs/7.x/blade#control-structures), [Sub-Views](https://laravel.com/docs/7.x/blade#including-sub-views), [Directives](#Directives), your Custom [If Statements](#if-statements) and [Blade components](#components).
+You can use the power of Blade like [Layouts](https://laravel.com/docs/11.x/blade#layouts-using-template-inheritance), [Sub-Views](https://laravel.com/docs/11.x/blade#including-subviews), [Directives](#Directives), your Custom [If Statements](#if-statements) and [Blade components](#components).
 
-All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/7.x/blade).
+All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/11.x/blade).
 
 ### Conflicts
 
@@ -50,11 +50,11 @@ include '../vendor/autoload.php';
 
 The default values of the package are:
 
-| Option | Default | Values | Description |
-|:----|:----|:----|:----|
-| beebmx.kirby-blade.views | site/cache/views | (string) | Location of the views cached |
-| beebmx.kirby-blade.directives | [] | (array) | Array with the custom directives |
-| beebmx.kirby-blade.ifs | [] | (array) | Array with the custom if statements |
+| Option                        | Default          | Values   | Description                         |
+|:------------------------------|:-----------------|:---------|:------------------------------------|
+| beebmx.kirby-blade.views      | site/cache/views | (string) | Location of the views cached        |
+| beebmx.kirby-blade.directives | []               | (array)  | Array with the custom directives    |
+| beebmx.kirby-blade.ifs        | []               | (array)  | Array with the custom if statements |
 
 All the values can be updated in the `config.php` file.
 
@@ -125,7 +125,7 @@ Like directives, you can create your own if statements:
 ],
 ```
 
-After declaration you can use it like:
+After declaration, you can use it like:
 
 ```php
 @logged
@@ -137,7 +137,9 @@ After declaration you can use it like:
 
 ### Components
 
-Now you can use natively blade components in Kirby 3. To display a component its required to place your component in `templates/components` and then you can call it with the prefix `x-` in kebab case.
+Now you can use Blade components natively in Kirby 3.
+To display a component its required to place your component in
+`templates/components` and then you can call it with the prefix `x-` in kebab case.
 
 ```php
 
@@ -177,4 +179,4 @@ You can also send data to the components via "slots" and attributes:
 
 ````
 
-All the documentation related with [Components](https://laravel.com/docs/7.x/blade#components) is in the Laravel website.
+All the documentation related to [Components](https://laravel.com/docs/11.x/blade#components) is in the Laravel website.

@@ -2,7 +2,7 @@
 
 namespace Beebmx;
 
-use Beebmx\Blade\Application;
+use Beebmx\Blade\Container;
 use Beebmx\KirbyBlade\Blade;
 use Exception;
 use Kirby\Cms\App as Kirby;
@@ -13,7 +13,7 @@ use Kirby\Toolkit\Tpl;
 
 class Template extends KirbyTemplate
 {
-    protected $blade;
+    protected Blade $blade;
 
     protected $views;
 
@@ -74,7 +74,7 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
-            $application = new Application;
+            $application = new Container;
             $this->blade = new Blade(
                 $this->template,
                 $this->views,
@@ -224,7 +224,7 @@ class Template extends KirbyTemplate
             return "<?php echo Kirby\Cms\Html::youtube($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('gist', function (string $url, string $file = null) {
+        $this->blade->compiler()->directive('gist', function (string $url, ?string $file = null) {
             return "<?php echo Kirby\Cms\App::instance()->kirbytag(['gist' => $url, 'file' => $file]) ?>";
         });
 
@@ -244,7 +244,7 @@ class Template extends KirbyTemplate
         }
     }
 
-    public function getFilename(string $name = null): string
+    public function getFilename(?string $name = null): string
     {
         if ($name) {
             return $this->root().'/'.$name.'.'.$this->extension();

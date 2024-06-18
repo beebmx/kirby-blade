@@ -19,7 +19,7 @@ class Factory extends FactoryView
      * @param  \Illuminate\View\ViewFinderInterface  $finder
      * @return void
      */
-    public function __construct(EngineResolver $engines, FileViewFinder $finder, Dispatcher $events = null)
+    public function __construct(EngineResolver $engines, FileViewFinder $finder, ?Dispatcher $events = null)
     {
         $this->finder = $finder;
         $this->events = $events;
