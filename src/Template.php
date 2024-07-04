@@ -88,21 +88,19 @@ class Template extends KirbyTemplate
                     $application->terminate();
                 });
             }
-
-            return Tpl::load($this->file(), $data);
-        } else {
-            return Tpl::load($this->file(), $data);
         }
+
+        return Tpl::load($this->file(), $data);
     }
 
-    public function setViewDirectory()
+    public function setViewDirectory(): void
     {
         if (! file_exists($this->views)) {
             Dir::make($this->views);
         }
     }
 
-    protected function setDirectives()
+    protected function setDirectives(): void
     {
         $this->blade->compiler()->directive('js', function (string $path) {
             return "<?php echo Kirby\Cms\Html::js($path) ?>";
@@ -237,9 +235,17 @@ class Template extends KirbyTemplate
         }
     }
 
-    protected function setIfStatements()
+    protected function setIfStatements(): void
     {
-        foreach ($statements = Kirby::instance()->option('beebmx.kirby-blade.ifs', []) as $statement => $callback) {
+        $this->blade->compiler()->if('auth', function () {
+            return Kirby::instance()->user() !== null;
+        });
+
+        $this->blade->compiler()->if('guest', function () {
+            return Kirby::instance()->user() === null;
+        });
+
+        foreach (Kirby::instance()->option('beebmx.kirby-blade.ifs', []) as $statement => $callback) {
             $this->blade->compiler()->if($statement, $callback);
         }
     }
