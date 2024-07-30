@@ -25,6 +25,8 @@ class Template extends KirbyTemplate
 
     protected string $type;
 
+    protected Container $app;
+
     public static array $data = [];
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
@@ -74,18 +76,18 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
-            $application = new Container;
+            $this->app = new Container;
             $this->blade = new Blade(
                 $this->template,
                 $this->views,
-                $application
+                $this->app
             );
             $this->setDirectives();
             $this->setIfStatements();
 
             if ($this->hasDefaultType() === true) {
-                return tap($this->blade->make($this->name, $data), function () use ($application) {
-                    $application->terminate();
+                return tap($this->blade->make($this->name, $data), function () {
+                    $this->app->terminate();
                 });
             }
         }
@@ -266,6 +268,11 @@ class Template extends KirbyTemplate
     public function isBlade(): bool
     {
         return (bool) file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
+    }
+
+    public function app(): ?Container
+    {
+        return $this->app ?? null;
     }
 
     /**
