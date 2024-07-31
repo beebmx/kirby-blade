@@ -19,11 +19,13 @@ class Blade extends BladeProvider
 
     public function __construct($viewPaths, string $cachePath, ?ContainerInterface $container = null)
     {
-        $this->container = $container ?: new Container;
-        $this->setupContainer((array) $viewPaths, $cachePath);
-
-        (new ViewServiceProvider($this->container))->register();
+        $this->container = $container ?: Container::getInstance();
         Container::setInstance($this->container);
+
+        if (! $this->container->has('blade.compiler') || ! $this->container->has('view')) {
+            $this->setupContainer((array) $viewPaths, $cachePath);
+            (new ViewServiceProvider($this->container))->register();
+        }
 
         $this->factory = $this->container->get('view');
         $this->compiler = $this->container->get('blade.compiler');

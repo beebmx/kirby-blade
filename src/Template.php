@@ -2,9 +2,11 @@
 
 namespace Beebmx;
 
-use Beebmx\Blade\Container;
+use Beebmx\Blade\Container as KirbyContainer;
 use Beebmx\KirbyBlade\Blade;
 use Exception;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container as ContainerInterface;
 use Kirby\Cms\App as Kirby;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
@@ -15,24 +17,22 @@ class Template extends KirbyTemplate
 {
     protected Blade $blade;
 
-    protected $views;
+    protected string $views;
 
     protected string $defaultType;
 
     protected string $name;
 
-    protected $template;
+    protected string $template;
 
     protected string $type;
-
-    protected Container $app;
 
     public static array $data = [];
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
     {
-        $this->template = $kirby->roots()->templates();
-        $this->views = $this->getPathViews();
+        $this->template = static::getPathTemplates();
+        $this->views = static::getPathViews();
 
         $this->name = strtolower($name);
         $this->type = $type;
@@ -76,18 +76,22 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
-            $this->app = new Container;
+            $application = $this->getContainer(
+                Container::getInstance()
+            );
+
             $this->blade = new Blade(
                 $this->template,
                 $this->views,
-                $this->app
+                $application
             );
+
             $this->setDirectives();
             $this->setIfStatements();
 
             if ($this->hasDefaultType() === true) {
-                return tap($this->blade->make($this->name, $data), function () {
-                    $this->app->terminate();
+                return tap($this->blade->make($this->name, $data), function () use ($application) {
+                    $application->terminate();
                 });
             }
         }
@@ -270,11 +274,6 @@ class Template extends KirbyTemplate
         return (bool) file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
     }
 
-    public function app(): ?Container
-    {
-        return $this->app ?? null;
-    }
-
     /**
      * Returns the expected template file extension
      */
@@ -283,13 +282,25 @@ class Template extends KirbyTemplate
         return 'blade.php';
     }
 
-    protected function getPathViews()
+    public static function getPathTemplates(): string
     {
-        $path = option('beebmx.kirby-blade.views');
+        return Kirby::instance()->roots()->templates();
+    }
+
+    public static function getPathViews(): string
+    {
+        $path = Kirby::instance()->option('beebmx.kirby-blade.views');
         if (is_callable($path)) {
             return $path();
         }
 
         return $path;
+    }
+
+    protected function getContainer(ContainerInterface $container): ContainerInterface
+    {
+        return method_exists($container, 'terminate')
+            ? $container
+            : new KirbyContainer;
     }
 }

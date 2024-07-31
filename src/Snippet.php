@@ -9,12 +9,12 @@ use Kirby\Toolkit\Tpl;
 
 class Snippet extends Template
 {
-    protected $snippet;
+    protected string $snippet;
 
     public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
     {
-        $this->template = $kirby->roots()->snippets();
-        $this->views = $this->getPathViews();
+        $this->template = static::getPathSnippets();
+        $this->views = static::getPathViews();
         $this->snippet = $this->template.'/'.$name.'.php';
 
         $blade = $this->template.'/'.$name.'.'.$this->bladeExtension();
@@ -38,6 +38,7 @@ class Snippet extends Template
                 $this->views,
                 new Container
             );
+
             $this->setDirectives();
             $this->setIfStatements();
 
@@ -45,5 +46,10 @@ class Snippet extends Template
         } else {
             return Tpl::load($this->snippet, $data);
         }
+    }
+
+    public static function getPathSnippets(): string
+    {
+        return Kirby::instance()->roots()->snippets();
     }
 }

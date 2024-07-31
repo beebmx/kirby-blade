@@ -2,6 +2,7 @@
 
 namespace Beebmx\View\Compiler;
 
+use Illuminate\Container\Container;
 use Illuminate\View\Compilers\BladeCompiler as Compiler;
 
 class BladeCompiler extends Compiler
@@ -58,5 +59,20 @@ class BladeCompiler extends Compiler
         (is_object($value) && method_exists($value, '__toString'))
             ? _e($value)
             : $value;
+    }
+
+    public function anonymousComponentPath(string $path, ?string $prefix = null): void
+    {
+        $prefixHash = md5($prefix ?: $path);
+
+        $this->anonymousComponentPaths[] = [
+            'path' => $path,
+            'prefix' => $prefix,
+            'prefixHash' => $prefixHash,
+        ];
+
+        Container::getInstance()
+            ->get('view')
+            ->addNamespace($prefixHash, $path);
     }
 }
