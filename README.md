@@ -50,11 +50,12 @@ include '../vendor/autoload.php';
 
 The default values of the package are:
 
-| Option                        | Default          | Values   | Description                         |
-|:------------------------------|:-----------------|:---------|:------------------------------------|
-| beebmx.kirby-blade.views      | site/cache/views | (string) | Location of the views cached        |
-| beebmx.kirby-blade.directives | []               | (array)  | Array with the custom directives    |
-| beebmx.kirby-blade.ifs        | []               | (array)  | Array with the custom if statements |
+| Option                        | Default          | Values   | Description                                       |
+|:------------------------------|:-----------------|:---------|:--------------------------------------------------|
+| beebmx.kirby-blade.bootstrap  | false            | (bool)   | Enable blade facade after the plugin is available |
+| beebmx.kirby-blade.views      | site/cache/views | (string) | Location of the views cached                      |
+| beebmx.kirby-blade.directives | []               | (array)  | Array with the custom directives                  |
+| beebmx.kirby-blade.ifs        | []               | (array)  | Array with the custom if statements               |
 
 All the values can be updated in the `config.php` file.
 
@@ -68,7 +69,7 @@ All the views generated are stored in `site/cache/views` directory or wherever y
 
 ### Directives
 
-By default Kirby Blade comes with the follows directives:
+By default, Kirby Blade comes with the follows directives:
 
 ```php
 @js('js/app.js')

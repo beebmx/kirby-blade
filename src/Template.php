@@ -236,7 +236,7 @@ class Template extends KirbyTemplate
             return "<?php echo (new Beebmx\Foundation\Vite)($entrypoints, '$buildDirectory'); ?>";
         });
 
-        foreach ($directives = Kirby::instance()->option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
+        foreach (Kirby::instance()->option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
             $this->blade->compiler()->directive($directive, $callback);
         }
     }
