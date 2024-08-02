@@ -8,7 +8,7 @@ use Kirby\Cms\App;
 
 return [
     'system.loadPlugins:after' => function () {
-        if(App::instance()->option('beebmx.kirby-blade.bootstrap', false)) {
+        if (App::instance()->option('beebmx.kirby-blade.bootstrap', false)) {
             $container = new BladeContainer;
             Container::setInstance($container);
 
