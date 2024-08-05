@@ -4,52 +4,54 @@ namespace Beebmx;
 
 use Beebmx\Blade\Container;
 use Beebmx\KirbyBlade\Blade;
+use Kirby\Cms\App;
 use Kirby\Cms\App as Kirby;
-use Kirby\Toolkit\Tpl;
+use Kirby\Template\Snippet as KirbySnippet;
 
-class Snippet extends Template
+class Snippet extends KirbySnippet
 {
-    protected string $snippet;
-
-    public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
-    {
-        $this->template = static::getPathSnippets();
-        $this->views = static::getPathViews();
-        $this->snippet = $this->template.'/'.$name.'.php';
-
-        $blade = $this->template.'/'.$name.'.'.$this->bladeExtension();
-
-        if (file_exists($this->snippet) === false && file_exists($blade) === false) {
-            $this->snippet = $kirby->extensions('snippets')[$name];
-        }
-
-        $this->name = strtolower($name);
-        $this->type = $type;
-        $this->defaultType = $defaultType;
-
-        $this->setViewDirectory();
-    }
-
-    public function render(array $data = []): string
-    {
-        if ($this->isBlade()) {
-            $this->blade = new Blade(
-                $this->template,
-                $this->views,
+    /**
+     * Returns either an open snippet capturing slots
+     * or the template string for self-enclosed snippets
+     */
+    public static function factory(
+        string|array|null $name,
+        array $data = [],
+        bool $slots = false
+    ): static|string {
+        if (static::isBlade($name)) {
+            $blade = new Blade(
+                static::getPathSnippets(),
+                Template::getPathViews(),
                 new Container
             );
 
-            $this->setDirectives();
-            $this->setIfStatements();
-
-            return $this->blade->make($this->name, $data);
-        } else {
-            return Tpl::load($this->snippet, $data);
+            return $blade->make($name, $data);
         }
+
+        // instead of returning empty string when `$name` is null
+        // allow rest of code to run, otherwise the wrong snippet would be closed
+        // and potential issues for nested snippets may occur
+        $file = $name !== null ? static::file($name) : null;
+
+        // for snippets with slots, make sure to open a new
+        // snippet and start capturing slots
+        if ($slots === true) {
+            return static::begin($file, $data);
+        }
+
+        // for snippets without slots, directly load and return
+        // the snippet's template file
+        return static::load($file, static::scope($data));
     }
 
     public static function getPathSnippets(): string
     {
         return Kirby::instance()->roots()->snippets();
+    }
+
+    public static function isBlade(string $name): bool
+    {
+        return file_exists(App::instance()->roots()->snippets().'/'.$name.'.'.Template::BLADE_EXTENSION);
     }
 }

@@ -15,6 +15,8 @@ use Kirby\Toolkit\Tpl;
 
 class Template extends KirbyTemplate
 {
+    public const BLADE_EXTENSION = 'blade.php';
+
     protected Blade $blade;
 
     protected string $views;
@@ -76,7 +78,7 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
-            $application = $this->getContainer(
+            $application = static::getContainer(
                 Container::getInstance()
             );
 
@@ -271,7 +273,7 @@ class Template extends KirbyTemplate
 
     public function isBlade(): bool
     {
-        return (bool) file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
+        return file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
     }
 
     /**
@@ -279,7 +281,7 @@ class Template extends KirbyTemplate
      */
     public function bladeExtension(): string
     {
-        return 'blade.php';
+        return Template::BLADE_EXTENSION;
     }
 
     public static function getPathTemplates(): string
@@ -290,6 +292,7 @@ class Template extends KirbyTemplate
     public static function getPathViews(): string
     {
         $path = Kirby::instance()->option('beebmx.kirby-blade.views');
+
         if (is_callable($path)) {
             return $path();
         }
@@ -297,7 +300,7 @@ class Template extends KirbyTemplate
         return $path;
     }
 
-    protected function getContainer(ContainerInterface $container): ContainerInterface
+    public static function getContainer(ContainerInterface $container): ContainerInterface
     {
         return method_exists($container, 'terminate')
             ? $container
