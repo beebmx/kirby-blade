@@ -75,4 +75,14 @@ class BladeCompiler extends Compiler
             ->get('view')
             ->addNamespace($prefixHash, $path);
     }
+
+    /**
+     * Register a new view path.
+     */
+    public function viewPath(string $path): void
+    {
+        Container::getInstance()
+            ->get('view')
+            ->addLocation($path);
+    }
 }

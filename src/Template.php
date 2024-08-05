@@ -263,16 +263,14 @@ class Template extends KirbyTemplate
             return $this->root().'/'.$name.'.'.$this->extension();
         }
 
-        if ($this->isBlade()) {
-            return $this->root().'/'.$this->name().'.'.$this->bladeExtension();
-        } else {
-            return $this->root().'/'.$this->name().'.'.$this->extension();
-        }
+        return file_exists($this->root().'/'.$this->name().'.'.$this->bladeExtension())
+            ? $this->root().'/'.$this->name().'.'.$this->bladeExtension()
+             : $this->root().'/'.$this->name().'.'.$this->extension();
     }
 
     public function isBlade(): bool
     {
-        return file_exists($this->template.'/'.$this->name().'.'.$this->bladeExtension());
+        return str_ends_with($this->file(), static::BLADE_EXTENSION);
     }
 
     /**
