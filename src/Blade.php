@@ -3,7 +3,7 @@
 namespace Beebmx\KirbyBlade;
 
 use Beebmx\Blade\Blade as BladeProvider;
-use Beebmx\View\ViewServiceProvider;
+use Beebmx\KirbyBlade\View\ViewServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;
 use Illuminate\Contracts\View\View;

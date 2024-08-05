@@ -1,9 +1,8 @@
 <?php
 
-namespace Beebmx;
+namespace Beebmx\KirbyBlade;
 
 use Beebmx\Blade\Container;
-use Beebmx\KirbyBlade\Blade;
 use Kirby\Cms\App;
 use Kirby\Cms\App as Kirby;
 use Kirby\Template\Snippet as KirbySnippet;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Beebmx\Foundation;
+namespace Beebmx\KirbyBlade\Foundation;
 
 use Exception;
 use Illuminate\Support\Collection;

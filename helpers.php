@@ -1,6 +1,6 @@
 <?php
 
-use Beebmx\Foundation\Vite;
+use Beebmx\KirbyBlade\Foundation\Vite;
 use Illuminate\Contracts\Support\Htmlable;
 
 if (! function_exists('b')) {

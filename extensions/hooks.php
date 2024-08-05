@@ -2,7 +2,7 @@
 
 use Beebmx\Blade\Container as BladeContainer;
 use Beebmx\KirbyBlade\Blade;
-use Beebmx\Template;
+use Beebmx\KirbyBlade\Template;
 use Illuminate\Container\Container;
 use Kirby\Cms\App;
 

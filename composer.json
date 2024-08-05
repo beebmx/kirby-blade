@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "kirby-4", "blade", "view", "template"
     ],
-    "version": "5.4.0",
+    "version": "6.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -37,7 +37,7 @@
             "helpers.php"
         ],
         "psr-4": {
-            "Beebmx\\": "src/"
+            "Beebmx\\KirbyBlade\\": "src/"
         }
     },
     "minimum-stability": "dev",

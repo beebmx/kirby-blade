@@ -1,8 +1,8 @@
 <?php
 
-namespace Beebmx\View;
+namespace Beebmx\KirbyBlade\View;
 
-use Beebmx\View\Compiler\BladeCompiler;
+use Beebmx\KirbyBlade\View\Compiler\BladeCompiler;
 use Illuminate\View\ViewServiceProvider as ViewProvider;
 
 class ViewServiceProvider extends ViewProvider

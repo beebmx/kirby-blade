@@ -1,7 +1,7 @@
 <?php
 
-use Beebmx\Snippet;
-use Beebmx\Template;
+use Beebmx\KirbyBlade\Snippet;
+use Beebmx\KirbyBlade\Template;
 use Illuminate\Support\Str;
 use Kirby\Cms\App as Kirby;
 use Kirby\Http\Header;

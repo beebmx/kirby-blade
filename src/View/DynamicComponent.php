@@ -1,8 +1,8 @@
 <?php
 
-namespace Beebmx\View;
+namespace Beebmx\KirbyBlade\View;
 
-use Beebmx\View\Compiler\ComponentTagCompiler;
+use Beebmx\KirbyBlade\View\Compiler\ComponentTagCompiler;
 use Illuminate\Container\Container;
 use Illuminate\View\DynamicComponent as Dynamic;
 

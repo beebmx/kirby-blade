@@ -1,9 +1,8 @@
 <?php
 
-namespace Beebmx;
+namespace Beebmx\KirbyBlade;
 
 use Beebmx\Blade\Container as KirbyContainer;
-use Beebmx\KirbyBlade\Blade;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;
@@ -235,7 +234,7 @@ class Template extends KirbyTemplate
         });
 
         $this->blade->compiler()->directive('vite', function ($entrypoints, $buildDirectory = 'build') {
-            return "<?php echo (new Beebmx\Foundation\Vite)($entrypoints, '$buildDirectory'); ?>";
+            return "<?php echo (new Beebmx\KirbyBlade\Foundation\Vite)($entrypoints, '$buildDirectory'); ?>";
         });
 
         foreach (Kirby::instance()->option('beebmx.kirby-blade.directives', []) as $directive => $callback) {

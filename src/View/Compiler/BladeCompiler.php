@@ -1,6 +1,6 @@
 <?php
 
-namespace Beebmx\View\Compiler;
+namespace Beebmx\KirbyBlade\View\Compiler;
 
 use Illuminate\Container\Container;
 use Illuminate\View\Compilers\BladeCompiler as Compiler;

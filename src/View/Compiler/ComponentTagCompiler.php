@@ -1,8 +1,8 @@
 <?php
 
-namespace Beebmx\View\Compiler;
+namespace Beebmx\KirbyBlade\View\Compiler;
 
-use Beebmx\View\DynamicComponent;
+use Beebmx\KirbyBlade\View\DynamicComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\View\AnonymousComponent;

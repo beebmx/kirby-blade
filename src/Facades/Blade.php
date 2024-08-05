@@ -1,6 +1,6 @@
 <?php
 
-namespace Beebmx\Facades;
+namespace Beebmx\KirbyBlade\Facades;
 
 use Illuminate\Container\Container;
 use Kirby\Toolkit\Facade;

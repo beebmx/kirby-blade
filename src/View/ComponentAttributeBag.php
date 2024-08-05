@@ -1,6 +1,6 @@
 <?php
 
-namespace Beebmx\View;
+namespace Beebmx\KirbyBlade\View;
 
 use Illuminate\View\AppendableAttributeValue;
 use Illuminate\View\ComponentAttributeBag as AttributeBag;
