@@ -59,7 +59,7 @@ if (! function_exists('base_path')) {
 if (! function_exists('app_path')) {
     function app_path($path = ''): string
     {
-        return join_paths(base_path('app'), $path);
+        return join_paths(base_path(App::instance()->option('beebmx.kirby-blade.app_path', 'app')), $path);
     }
 }
 

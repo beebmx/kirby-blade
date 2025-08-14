@@ -2,7 +2,7 @@
 
 namespace Beebmx\KirbyBlade\View\Compiler;
 
-use Beebmx\KirbyBlade\App;
+use Beebmx\KirbyBlade\Application;
 use Beebmx\KirbyBlade\View\DynamicComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
@@ -110,7 +110,7 @@ class ComponentTagCompiler extends TagCompiler
     public function guessClassName(string $component): string
     {
         $namespace = Container::getInstance()
-            ->make(App::class)
+            ->make(Application::class)
             ->getNamespace();
 
         $class = $this->formatClassName($component);

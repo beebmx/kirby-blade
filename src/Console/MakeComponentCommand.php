@@ -2,7 +2,7 @@
 
 namespace Beebmx\KirbyBlade\Console;
 
-use Beebmx\KirbyBlade\App;
+use Beebmx\KirbyBlade\Application;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
@@ -231,7 +231,7 @@ class MakeComponentCommand
 
     protected function rootNamespace(): string
     {
-        return App::getInstance()
+        return Application::getInstance()
             ->getNamespace();
     }
 

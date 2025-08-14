@@ -3,8 +3,9 @@
 use Kirby\Cms\App;
 
 return [
+    'app_path' => 'app',
     'bootstrap' => false,
-    'views' => fn (): string => App::instance()->roots()->cache().'/views',
     'directives' => [],
     'ifs' => [],
+    'views' => fn (): string => App::instance()->roots()->cache().'/views',
 ];

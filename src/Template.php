@@ -300,6 +300,6 @@ class Template extends KirbyTemplate
     {
         return method_exists($container, 'terminate')
             ? $container
-            : App::getInstance();
+            : Application::getInstance();
     }
 }
