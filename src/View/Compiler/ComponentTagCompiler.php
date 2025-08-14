@@ -2,23 +2,24 @@
 
 namespace Beebmx\KirbyBlade\View\Compiler;
 
+use Beebmx\KirbyBlade\App;
 use Beebmx\KirbyBlade\View\DynamicComponent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\View\AnonymousComponent;
 use Illuminate\View\Compilers\ComponentTagCompiler as TagCompiler;
 use InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class ComponentTagCompiler extends TagCompiler
 {
     /**
      * Compile the Blade component string for the given component and attributes.
      *
-     * @return string
-     *
-     * @throws \InvalidArgumentException
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
      */
-    protected function componentString(string $component, array $attributes)
+    protected function componentString(string $component, array $attributes): string
     {
         $class = $this->componentClass($component);
 
@@ -56,8 +57,8 @@ class ComponentTagCompiler extends TagCompiler
     /**
      * Get the component class for a given component alias.
      *
-     *
-     * @throws \InvalidArgumentException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function componentClass(string $component): string
     {
@@ -81,6 +82,14 @@ class ComponentTagCompiler extends TagCompiler
             return $class;
         }
 
+        if (class_exists($class = $this->guessClassName($component))) {
+            return $class;
+        }
+
+        if (class_exists($class = $class.'\\'.Str::afterLast($class, '\\'))) {
+            return $class;
+        }
+
         if (! is_null($guess = $this->guessAnonymousComponentUsingNamespaces($viewFactory, $component)) ||
             ! is_null($guess = $this->guessAnonymousComponentUsingPaths($viewFactory, $component))) {
             return $guess;
@@ -93,5 +102,19 @@ class ComponentTagCompiler extends TagCompiler
         throw new InvalidArgumentException(
             "Unable to locate a class or view for component [{$component}]."
         );
+    }
+
+    /**
+     * Guess the class name for the given component.
+     */
+    public function guessClassName(string $component): string
+    {
+        $namespace = Container::getInstance()
+            ->make(App::class)
+            ->getNamespace();
+
+        $class = $this->formatClassName($component);
+
+        return $namespace.'View\\Components\\'.$class;
     }
 }

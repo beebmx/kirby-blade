@@ -40,10 +40,8 @@ class Vite
 
     /**
      * Generate or set a Content Security Policy nonce to apply to all generated tags.
-     *
-     * @param  ?string  $nonce
      */
-    public function useCspNonce($nonce = null): string
+    public function useCspNonce(?string $nonce = null): string
     {
         return $this->nonce = $nonce ?? Str::random(40);
     }
@@ -67,7 +65,7 @@ class Vite
      * @param  (callable(string, string, ?array, ?array): array)|array  $attributes
      * @return $this
      */
-    public function useScriptTagAttributes($attributes): static
+    public function useScriptTagAttributes(callable|array $attributes): static
     {
         if (! is_callable($attributes)) {
             $attributes = fn () => $attributes;
@@ -84,7 +82,7 @@ class Vite
      * @param  (callable(string, string, ?array, ?array): array)|array  $attributes
      * @return $this
      */
-    public function useStyleTagAttributes($attributes): static
+    public function useStyleTagAttributes(callable|array $attributes): static
     {
         if (! is_callable($attributes)) {
             $attributes = fn () => $attributes;
@@ -99,19 +97,18 @@ class Vite
      * Generate Vite tags for an entrypoint.
      *
      * @param  string|string[]  $entrypoints
-     * @param  string  $buildDirectory
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __invoke($entrypoints, $buildDirectory = 'build'): HtmlString
+    public function __invoke(array|string $entrypoints, string $buildDirectory = 'build'): HtmlString
     {
         static $manifests = [];
 
         $entrypoints = collect($entrypoints);
         $buildDirectory = Str::start($buildDirectory, '/');
 
-        if (is_file(public_path('/hot'))) {
-            $url = rtrim(file_get_contents(public_path('/hot')));
+        if (is_file($public = public_path('/hot'))) {
+            $url = rtrim(file_get_contents($public));
 
             return new HtmlString(
                 $entrypoints
@@ -177,13 +174,8 @@ class Vite
 
     /**
      * Make tag for the given chunk.
-     *
-     * @param  string  $src
-     * @param  string  $url
-     * @param  ?array  $chunk
-     * @param  ?array  $manifest
      */
-    protected function makeTagForChunk($src, $url, $chunk, $manifest): string
+    protected function makeTagForChunk(string $src, string $url, ?array $chunk, ?array $manifest): string
     {
         if (
             $this->nonce === null
@@ -209,13 +201,8 @@ class Vite
 
     /**
      * Resolve the attributes for the chunks generated script tag.
-     *
-     * @param  string  $src
-     * @param  string  $url
-     * @param  ?array  $chunk
-     * @param  ?array  $manifest
      */
-    protected function resolveScriptTagAttributes($src, $url, $chunk, $manifest): array
+    protected function resolveScriptTagAttributes(string $src, string $url, ?array $chunk, ?array $manifest): array
     {
         $attributes = $this->integrityKey !== false
             ? ['integrity' => $chunk[$this->integrityKey] ?? false]
@@ -230,13 +217,8 @@ class Vite
 
     /**
      * Resolve the attributes for the chunks generated stylesheet tag.
-     *
-     * @param  string  $src
-     * @param  string  $url
-     * @param  ?array  $chunk
-     * @param  ?array  $manifest
      */
-    protected function resolveStylesheetTagAttributes($src, $url, $chunk, $manifest): array
+    protected function resolveStylesheetTagAttributes(string $src, string $url, ?array $chunk, ?array $manifest): array
     {
         $attributes = $this->integrityKey !== false
             ? ['integrity' => $chunk[$this->integrityKey] ?? false]
@@ -253,10 +235,8 @@ class Vite
      * Generate an appropriate tag for the given URL in HMR mode.
      *
      * @deprecated Will be removed in a future Laravel version.
-     *
-     * @param  string  $url
      */
-    protected function makeTag($url): string
+    protected function makeTag(string $url): string
     {
         if ($this->isCssPath($url)) {
             return $this->makeStylesheetTag($url);
@@ -269,10 +249,8 @@ class Vite
      * Generate a script tag for the given URL.
      *
      * @deprecated Will be removed in a future Laravel version.
-     *
-     * @param  string  $url
      */
-    protected function makeScriptTag($url): string
+    protected function makeScriptTag(string $url): string
     {
         return $this->makeScriptTagWithAttributes($url, []);
     }
@@ -281,21 +259,16 @@ class Vite
      * Generate a stylesheet tag for the given URL in HMR mode.
      *
      * @deprecated Will be removed in a future Laravel version.
-     *
-     * @param  string  $url
      */
-    protected function makeStylesheetTag($url): string
+    protected function makeStylesheetTag(string $url): string
     {
         return $this->makeStylesheetTagWithAttributes($url, []);
     }
 
     /**
      * Generate a script tag with attributes for the given URL.
-     *
-     * @param  string  $url
-     * @param  array  $attributes
      */
-    protected function makeScriptTagWithAttributes($url, $attributes): string
+    protected function makeScriptTagWithAttributes(string $url, array $attributes): string
     {
         $attributes = $this->parseAttributes(array_merge([
             'type' => 'module',
@@ -308,11 +281,8 @@ class Vite
 
     /**
      * Generate a link tag with attributes for the given URL.
-     *
-     * @param  string  $url
-     * @param  array  $attributes
      */
-    protected function makeStylesheetTagWithAttributes($url, $attributes): string
+    protected function makeStylesheetTagWithAttributes(string $url, array $attributes): string
     {
         $attributes = $this->parseAttributes(array_merge([
             'rel' => 'stylesheet',
@@ -325,20 +295,16 @@ class Vite
 
     /**
      * Determine whether the given path is a CSS file.
-     *
-     * @param  string  $path
      */
-    protected function isCssPath($path): bool
+    protected function isCssPath(string $path): bool
     {
         return preg_match('/\.(css|less|sass|scss|styl|stylus|pcss|postcss)$/', $path) === 1;
     }
 
     /**
      * Parse the attributes into key="value" strings.
-     *
-     * @param  array  $attributes
      */
-    protected function parseAttributes($attributes): array
+    protected function parseAttributes(array $attributes): array
     {
         return Collection::make($attributes)
             ->reject(fn ($value, $key) => in_array($value, [false, null], true))
@@ -351,7 +317,7 @@ class Vite
     /**
      * Generate React refresh runtime script.
      *
-     * @return \Illuminate\Support\HtmlString|void
+     * @return HtmlString|void
      */
     public function reactRefresh()
     {

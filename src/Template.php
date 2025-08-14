@@ -2,7 +2,6 @@
 
 namespace Beebmx\KirbyBlade;
 
-use Beebmx\Blade\Container as KirbyContainer;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;
@@ -77,22 +76,22 @@ class Template extends KirbyTemplate
     public function render(array $data = []): string
     {
         if ($this->isBlade()) {
-            $application = static::getContainer(
+            $container = static::getContainer(
                 Container::getInstance()
             );
 
             $this->blade = new Blade(
                 $this->template,
                 $this->views,
-                $application
+                $container
             );
 
             $this->setDirectives();
             $this->setIfStatements();
 
             if ($this->hasDefaultType() === true) {
-                return tap($this->blade->make($this->name, $data), function () use ($application) {
-                    $application->terminate();
+                return tap($this->blade->make($this->name, $data), function () use ($container) {
+                    $container->terminate();
                 });
             }
         }
@@ -301,6 +300,6 @@ class Template extends KirbyTemplate
     {
         return method_exists($container, 'terminate')
             ? $container
-            : new KirbyContainer;
+            : App::getInstance();
     }
 }

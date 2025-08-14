@@ -2,6 +2,7 @@
 
 namespace Beebmx\KirbyBlade\View;
 
+use Illuminate\Support\Collection;
 use Illuminate\View\AppendableAttributeValue;
 use Illuminate\View\ComponentAttributeBag as AttributeBag;
 
@@ -20,7 +21,7 @@ class ComponentAttributeBag extends AttributeBag
                 : $value;
         }, $attributeDefaults);
 
-        [$appendableAttributes, $nonAppendableAttributes] = collect($this->attributes)
+        [$appendableAttributes, $nonAppendableAttributes] = Collection::make($this->attributes)
             ->partition(function ($value, $key) use ($attributeDefaults) {
                 return $key === 'class' ||
                     (isset($attributeDefaults[$key]) &&

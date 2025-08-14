@@ -2,7 +2,8 @@
 
 namespace Beebmx\KirbyBlade;
 
-use Beebmx\Blade\Container;
+use Beebmx\KirbyBlade\Facades\Blade as FacadeBlade;
+use Illuminate\Container\Container;
 use Kirby\Cms\App;
 use Kirby\Cms\App as Kirby;
 use Kirby\Template\Snippet as KirbySnippet;
@@ -19,13 +20,10 @@ class Snippet extends KirbySnippet
         bool $slots = false
     ): static|string {
         if (static::isBlade($name)) {
-            $blade = new Blade(
-                static::getPathSnippets(),
-                Template::getPathViews(),
-                new Container
-            );
+            FacadeBlade::viewPath(static::getPathSnippets());
+            $factory = Container::getInstance()->get('view');
 
-            return $blade->make($name, $data);
+            return $factory->make($name, $data);
         }
 
         // instead of returning empty string when `$name` is null
