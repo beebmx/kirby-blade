@@ -7,11 +7,10 @@
         "template",
         "kirby",
         "kirby-plugin",
-        "kirby3",
         "kirby4",
         "kirby5"
     ],
-    "version": "6.2.2",
+    "version": "6.2.3",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [

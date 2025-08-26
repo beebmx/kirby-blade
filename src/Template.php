@@ -3,7 +3,6 @@
 namespace Beebmx\KirbyBlade;
 
 use Exception;
-use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerInterface;
 use Kirby\Cms\App as Kirby;
 use Kirby\Filesystem\Dir;
@@ -77,7 +76,7 @@ class Template extends KirbyTemplate
     {
         if ($this->isBlade()) {
             $container = static::getContainer(
-                Container::getInstance()
+                Application::getInstance()
             );
 
             $this->blade = new Blade(
