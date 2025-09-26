@@ -12,6 +12,28 @@ class Application extends Container
      */
     protected ?string $namespace = null;
 
+    public function isDownForMaintenance(): bool
+    {
+        return false;
+    }
+
+    public function environment(...$environments): bool|string
+    {
+        if (empty($environments)) {
+            return 'kirby';
+        }
+
+        return in_array(
+            'kirby',
+            is_array($environments[0]) ? $environments[0] : $environments
+        );
+    }
+
+    public function runningUnitTests(): bool
+    {
+        return false;
+    }
+
     public function getNamespace(): string
     {
         if (! is_null($this->namespace)) {
