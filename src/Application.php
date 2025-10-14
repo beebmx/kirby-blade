@@ -32,7 +32,7 @@ class Application extends Container
 
     public function basePath(string $path = ''): string
     {
-        return base_path();
+        return base_path($path);
     }
 
     public function runningUnitTests(): bool
