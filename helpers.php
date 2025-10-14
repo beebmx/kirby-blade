@@ -52,7 +52,7 @@ if (! function_exists('public_path')) {
 if (! function_exists('base_path')) {
     function base_path($path = ''): string
     {
-        return join_paths(App::instance()->roots()->base(), $path);
+        return join_paths(App::instance()->roots()->base() ?? App::instance()->roots()->index(), $path);
     }
 }
 
