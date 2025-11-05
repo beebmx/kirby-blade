@@ -10,9 +10,10 @@
         "kirby4",
         "kirby5"
     ],
-    "version": "6.2.6",
+    "version": "6.2.7",
     "type": "kirby-plugin",
     "license": "MIT",
+    "homepage": "https://github.com/beebmx/kirby-blade",
     "authors": [
         {
             "name": "Fernando Gutierrez",

@@ -3,7 +3,6 @@
 namespace Beebmx\KirbyBlade;
 
 use Beebmx\Blade\Container;
-use Kirby\Cms\App;
 use RuntimeException;
 
 class Application extends Container
