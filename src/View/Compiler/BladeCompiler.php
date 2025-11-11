@@ -76,6 +76,15 @@ class BladeCompiler extends Compiler
             ->addNamespace($prefixHash, $path);
     }
 
+    public function replaceAnonymousComponentPath(string $path, ?string $prefix = null): void
+    {
+        $prefixHash = hash('xxh128', $prefix ?: $path);
+
+        Container::getInstance()
+            ->get('view')
+            ->replaceNamespace($prefixHash, $path);
+    }
+
     /**
      * Register a new view path.
      */
