@@ -1,8 +1,14 @@
 # Kirby Blade
 
-Kirby Blade use Laravel `illuminate/view` and `jenssegers/blade` packages.
+Kirby Blade use Laravel `illuminate/view` and `beebmx/blade` packages.
 
-This package enables [Laravel Blade](https://laravel.com/docs/12.x/blade) for your own Kirby applications.
+This package enables [Laravel Blade](https://laravel.com/docs/13.x/blade) for your own Kirby applications.
+
+## Requirements
+
+- PHP `8.4` or higher
+- Kirby `4` or `5`
+- `illuminate/view` `12` or `13`
 
 ## Installation
 
@@ -20,9 +26,9 @@ According to Laravel Blade documentation is:
 
 ## Usage
 
-You can use the power of Blade like [Layouts](https://laravel.com/docs/12.x/blade#layouts-using-template-inheritance), [Sub-Views](https://laravel.com/docs/12.x/blade#including-subviews), [Directives](#Directives), your Custom [If Statements](#if-statements) and [Blade components](#components).
+You can use the power of Blade like [Layouts](https://laravel.com/docs/13.x/blade#layouts-using-template-inheritance), [Sub-Views](https://laravel.com/docs/13.x/blade#including-subviews), [Directives](#Directives), your Custom [If Statements](#if-statements) and [Blade components](#components).
 
-All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/12.x/blade).
+All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/13.x/blade).
 
 ### Conflicts
 
@@ -180,4 +186,4 @@ You can also send data to the components via "slots" and attributes:
 
 ````
 
-All the documentation related to [Components](https://laravel.com/docs/12.x/blade#components) is in the Laravel website.
+All the documentation related to [Components](https://laravel.com/docs/13.x/blade#components) is in the Laravel website.
