@@ -1,5 +1,17 @@
 <?php
 
+if (! defined('KIRBY_HELPER_E')) {
+    define('KIRBY_HELPER_E', false);
+}
+
+if (! defined('KIRBY_HELPER_DUMP')) {
+    define('KIRBY_HELPER_DUMP', false);
+}
+
+if (! defined('KIRBY_HELPER_GO')) {
+    define('KIRBY_HELPER_GO', false);
+}
+
 use Beebmx\KirbyBlade\Foundation\Vite;
 use Beebmx\KirbyBlade\Template;
 use Illuminate\Contracts\Support\DeferringDisplayableValue;

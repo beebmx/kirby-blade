@@ -1,5 +1,38 @@
 # Upgrade Guide
 
+## Upgrading to 7.1.0 from 7.0.x
+
+### High impact changes
+
+#### Kirby's `e()`, `dump()` and `go()` helpers are disabled
+
+Kirby Blade now defines the `KIRBY_HELPER_E`, `KIRBY_HELPER_DUMP` and `KIRBY_HELPER_GO` constants as `false` when Composer loads it. You no longer need to define them yourself to avoid the `Cannot redeclare function e()` error, which also fixes running `vendor/bin/pest` directly in a site that uses Kirby Blade.
+
+As a result, Kirby doesn't declare these helpers anymore:
+
+- `e()` is Laravel's helper, which escapes HTML and returns the result. Kirby's `e($condition, $value)`, which echoes `$value` when `$condition` is true, is no longer available.
+- `dump()` and `go()` aren't available unless another package declares them, for example `symfony/var-dumper` for `dump()`.
+
+If your templates, snippets or controllers call `dump()` or `go()`, use the Kirby classes behind them:
+
+```php
+use Kirby\Cms\Helpers;
+use Kirby\Cms\Response;
+
+Helpers::dump($variable); // instead of dump($variable)
+
+Response::go('/blog'); // instead of go('/blog')
+```
+
+Or keep Kirby's helper by defining its constant as `true` in the `index.php` file of your `public` directory, before including `autoload.php`:
+
+```php
+const KIRBY_HELPER_DUMP = true;
+const KIRBY_HELPER_GO = true;
+```
+
+If you already define these constants as `false` in your `index.php`, nothing changes: Kirby Blade only defines a constant that isn't defined yet.
+
 ## Upgrading to 7.x from 6.x
 
 Kirby Blade `7.x` adds support for Kirby `6` while keeping support for Kirby `4` and `5`.

@@ -56,26 +56,6 @@ You can use the power of Blade like [Layouts](https://laravel.com/docs/13.x/blad
 
 All the documentation about Laravel Blade is in the [official documentation](https://laravel.com/docs/13.x/blade).
 
-### Conflicts
-
-Kirby and Laravel's `illuminate/support` package both declare an `e()` helper, which ends with a `Cannot redeclare function e()` error. Disable Kirby's helper by defining the `KIRBY_HELPER_E` constant in the `index.php` file of your `public` directory, before including `autoload.php`:
-
-```php
-<?php
-
-const KIRBY_HELPER_E = false;
-
-include '../vendor/autoload.php';
-
-// ...
-```
-
-If your project also installs `symfony/var-dumper`, which declares a `dump()` helper too, disable Kirby's `dump()` as well:
-
-```php
-const KIRBY_HELPER_DUMP = false;
-```
-
 ## Options
 
 The default values of the package are:
@@ -342,3 +322,47 @@ You can also send data to the components via "slots" and attributes:
 ````
 
 All the documentation related to [Components](https://laravel.com/docs/13.x/blade#components) is in the Laravel website.
+
+## Conflicts
+
+Kirby declares some global helpers whose names clash with helpers from Laravel and other packages. The most common one is `e()`, which Laravel's `illuminate/support` package declares too, which ends with a `Cannot redeclare function e()` error.
+
+When Kirby Blade is installed with Composer, it disables Kirby's `e()`, `dump()` and `go()` helpers for you by defining these constants:
+
+```php
+KIRBY_HELPER_E = false
+KIRBY_HELPER_DUMP = false
+KIRBY_HELPER_GO = false
+```
+
+As a result:
+
+- `e()` is Laravel's helper, which escapes HTML and returns the result instead of echoing it. Blade's `{{ }}` echoes don't depend on it.
+- `dump()` and `go()` aren't available unless another package declares them, for example `symfony/var-dumper` for `dump()`. Otherwise, use the Kirby classes behind them:
+
+```php
+use Kirby\Cms\Helpers;
+use Kirby\Cms\Response;
+
+Helpers::dump($variable); // instead of dump($variable)
+
+Response::go('/blog'); // instead of go('/blog')
+```
+
+### Defining the constants yourself
+
+Kirby Blade only defines a constant that isn't defined yet, so you can still define them yourself. You need to when Kirby Blade isn't loaded through Composer's autoloader, or when Composer loads Kirby's helpers before Kirby Blade's. Define them in the `index.php` file of your `public` directory, before including `autoload.php`:
+
+```php
+<?php
+
+const KIRBY_HELPER_E = false;
+const KIRBY_HELPER_DUMP = false;
+const KIRBY_HELPER_GO = false;
+
+include '../vendor/autoload.php';
+
+// ...
+```
+
+To keep one of Kirby's helpers, define its constant as `true` instead, for example `const KIRBY_HELPER_GO = true;`. Don't do this for `e()`, because Laravel's `e()` would clash with it.

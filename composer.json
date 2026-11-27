@@ -12,7 +12,7 @@
         "kirby5",
         "kirby6"
     ],
-    "version": "7.0.0",
+    "version": "7.1.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "homepage": "https://github.com/beebmx/kirby-blade",
