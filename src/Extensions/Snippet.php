@@ -8,7 +8,7 @@ use Kirby\Template\Snippet as KirbySnippet;
 
 class Snippet
 {
-    public function __invoke(Kirby $kirby, string $name, array $data = [], bool $slots = false): KirbySnippet|string
+    public function __invoke(Kirby $kirby, string|array|null $name, array $data = [], bool $slots = false): KirbySnippet|string
     {
         return BladeSnippet::factory($name, $data, $slots);
     }

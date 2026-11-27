@@ -8,43 +8,41 @@ use Kirby\Cms\App as Kirby;
 use Kirby\Filesystem\Dir;
 use Kirby\Filesystem\F;
 use Kirby\Template\Template as KirbyTemplate;
-use Kirby\Toolkit\Tpl;
 
 class Template extends KirbyTemplate
 {
-    public const BLADE_EXTENSION = 'blade.php';
+    public const string BLADE_EXTENSION = 'blade.php';
 
     protected Blade $blade;
 
-    protected string $views;
+    /**
+     * Resolved template file, cached since Kirby asks for it several times
+     */
+    protected ?string $file = null;
 
-    protected string $defaultType;
+    protected bool $resolved = false;
 
-    protected string $name;
-
-    protected string $template;
-
-    protected string $type;
-
-    public static array $data = [];
-
-    public function __construct(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html')
-    {
-        $this->template = static::getPathTemplates();
-        $this->views = static::getPathViews();
-
-        $this->name = strtolower($name);
-        $this->type = $type;
-        $this->defaultType = $defaultType;
-
-        $this->setViewDirectory();
-    }
+    protected static ?Blade $booted = null;
 
     /**
      * Detects the location of the template file
      * if it exists.
      */
     public function file(): ?string
+    {
+        if ($this->resolved === false) {
+            $this->file = $this->resolveFile();
+            $this->resolved = true;
+        }
+
+        return $this->file;
+    }
+
+    /**
+     * Looks for the template file in the templates directory
+     * and in the templates registered by plugins
+     */
+    protected function resolveFile(): ?string
     {
         if ($this->hasDefaultType() === true) {
             try {
@@ -74,184 +72,245 @@ class Template extends KirbyTemplate
 
     public function render(array $data = []): string
     {
-        if ($this->isBlade()) {
-            $container = static::getContainer(
-                Application::getInstance()
-            );
+        if ($this->isBlade() && $this->hasDefaultType() === true) {
+            $this->blade = static::boot();
 
-            $this->blade = new Blade(
-                $this->template,
-                $this->views,
-                $container
-            );
+            // Templates registered by plugins live outside the
+            // templates directory, so they are rendered by path
+            $view = str_starts_with($this->file(), (realpath($this->root()) ?: $this->root()).'/')
+                ? $this->blade->make($this->name, $data)
+                : $this->blade->file($this->file(), $data);
 
-            $this->setDirectives();
-            $this->setIfStatements();
-
-            if ($this->hasDefaultType() === true) {
-                return tap($this->blade->make($this->name, $data), function () use ($container) {
-                    $container->terminate();
-                });
+            try {
+                return $view->render();
+            } finally {
+                $this->blade->container()->terminate();
             }
         }
 
-        return Tpl::load($this->file(), $data);
+        return parent::render($data);
     }
 
-    public function setViewDirectory(): void
+    /**
+     * Boots the Blade engine with the Kirby directives and if statements;
+     * the engine is booted once and reused while the container is the same
+     */
+    public static function boot(): Blade
     {
-        if (! file_exists($this->views)) {
-            Dir::make($this->views);
+        $container = static::getContainer(Application::getInstance());
+
+        if (static::$booted?->container() === $container) {
+            return static::$booted;
+        }
+
+        $views = static::getPathViews();
+
+        if (! is_dir($views)) {
+            Dir::make($views);
+        }
+
+        $blade = new Blade(static::getPathTemplates(), $views, $container);
+
+        static::addViewLocation($blade, Snippet::getPathSnippets());
+        static::setDirectives($blade);
+        static::setIfStatements($blade);
+
+        return static::$booted = $blade;
+    }
+
+    /**
+     * Forgets the booted Blade engine, so the next boot starts fresh
+     */
+    public static function flush(): void
+    {
+        static::$booted = null;
+    }
+
+    /**
+     * Adds a lookup location for views, only if it's not registered yet
+     */
+    protected static function addViewLocation(Blade $blade, string $path): void
+    {
+        $finder = $blade->container()->get('view')->getFinder();
+
+        if (! in_array(realpath($path) ?: $path, $finder->getPaths(), true)) {
+            $finder->addLocation($path);
         }
     }
 
-    protected function setDirectives(): void
+    protected static function setDirectives(Blade $blade): void
     {
-        $this->blade->compiler()->directive('js', function (string $path) {
+        $blade->compiler()->directive('js', function (string $path) {
             return "<?php echo Kirby\Cms\Html::js($path) ?>";
         });
 
-        $this->blade->compiler()->directive('css', function (string $path) {
+        $blade->compiler()->directive('css', function (string $path) {
             return "<?php echo Kirby\Cms\Html::css($path) ?>";
         });
 
-        $this->blade->compiler()->directive('kirbytext', function (string $text) {
-            return "<?php echo kirbytext($text) ?>";
+        $blade->compiler()->directive('kirbytext', function (string $text) {
+            return "<?php echo Kirby\Cms\App::instance()->kirbytext($text) ?>";
         });
 
-        $this->blade->compiler()->directive('kt', function (string $text) {
-            return "<?php echo kirbytext($text) ?>";
+        $blade->compiler()->directive('kt', function (string $text) {
+            return "<?php echo Kirby\Cms\App::instance()->kirbytext($text) ?>";
         });
 
-        $this->blade->compiler()->directive('kirbytextinline', function (string $text) {
-            return "<?php echo kirbytextinline($text) ?>";
+        $blade->compiler()->directive('kirbytextinline', function (string $text) {
+            return static::kirbytextInline($text);
         });
 
-        $this->blade->compiler()->directive('kti', function (string $text) {
-            return "<?php echo kirbytextinline($text) ?>";
+        $blade->compiler()->directive('kti', function (string $text) {
+            return static::kirbytextInline($text);
         });
 
-        $this->blade->compiler()->directive('smartypants', function (string $text) {
+        $blade->compiler()->directive('smartypants', function (string $text) {
             return "<?php echo Kirby\Cms\App::instance()->smartypants($text) ?>";
         });
 
-        $this->blade->compiler()->directive('esc', function (string $expression) {
+        $blade->compiler()->directive('esc', function (string $expression) {
             return "<?php echo Kirby\Toolkit\Str::esc($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('image', function ($text) {
+        $blade->compiler()->directive('image', function ($text) {
             return "<?php echo Kirby\Cms\App::instance()->image($text) ?>";
         });
 
-        $this->blade->compiler()->directive('svg', function (string $file) {
+        $blade->compiler()->directive('svg', function (string $file) {
             return "<?php echo Kirby\Cms\Html::svg($file) ?>";
         });
 
-        $this->blade->compiler()->directive('page', function (mixed $page) {
-            return "<?php echo page($page) ?>";
+        $blade->compiler()->directive('page', function (string $expression) {
+            return trim($expression) === ''
+                ? '<?php echo Kirby\Cms\App::instance()->site()->page() ?>'
+                : "<?php echo Kirby\Cms\App::instance()->site()->find($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('pages', function (mixed $page) {
-            return "<?php echo pages($page) ?>";
+        $blade->compiler()->directive('pages', function (string $expression) {
+            return "<?php echo Kirby\Cms\App::instance()->site()->find(array_merge(...array_map(Kirby\Toolkit\A::wrap(...), [$expression]))) ?>";
         });
 
-        $this->blade->compiler()->directive('markdown', function (string $expression) {
+        $blade->compiler()->directive('markdown', function (string $expression) {
             return "<?php echo Kirby\Cms\App::instance()->markdown($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('html', function (string $expression) {
+        $blade->compiler()->directive('html', function (string $expression) {
             return "<?php echo Kirby\Cms\Html::encode($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('h', function (string $expression) {
+        $blade->compiler()->directive('h', function (string $expression) {
             return "<?php echo Kirby\Cms\Html::encode($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('url', function (string $expression) {
+        $blade->compiler()->directive('url', function (string $expression) {
             return "<?php echo Kirby\Cms\Url::to($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('u', function (string $expression) {
+        $blade->compiler()->directive('u', function (string $expression) {
             return "<?php echo Kirby\Cms\Url::to($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('go', function (string $url, int $code = 302) {
-            return "<?php echo Kirby\Http\Response::go($url, $code); ?>";
+        $blade->compiler()->directive('go', function (string $expression) {
+            return "<?php Kirby\Http\Response::go($expression); ?>";
         });
 
-        $this->blade->compiler()->directive('asset', function (string $path) {
+        $blade->compiler()->directive('asset', function (string $path) {
             return "<?php echo new Kirby\Filesystem\Asset($path) ?>";
         });
 
-        $this->blade->compiler()->directive('translate', function (string $expression) {
+        $blade->compiler()->directive('translate', function (string $expression) {
             return "<?php echo Kirby\Toolkit\I18n::translate($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('t', function (string $expression) {
+        $blade->compiler()->directive('t', function (string $expression) {
             return "<?php echo Kirby\Toolkit\I18n::translate($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('tc', function (string $expression) {
+        $blade->compiler()->directive('lang', function (string $expression) {
+            return "<?php echo Kirby\Toolkit\I18n::translate($expression) ?>";
+        });
+
+        $blade->compiler()->directive('tc', function (string $expression) {
             return "<?php echo Kirby\Toolkit\I18n::translateCount($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('tt', function (string $expression) {
+        $blade->compiler()->directive('choice', function (string $expression) {
+            return "<?php echo Kirby\Toolkit\I18n::translateCount($expression) ?>";
+        });
+
+        $blade->compiler()->directive('tt', function (string $expression) {
             return "<?php echo Kirby\Toolkit\I18n::template($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('dump', function (string $expression) {
-            return "<?php echo Kirby\Cms\Helpers::dump($expression) ?>";
+        $blade->compiler()->directive('dump', function (string $expression) {
+            return "<?php Kirby\Cms\Helpers::dump($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('csrf', function () {
+        $blade->compiler()->directive('csrf', function () {
             return '<?php echo Kirby\Cms\App::instance()->csrf() ?>';
         });
 
-        $this->blade->compiler()->directive('snippet', function (string $expression) {
-            return "<?php snippet($expression) ?>";
+        $blade->compiler()->directive('snippet', function (string $expression) {
+            return "<?php if (is_string(\$__snippet = Kirby\Cms\App::instance()->snippet($expression))) { echo \$__snippet; } unset(\$__snippet); ?>";
         });
 
-        $this->blade->compiler()->directive('twitter', function (string $expression) {
-            return "<?php echo twitter($expression) ?>";
+        $blade->compiler()->directive('endsnippet', function () {
+            return '<?php Kirby\Template\Snippet::end() ?>';
         });
 
-        $this->blade->compiler()->directive('video', function (string $expression) {
+        $blade->compiler()->directive('video', function (string $expression) {
             return "<?php echo Kirby\Cms\Html::video($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('vimeo', function (string $expression) {
+        $blade->compiler()->directive('vimeo', function (string $expression) {
             return "<?php echo Kirby\Cms\Html::vimeo($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('youtube', function (string $expression) {
+        $blade->compiler()->directive('youtube', function (string $expression) {
             return "<?php echo Kirby\Cms\Html::youtube($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('gist', function (string $url, ?string $file = null) {
-            return "<?php echo Kirby\Cms\App::instance()->kirbytag(['gist' => $url, 'file' => $file]) ?>";
+        $blade->compiler()->directive('gist', function (string $expression) {
+            return "<?php echo Kirby\Cms\Html::gist($expression) ?>";
         });
 
-        $this->blade->compiler()->directive('vite', function ($entrypoints, $buildDirectory = 'build') {
-            return "<?php echo (new Beebmx\KirbyBlade\Foundation\Vite)($entrypoints, '$buildDirectory'); ?>";
+        $blade->compiler()->directive('attr', function (string $expression) {
+            return "<?php echo Kirby\Cms\Html::attr($expression) ?>";
+        });
+
+        $blade->compiler()->directive('vite', function (string $expression) {
+            return "<?php echo (new Beebmx\KirbyBlade\Foundation\Vite)($expression); ?>";
+        });
+
+        $blade->compiler()->directive('viteReactRefresh', function () {
+            return '<?php echo (new Beebmx\KirbyBlade\Foundation\Vite)->reactRefresh(); ?>';
         });
 
         foreach (Kirby::instance()->option('beebmx.kirby-blade.directives', []) as $directive => $callback) {
-            $this->blade->compiler()->directive($directive, $callback);
+            $blade->compiler()->directive($directive, $callback);
         }
     }
 
-    protected function setIfStatements(): void
+    /**
+     * Compiles kirbytext with inline markdown, so no wrapping paragraph is added
+     */
+    protected static function kirbytextInline(string $expression): string
     {
-        $this->blade->compiler()->if('auth', function () {
+        return "<?php echo (fn (?string \$text = null, array \$options = []) => Kirby\Cms\App::instance()->kirbytext(\$text, array_replace_recursive(\$options, ['markdown' => ['inline' => true]])))($expression) ?>";
+    }
+
+    protected static function setIfStatements(Blade $blade): void
+    {
+        $blade->compiler()->if('auth', function () {
             return Kirby::instance()->user() !== null;
         });
 
-        $this->blade->compiler()->if('guest', function () {
+        $blade->compiler()->if('guest', function () {
             return Kirby::instance()->user() === null;
         });
 
         foreach (Kirby::instance()->option('beebmx.kirby-blade.ifs', []) as $statement => $callback) {
-            $this->blade->compiler()->if($statement, $callback);
+            $blade->compiler()->if($statement, $callback);
         }
     }
 
@@ -268,7 +327,7 @@ class Template extends KirbyTemplate
 
     public function isBlade(): bool
     {
-        return str_ends_with($this->file(), static::BLADE_EXTENSION);
+        return str_ends_with($this->file() ?? '', static::BLADE_EXTENSION);
     }
 
     /**

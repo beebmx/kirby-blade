@@ -13,9 +13,9 @@ class Blade extends BladeProvider
 {
     protected $container;
 
-    private $factory;
+    protected $factory;
 
-    private $compiler;
+    protected $compiler;
 
     public function __construct($viewPaths, string $cachePath, ?ContainerInterface $container = null)
     {
@@ -36,8 +36,18 @@ class Blade extends BladeProvider
         return $this->factory->make($view, $data, $mergeData);
     }
 
+    public function file($path, $data = [], $mergeData = []): View
+    {
+        return $this->factory->file($path, $data, $mergeData);
+    }
+
     public function compiler(): BladeCompiler
     {
         return $this->compiler;
+    }
+
+    public function container(): ContainerInterface
+    {
+        return $this->container;
     }
 }

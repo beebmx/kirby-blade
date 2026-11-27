@@ -9,12 +9,12 @@ use Kirby\Http\Header;
 
 class Template
 {
-    public function __invoke(Kirby $kirby, string $name, ?string $contentType = null): BladeTemplate
+    public function __invoke(Kirby $kirby, string $name, string $type = 'html', string $defaultType = 'html'): BladeTemplate
     {
         if (Str::endsWith($kirby->request()->url(), '.php')) {
             Header::redirect(substr($kirby->request()->url(), 0, -4), 301);
         }
 
-        return new BladeTemplate($kirby, $name, $contentType);
+        return new BladeTemplate($name, $type, $defaultType);
     }
 }

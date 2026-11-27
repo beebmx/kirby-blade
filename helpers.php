@@ -1,7 +1,8 @@
 <?php
 
 use Beebmx\KirbyBlade\Foundation\Vite;
-use Illuminate\Container\Container;
+use Beebmx\KirbyBlade\Template;
+use Illuminate\Contracts\Support\DeferringDisplayableValue;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
 use Kirby\Cms\App;
@@ -17,13 +18,21 @@ if (! function_exists('_e')) {
     /**
      * Encode HTML special characters in a string.
      */
-    function _e(Htmlable|string $value, bool $doubleEncode = true): string
+    function _e(DeferringDisplayableValue|Htmlable|BackedEnum|Stringable|string|int|float|bool|null $value, bool $doubleEncode = true): string
     {
-        if ($value instanceof Htmlable) {
-            return $value->toHtml();
+        if ($value instanceof DeferringDisplayableValue) {
+            $value = $value->resolveDisplayableValue();
         }
 
-        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', $doubleEncode);
+        if ($value instanceof Htmlable) {
+            return $value->toHtml() ?? '';
+        }
+
+        if ($value instanceof BackedEnum) {
+            $value = $value->value;
+        }
+
+        return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $doubleEncode);
     }
 }
 
@@ -76,7 +85,7 @@ if (! function_exists('vite')) {
 if (! function_exists('view')) {
     function view($view = null, $data = [], $mergeData = [])
     {
-        $factory = Container::getInstance()->get('view');
+        $factory = Template::boot()->container()->get('view');
 
         if (func_num_args() === 0) {
             return $factory;

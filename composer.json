@@ -7,10 +7,12 @@
         "template",
         "kirby",
         "kirby-plugin",
+        "kirby3",
         "kirby4",
-        "kirby5"
+        "kirby5",
+        "kirby6"
     ],
-    "version": "6.2.9",
+    "version": "7.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "homepage": "https://github.com/beebmx/kirby-blade",
@@ -27,17 +29,22 @@
         "illuminate/view": "^12.0|^13.0",
         "ramsey/uuid": "^4.7"
     },
+    "conflict": {
+        "getkirby/cms": "<4.0"
+    },
     "require-dev": {
-        "getkirby/cli": "^1.7",
-        "getkirby/cms": "^4.0|^5.0",
-        "laravel/pint": "^1.0"
+        "getkirby/cli": "^1.7|^2.1",
+        "getkirby/cms": "^4.0|^5.0|^6.0",
+        "laravel/pint": "^1.0",
+        "pestphp/pest": "^5.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "getkirby/composer-installer": true
+            "getkirby/composer-installer": true,
+            "pestphp/pest-plugin": true
         }
     },
     "autoload": {
@@ -46,6 +53,20 @@
         ],
         "psr-4": {
             "Beebmx\\KirbyBlade\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "tests/Fixtures/app/",
+            "Beebmx\\KirbyBlade\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "@php -d auto_prepend_file=tests/constants.php vendor/bin/pest"
+    },
+    "extra": {
+        "kirby": {
+            "compatible": "^3.0 || ^4.0 || ^5.0 || ^6.0"
         }
     },
     "minimum-stability": "dev",

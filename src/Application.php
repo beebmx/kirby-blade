@@ -45,7 +45,13 @@ class Application extends Container
             return $this->namespace;
         }
 
-        $composer = json_decode(file_get_contents(base_path('composer.json')), true);
+        $file = base_path('composer.json');
+
+        if (! is_file($file)) {
+            throw new RuntimeException("Unable to detect application namespace: [{$file}] does not exist.");
+        }
+
+        $composer = json_decode(file_get_contents($file), true);
 
         foreach ((array) data_get($composer, 'autoload.psr-4') as $namespace => $path) {
             foreach ((array) $path as $pathChoice) {
@@ -55,6 +61,6 @@ class Application extends Container
             }
         }
 
-        throw new RuntimeException('Unable to detect application namespace.');
+        throw new RuntimeException('Unable to detect application namespace: no PSR-4 entry in ['.$file.'] points to ['.app_path().'].');
     }
 }

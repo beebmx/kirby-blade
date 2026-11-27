@@ -2,7 +2,7 @@
 
 namespace Beebmx\KirbyBlade\Console;
 
-use Illuminate\Container\Container;
+use Beebmx\KirbyBlade\Template;
 use Kirby\CLI\CLI;
 use Kirby\Filesystem\F;
 use RuntimeException;
@@ -16,7 +16,7 @@ class ViewClearCommand
      */
     public function __invoke(CLI $cli): void
     {
-        $container = Container::getInstance();
+        $container = Template::boot()->container();
         $path = $container['config']['view.compiled'];
 
         if (! $path) {

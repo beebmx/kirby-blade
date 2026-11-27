@@ -24,6 +24,11 @@ return [
                 'longPrefix' => 'view',
                 'noValue' => true,
             ],
+            'force' => [
+                'description' => 'Create the files even if the component already exists',
+                'longPrefix' => 'force',
+                'noValue' => true,
+            ],
         ],
         'command' => new MakeComponentCommand,
     ],

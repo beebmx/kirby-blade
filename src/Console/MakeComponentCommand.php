@@ -3,8 +3,8 @@
 namespace Beebmx\KirbyBlade\Console;
 
 use Beebmx\KirbyBlade\Application;
+use Beebmx\KirbyBlade\Template;
 use Exception;
-use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Kirby\CLI\CLI;
@@ -111,8 +111,9 @@ class MakeComponentCommand
             return;
         }
 
-        $this->writeClass($cli);
-        $this->writeView($cli);
+        if ($this->writeClass($cli)) {
+            $this->writeView($cli);
+        }
     }
 
     protected function writeView(CLI $cli): void
@@ -144,14 +145,16 @@ class MakeComponentCommand
     }
 
     /**
+     * Writes the component class; returns false when it was not written
+     *
      * @throws Exception
      */
-    protected function writeClass(CLI $cli): void
+    protected function writeClass(CLI $cli): bool
     {
         if ($this->isReservedName($this->getNameInput($cli))) {
             $cli->error('The name "'.$this->getNameInput($cli).'" is reserved by PHP.');
 
-            return;
+            return false;
         }
 
         $name = $this->qualifyClass($this->getNameInput($cli));
@@ -162,16 +165,16 @@ class MakeComponentCommand
             $this->alreadyExists($this->getNameInput($cli))) {
             $cli->error('Component already exists.');
 
-            return;
+            return false;
         }
 
-        $this->makeDirectory($path);
+        F::write($path, $this->sortImports($this->buildClass($name, $cli)));
 
-        $cli->make($path, $this->sortImports($this->buildClass($name, $cli)));
-
-        $path = str_replace(Kirby::instance()->roots()->base(), '', $path);
+        $path = str_replace(base_path(), '', $path);
 
         $cli->out(sprintf('%s [%s] created successfully.', 'Component', $path));
+
+        return true;
     }
 
     protected function getView(CLI $cli): string
@@ -203,7 +206,7 @@ class MakeComponentCommand
 
     protected function viewPath(string $path = ''): string
     {
-        $views = rtrim(Container::getInstance()['config']['view.paths'][0], DIRECTORY_SEPARATOR);
+        $views = rtrim(Template::boot()->container()['config']['view.paths'][0], DIRECTORY_SEPARATOR);
 
         return $views.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -260,18 +263,6 @@ class MakeComponentCommand
     protected function alreadyExists(string $rawName): bool
     {
         return F::exists($this->getPath($this->qualifyClass($rawName)));
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function makeDirectory($path)
-    {
-        if (! Dir::exists(dirname($path))) {
-            Dir::make(dirname($path));
-        }
-
-        return $path;
     }
 
     protected function buildClass(string $name, CLI $cli): string

@@ -139,7 +139,7 @@ class Vite
 
             $tags->push($this->makeTagForChunk(
                 $entrypoint,
-                new Asset("{$buildDirectory}/{$manifest[$entrypoint]['file']}"),
+                $this->asset("{$buildDirectory}/{$manifest[$entrypoint]['file']}"),
                 $manifest[$entrypoint],
                 $manifest
             ));
@@ -147,7 +147,7 @@ class Vite
             foreach ($manifest[$entrypoint]['css'] ?? [] as $css) {
                 $tags->push($this->makeTagForChunk(
                     $entrypoint,
-                    new Asset("{$buildDirectory}/{$css}"),
+                    $this->asset("{$buildDirectory}/{$css}"),
                     $manifest[$entrypoint],
                     $manifest
                 ));
@@ -159,7 +159,7 @@ class Vite
 
                     $tags->push($this->makeTagForChunk(
                         $partialManifest->keys()->first(),
-                        new Asset("{$buildDirectory}/{$css}"),
+                        $this->asset("{$buildDirectory}/{$css}"),
                         $partialManifest->first(),
                         $manifest
                     ));
@@ -170,6 +170,15 @@ class Vite
         [$stylesheets, $scripts] = $tags->partition(fn ($tag) => str_starts_with($tag, '<link'));
 
         return new HtmlString($stylesheets->join('').$scripts->join(''));
+    }
+
+    /**
+     * Create a Kirby asset for the given path; Kirby adds the slash
+     * between the site url and the path, so it's removed from the path
+     */
+    protected function asset(string $path): Asset
+    {
+        return new Asset(ltrim($path, '/'));
     }
 
     /**
